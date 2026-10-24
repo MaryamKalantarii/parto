@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Montserrat } from "next/font/google";
+import { Cormorant_Garamond, Vazirmatn } from "next/font/google";
 import "./globals.css";
 
-// 1. تنظیم فونت Serif لوکس برای تیترهای بزرگ
+// ۱. تنظیم فونت Serif انگلیسی برای اعداد و برند
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500"],
@@ -10,10 +10,10 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-// 2. تنظیم فونت Sans مینیمال برای متون ریز و جزییات
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["200", "300", "400"],
+// ۲. تنظیم فونت فارسی لوکس، نرم و مدرن (وزیرمتن)
+const vazirmatn = Vazirmatn({
+  subsets: ["arabic"],
+  weight: ["200", "300", "400", "500", "600"],
   variable: "--font-sans",
   display: "swap",
 });
@@ -29,8 +29,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${montserrat.variable}`}>
-      <body className="bg-[#111111] text-[#F7F5F0] antialiased selection:bg-[#F7F5F0] selection:text-[#111111]">
+    <html
+      lang="fa"
+      dir="rtl"
+      className={`${cormorant.variable} ${vazirmatn.variable}`}
+    >
+      <body className="font-sans bg-[#0a0a0a] text-[#F7F5F0] antialiased selection:bg-[#D8C2A8] selection:text-[#060605]">
         {children}
       </body>
     </html>

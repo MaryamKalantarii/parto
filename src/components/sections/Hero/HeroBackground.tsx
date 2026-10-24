@@ -59,7 +59,7 @@ export function HeroBackground() {
       srcSet="/images/hero/hero-mobile.png"
     />
     <img
-      src="/images/hhh.jpg"
+      src="/images/hero-bggg.png"
       alt=""
       className="h-full w-full object-cover object-center"
     />

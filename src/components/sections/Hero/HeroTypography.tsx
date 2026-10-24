@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useEffect, useRef } from "react";
@@ -7,9 +6,10 @@ import Link from "next/link";
 
 export function HeroTypography() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
   const tagRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const copyRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -22,53 +22,38 @@ export function HeroTypography() {
     const ctx = gsap.context(() => {
       if (reduceMotion) {
         gsap.set(
-          [tagRef.current, titleRef.current, copyRef.current],
-          { opacity: 1, y: 0, scale: 1 }
+          [tagRef.current, titleRef.current, copyRef.current, ctaRef.current],
+          { opacity: 1, x: 0, y: 0, scale: 1 }
         );
         return;
       }
 
       gsap.fromTo(
         tagRef.current,
-        { opacity: 0, y: -12 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          delay: 0.2,
-          ease: "power3.out",
-        }
+        { opacity: 0, x: 20 },
+        { opacity: 1, x: 0, duration: 1, delay: 0.2, ease: "power3.out" }
       );
 
       gsap.fromTo(
         titleRef.current,
-        { opacity: 0, y: 24, scale: 0.985 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 1.4,
-          delay: 0.35,
-          ease: "power3.out",
-        }
+        { opacity: 0, x: 25, scale: 0.98 },
+        { opacity: 1, x: 0, scale: 1, duration: 1.2, delay: 0.35, ease: "power3.out" }
       );
 
       gsap.fromTo(
         copyRef.current,
-        { opacity: 0, y: 14 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          delay: 0.65,
-          ease: "power3.out",
-        }
+        { opacity: 0, x: 20 },
+        { opacity: 1, x: 0, duration: 1, delay: 0.55, ease: "power3.out" }
+      );
+
+      gsap.fromTo(
+        ctaRef.current,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.8, delay: 0.75, ease: "power3.out" }
       );
     }, container);
 
-    const finePointer = window.matchMedia(
-      "(hover: hover) and (pointer: fine)"
-    );
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
     const handleMouseMove = (event: MouseEvent) => {
       if (
@@ -79,8 +64,8 @@ export function HeroTypography() {
       }
 
       gsap.to(container, {
-        x: (event.clientX / window.innerWidth - 0.5) * -8,
-        y: (event.clientY / window.innerHeight - 0.5) * -8,
+        x: (event.clientX / window.innerWidth - 0.5) * 8,
+        y: (event.clientY / window.innerHeight - 0.5) * 8,
         duration: 1.5,
         ease: "power2.out",
         overwrite: "auto",
@@ -88,9 +73,7 @@ export function HeroTypography() {
     };
 
     if (finePointer.matches && !reduceMotion) {
-      window.addEventListener("mousemove", handleMouseMove, {
-        passive: true,
-      });
+      window.addEventListener("mousemove", handleMouseMove, { passive: true });
     }
 
     return () => {
@@ -102,47 +85,56 @@ export function HeroTypography() {
   return (
     <div
       ref={containerRef}
-      className="pointer-events-none absolute inset-x-0 top-[18%] z-10 flex flex-col items-center px-4 text-center select-none sm:inset-y-0 sm:top-0 sm:items-start sm:justify-center sm:px-16 sm:text-left md:px-24"
+      dir="rtl"
+      className="pointer-events-none absolute inset-y-0 right-0 z-10 flex w-full flex-col justify-center px-6 text-right select-none sm:w-auto sm:px-12 md:px-16 lg:px-20"
     >
-      <div
-        ref={tagRef}
-        className="mb-3 flex items-center gap-2 sm:mb-6 sm:gap-4 sm:pl-2"
-      >
-        <span className="h-px w-5 bg-[#E4E1DA]/50 sm:w-12" />
-
-        <span className="whitespace-nowrap font-mono text-[8px] uppercase tracking-[0.2em] text-[#E4E1DA]/90 sm:text-xs sm:tracking-[0.35em]">
-          OBJECTS OF LIGHT.
+      {/* 1. زیرعنوان ظریف */}
+      <div ref={tagRef} className="mb-2 flex items-center gap-2.5 sm:mb-3">
+        <span className="h-[1px] w-5 bg-[#D8C2A8]/60 sm:w-8" />
+        <span className="font-sans text-[10px] font-light tracking-wider text-[#E8E5DF]/80 sm:text-[11px]">
+          زیبایی در جزئیات است
         </span>
-
-        <span className="h-px w-5 bg-[#E4E1DA]/50 sm:hidden" />
       </div>
 
+      {/* 2. عنوان اصلی - جمع‌وجور و محدود به سمت راست */}
       <h1
         ref={titleRef}
-        className="bg-gradient-to-b from-[#F7F5F0] via-[#E4E1DA]/90 to-[#B8B6B0]/40 bg-clip-text pl-[0.12em] font-serif text-[clamp(3.2rem,15vw,5.2rem)] font-light leading-[0.9] tracking-[0.12em] text-transparent drop-shadow-[0_10px_35px_rgba(0,0,0,0.5)] sm:pl-[0.22em] sm:text-[clamp(4.5rem,14vw,12.5rem)] sm:tracking-[0.22em]"
+        className="max-w-[280px] sm:max-w-[340px] font-sans text-[clamp(2.5rem,5.2vw,6.5rem)] font-extralight leading-[1.3] text-[#F7F5F0] drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)]"
       >
-        AUREL
+        مجموعه جواهرات
+        <br />
+        <span className="bg-gradient-to-l from-[#F7F5F0] via-[#D8C2A8] to-[#B8B6B0] bg-clip-text text-transparent font-normal">
+          پرتو
+        </span>
       </h1>
 
+      {/* 3. متن توضیحات بزرگ‌تر شده و فاصله گرفته از بالا */}
       <p
         ref={copyRef}
-        className="mt-5 max-w-[290px] text-[10px] font-light leading-[1.9] tracking-[0.08em] text-[#F7F5F0]/80 sm:mt-8 sm:max-w-[340px] sm:text-sm sm:leading-7"
+        className="mt-6 sm:mt-8 max-w-[400px] sm:max-w-[800px] font-sans text-sm sm:text-base font-light leading-[2.2] text-[#E8E5DF]/90"
       >
-        Jewelry shaped by light,
-        <br className="sm:hidden" /> defined by feeling.
-
-        <span className="mt-2 block text-[8px] uppercase tracking-[0.19em] text-[#E4E1DA]/60 sm:text-[10px]">
-          A study in form, material & permanence
-        </span>
+        ترکیبی از اصالت، هنر و درخشش.
+        <br />
+        برای لحظه‌های خاص زندگی شما.
       </p>
 
-      <Link
-        href="/collections"
-        className="pointer-events-auto mt-6 inline-flex items-center gap-4 border-b border-white/40 pb-2 text-[9px] tracking-[0.2em] text-[#F7F5F0] transition-colors hover:border-white sm:mt-8"
-      >
-        DISCOVER THE COLLECTION
-        <span className="text-sm">↗</span>
-      </Link>
+      {/* 4. دکمه مشاهده محصولات با کادر مربعی لوکس */}
+      <div className="mt-8 sm:mt-10">
+        <Link
+          ref={ctaRef}
+          href="/shop"
+          className="group pointer-events-auto inline-flex items-center gap-3 px-6 py-3.5 border border-white/30 bg-black/20 backdrop-blur-sm text-sm sm:text-base tracking-widest text-[#F7F5F0] transition-all duration-300 hover:border-[#D8C2A8] hover:bg-[#D8C2A8]/10 hover:text-[#D8C2A8]"
+        >
+          <span className="font-sans font-normal">
+            مشاهده محصولات
+          </span>
+          <span className="text-lg transition-transform duration-300 group-hover:-translate-x-2">
+            ←
+          </span>
+        </Link>
+      </div>
     </div>
   );
 }
+
+export default HeroTypography;

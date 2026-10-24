@@ -60,22 +60,17 @@ export function HeroUI() {
       <div className="absolute bottom-[62px] left-4 right-4 max-w-[260px] space-y-1 sm:bottom-8 sm:left-16 sm:right-auto">
         <div className="mb-1 flex items-center gap-2">
           <span className="font-mono text-[7px] uppercase tracking-[0.16em] text-[#B8B6B0] sm:text-[9px] sm:tracking-[0.25em]">
-            AUREL — 001
+            پرتو — 001
           </span>
           <span className="h-px w-4 bg-[#B8B6B0]/40" />
         </div>
+<p className="font-sans text-[11px] text-[#E8E5DF]/70 tracking-wider">
+  طراحی‌شده بر پایه نور، فرم و اصالت.
+</p>
 
-        <h2 className="font-serif text-[13px] font-normal uppercase tracking-[0.11em] text-[#F7F5F0] sm:text-lg sm:tracking-[0.18em]">
-          THE LUMIÈRE
-        </h2>
+    
 
-        <p className="max-w-[260px] text-[7px] font-light leading-relaxed tracking-[0.09em] text-[#E4E1DA]/85 sm:text-[11px] sm:tracking-wider">
-          SOLITAIRE RING — PLATINUM / DIAMOND
-        </p>
-
-        <p className="pt-1 font-serif text-[11px] font-medium tracking-widest text-[#F7F5F0] sm:text-sm">
-          $3,850
-        </p>
+     
       </div>
 
       {/* Scroll indicator */}
@@ -87,12 +82,7 @@ export function HeroUI() {
         <div className="h-3 w-px animate-pulse bg-gradient-to-b from-[#F7F5F0] via-[#E4E1DA]/40 to-transparent sm:h-7" />
       </div>
 
-      {/* Desktop editorial caption */}
-      <div className="absolute bottom-8 right-16 hidden max-w-[210px] text-right sm:block">
-        <p className="font-serif text-[11px] italic leading-relaxed tracking-wide text-[#E4E1DA]/70">
-          Jewelry shaped by light, material and movement.
-        </p>
-      </div>
+  
     </div>
   );
 }
