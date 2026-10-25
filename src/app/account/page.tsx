@@ -36,14 +36,10 @@ export default function AccountPage() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end pb-12 mb-12 border-b border-white/10 gap-6">
           <div>
        
-            <h1 className="font-serif text-4xl sm:text-6xl font-extralight tracking-wide text-[#F7F5F0]">MY ACCOUNT.</h1>
+          
             <p className="font-sans text-xs font-light text-[#8A857D] mt-3">Manage your details, orders and preferences.</p>
           </div>
 
-          <div className="text-right hidden md:block">
-            <div className="font-sans text-[9px] uppercase tracking-[0.3em] text-[#8A857D]">A PERSONAL SPACE</div>
-            <div className="font-sans text-[10px] uppercase tracking-[0.25em] text-[#D8C2A8] mt-1">FOR YOUR AUREL JOURNEY.</div>
-          </div>
         </div>
 
         {/* LAYOUT GRID - FIXED 12 COLUMNS FOR DESKTOP */}

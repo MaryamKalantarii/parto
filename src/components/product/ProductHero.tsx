@@ -110,69 +110,70 @@ export const ProductHero = () => {
       {/* Background Hero Image */}
       <div className="hero-image absolute inset-0 overflow-hidden bg-[#09090b]">
         <Image
-          src="/images/product-hero-model2.png"
-          alt="Timeless Beauty"
+          src="/images/product-hero/product-hero-model.jpg"
+          alt="زیبایی جاودانه"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[62%_center] brightness-[0.9] contrast-[1.08] saturate-[0.85] transform-gpu"
+          // در اینجا کلاس‌های brightness, contrast و saturate برای روشن‌تر شدن عکس حذف شده‌اند
+          className="object-cover object-[62%_center] transform-gpu"
         />
       </div>
 
-      {/* Dark Silver Gradients & Vignette */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#09090b]/90 via-[#09090b]/50 via-40% to-transparent" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-black/30 opacity-90" />
+      {/* Dark Silver Gradients & Vignette - کاهش شدت گرادینت‌ها برای روشن‌تر شدن کل هیرو */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-[#09090b]/60 via-[#09090b]/30 via-40% to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#09090b]/70 via-transparent to-black/20 opacity-80" />
 
       {/* Subtle Ice-Silver Ambient Glow */}
-      <div className="pointer-events-none absolute left-[15%] top-[35%] h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-400/[0.04] blur-[140px]" />
+      <div className="pointer-events-none absolute right-[15%] top-[35%] h-[450px] w-[450px] translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-400/[0.04] blur-[140px]" />
 
       {/* Main Content */}
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-[1700px] items-center px-6 pb-12 pt-20 sm:px-10 lg:px-14 xl:px-16">
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-[1700px] items-center justify-end px-6 pb-12 pt-20 sm:px-10 lg:px-14 xl:px-16 text-right">
         <div className="hero-content w-full max-w-[580px] -translate-y-2 lg:-translate-y-4">
           
           {/* Eyebrow */}
-          <div className="hero-eyebrow mb-6 flex items-center gap-4">
-            <span className="h-px w-8 bg-zinc-500/50" />
-            <span className="font-mono text-[8.5px] uppercase tracking-[0.35em] text-zinc-400 sm:text-[9.5px]">
-              OBJECTS OF LIGHT
+          <div className="hero-eyebrow mb-6 flex items-center justify-end gap-4">
+            <span className="font-mono text-[9px] uppercase tracking-[0.35em] text-zinc-400 sm:text-[10px]">
+              اشیایی از نور
             </span>
+            <span className="h-px w-8 bg-zinc-500/50" />
           </div>
 
           {/* Title */}
-          <h1 className="hero-title flex flex-col font-serif text-[42px] font-extralight uppercase leading-[0.96] tracking-[0.06em] text-white drop-shadow-md sm:text-[54px] md:text-[62px] lg:text-[68px] xl:text-[72px]">
-            <span className="hero-title-line block">TIMELESS BEAUTY</span>
-            <span className="hero-title-line block text-zinc-300">IN EVERY DETAIL.</span>
+          <h1 className="hero-title flex flex-col font-serif text-[38px] font-extralight uppercase leading-[1.1] tracking-[0.04em] text-white drop-shadow-md sm:text-[48px] md:text-[56px] lg:text-[62px]">
+            <span className="hero-title-line block">زیبایی جاودانه</span>
+            <span className="hero-title-line block text-zinc-300">در تمامی جزئیات.</span>
           </h1>
 
           {/* Description */}
-          <p className="hero-description mt-7 max-w-[360px] font-serif text-[13px] font-light leading-[1.7] tracking-[0.02em] text-zinc-400 sm:text-[14px]">
-            Exquisite craftsmanship designed for those who value subtle elegance and modern sophistication.
+          <p className="hero-description mt-7 ml-auto max-w-[380px] font-serif text-[13px] font-light leading-[1.8] tracking-[0.02em] text-zinc-400 sm:text-[14px]">
+            هنر اصیل ساخت، مخصوص کسانی که به ظرافتِ پنهان و اصالت مدرن اهمیت می‌دهند.
           </p>
 
           {/* CTA Button */}
-          <div className="hero-cta mt-9 sm:mt-11">
+          <div className="hero-cta mt-9 sm:mt-11 flex justify-end">
             <a
               href="#collection-grid"
               className="group inline-flex items-center gap-4 font-mono text-[9px] font-medium uppercase tracking-[0.25em] text-white transition-all duration-300 hover:text-zinc-300 sm:text-[10px]"
             >
-              <span className="border-b border-zinc-700 pb-1 transition-colors duration-300 group-hover:border-white">
-                EXPLORE COLLECTION
+              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/50 backdrop-blur-sm transition-all duration-300 group-hover:border-white group-hover:bg-white group-hover:text-black">
+                <span className="text-[12px] transition-transform duration-300 group-hover:-translate-x-0.5">
+                  ←
+                </span>
               </span>
 
-              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/50 backdrop-blur-sm transition-all duration-300 group-hover:border-white group-hover:bg-white group-hover:text-black">
-                <span className="text-[12px] transition-transform duration-300 group-hover:translate-x-0.5">
-                  →
-                </span>
+              <span className="border-b border-zinc-700 pb-1 transition-colors duration-300 group-hover:border-white">
+                مشاهده مجموعه
               </span>
             </a>
           </div>
         </div>
       </div>
 
-      {/* Right Pagination Indicator */}
-      <div className="hero-pagination absolute right-8 top-1/2 z-20 hidden -translate-y-1/2 flex-col items-center gap-5 lg:flex xl:right-12">
+      {/* Left Pagination Indicator (جابجا شده به سمت چپ صفحه متناسب با ساختار فارسی) */}
+      <div className="hero-pagination absolute left-8 top-1/2 z-20 hidden -translate-y-1/2 flex-col items-center gap-5 lg:flex xl:left-12">
         <span className="font-mono text-[9px] font-medium tracking-[0.15em] text-white">
-          01
+          ۰۱
         </span>
 
         <div className="relative h-20 w-px bg-zinc-800">
@@ -180,9 +181,11 @@ export const ProductHero = () => {
         </div>
 
         <span className="font-mono text-[9px] tracking-[0.15em] text-zinc-600">
-          04
+          ۰۴
         </span>
       </div>
     </section>
   );
 };
+
+export default ProductHero;

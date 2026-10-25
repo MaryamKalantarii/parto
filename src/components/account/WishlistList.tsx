@@ -15,25 +15,25 @@ export interface WishlistItem {
 const mockWishlist: WishlistItem[] = [
   {
     id: 'w1',
-    title: 'Aurel Brass Ring Dimmer',
-    category: 'LIGHTING CONTROLS',
-    price: '$2,100',
+    title: 'دیمر حلقه برنجی پرتو',
+    category: 'کنترل‌کننده‌های روشنایی',
+    price: '۲,۱۰۰,۰۰۰ تومان',
     inStock: true,
     image: '/images/account/recentorder.jpg',
   },
   {
     id: 'w2',
-    title: 'Sculptural Marble Wall Plate',
-    category: 'ARCHITECTURAL HARDWARE',
-    price: '$1,450',
+    title: 'صفحه دیواری مرمرین مجسمه‌وار',
+    category: 'یراق‌آلات معماری',
+    price: '۱,۴۵۰,۰۰۰ تومان',
     inStock: true,
     image: '/images/account/recentorder2.jpg',
   },
   {
     id: 'w3',
-    title: 'Minimalist Linear Pendant',
-    category: 'SUSPENSION LIGHTING',
-    price: '$3,800',
+    title: 'آویز خطی مینیمالیست',
+    category: 'روشنایی آویز',
+    price: '۳,۸۰۰,۰۰۰ تومان',
     inStock: false,
     image: '/images/account/recentorder3.jpg',
   },
@@ -47,18 +47,18 @@ export const WishlistList: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-right" dir="rtl">
       {/* HEADER */}
       <div className="flex justify-between items-center pb-4 border-b border-white/10">
         <div>
           <h2 className="font-serif text-xl font-light tracking-wide text-[#F7F5F0]">
-            WISHLIST
+            علاقه‌مندی‌ها
           </h2>
           <p className="font-sans text-xs text-[#8A857D] mt-1">
-            Your curated collection of saved items.
+            مجموعه برگزیده از اقلام ذخیره‌شده شما.
           </p>
         </div>
-        <span className="font-mono text-xs text-[#D8C2A8]">
+        <span className="font-mono text-xs text-[#D8C2A8]" dir="ltr">
           {items.length} {items.length === 1 ? 'ITEM' : 'ITEMS'}
         </span>
       </div>
@@ -79,7 +79,7 @@ export const WishlistList: React.FC = () => {
                 />
               </div>
               <div>
-                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#D8C2A8]">
+                <span className="font-sans text-[10px] tracking-wider text-[#D8C2A8]">
                   {item.category}
                 </span>
                 <h3 className="font-serif text-base font-light text-[#F7F5F0] mt-0.5">
@@ -88,13 +88,13 @@ export const WishlistList: React.FC = () => {
                 <div className="flex items-center gap-3 mt-1">
                   <span className="font-serif text-sm text-[#F7F5F0]">{item.price}</span>
                   <span
-                    className={`font-sans text-[8px] uppercase tracking-[0.15em] px-2 py-0.5 rounded-full border ${
+                    className={`font-sans text-[10px] tracking-wider px-2.5 py-0.5 rounded-full border ${
                       item.inStock
                         ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10'
                         : 'border-white/10 text-[#6A655D]'
                     }`}
                   >
-                    {item.inStock ? 'IN STOCK' : 'BACKORDER'}
+                    {item.inStock ? 'موجود در انبار' : 'پیش‌خرید'}
                   </span>
                 </div>
               </div>
@@ -104,19 +104,19 @@ export const WishlistList: React.FC = () => {
             <div className="flex items-center justify-between sm:justify-end gap-4 pt-3 sm:pt-0 border-t sm:border-t-0 border-white/5">
               <button
                 disabled={!item.inStock}
-                className={`px-4 py-2.5 rounded-full font-sans text-[9px] uppercase tracking-[0.2em] transition-all duration-300 ${
+                className={`px-4 py-2.5 rounded-full font-sans text-xs tracking-wider transition-all duration-300 ${
                   item.inStock
                     ? 'border border-[#D8C2A8]/40 bg-[#D8C2A8]/10 text-[#D8C2A8] hover:bg-[#D8C2A8] hover:text-[#060605]'
                     : 'border border-white/10 text-[#6A655D] cursor-not-allowed opacity-50'
                 }`}
               >
-                {item.inStock ? 'ADD TO BAG' : 'OUT OF STOCK'}
+                {item.inStock ? 'افزودن به سبد خرید' : 'ناموجود'}
               </button>
 
               <button
                 onClick={() => handleRemove(item.id)}
                 className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-[#8A857D] hover:text-red-400 hover:border-red-400/30 transition-all text-xs"
-                title="Remove Item"
+                title="حذف کالا"
               >
                 ✕
               </button>
@@ -126,12 +126,12 @@ export const WishlistList: React.FC = () => {
 
         {items.length === 0 && (
           <div className="text-center py-12 border border-dashed border-white/10 rounded-xl">
-            <p className="font-sans text-xs text-[#8A857D]">Your wishlist is currently empty.</p>
+            <p className="font-sans text-xs text-[#8A857D]">لیست علاقه‌مندی‌های شما در حال حاضر خالی است.</p>
             <Link
               href="/collection"
-              className="inline-block mt-3 font-sans text-[10px] uppercase tracking-[0.2em] text-[#D8C2A8] underline"
+              className="inline-block mt-3 font-sans text-xs tracking-wider text-[#D8C2A8] underline"
             >
-              Explore Our Collections
+              مشاهده مجموعه آثار
             </Link>
           </div>
         )}

@@ -61,7 +61,7 @@ export function SavoirFaire() {
           {/* عکس پس‌زمینه سراسری افقی */}
           <div ref={imageRef} className="absolute inset-0 w-full h-full">
             <Image
-              src="/images/craft-macro.jpg" // مسیر عکس خود را اینجا بگذارید
+              src="/images/savoirfair/craft-macro.jpg" // مسیر عکس خود را اینجا بگذارید
               alt="پرتو — فراتر از یک جواهر، یک داستان"
               fill
               priority

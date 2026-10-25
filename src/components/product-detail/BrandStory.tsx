@@ -15,7 +15,7 @@ export const BrandStory = ({ product }: BrandStoryProps) => {
   }
 
   return (
-    <section className="border-t border-white/5 bg-[#09090b] py-32 text-[#f4f4f5]">
+    <section className="border-t border-white/5 bg-[#09090b] py-32 text-[#f4f4f5] text-right" dir="rtl">
       <div className="mx-auto max-w-[1700px] px-6 sm:px-10 lg:px-14">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-3">
 
@@ -32,25 +32,24 @@ export const BrandStory = ({ product }: BrandStoryProps) => {
 
           {/* CENTER CONTENT */}
           <div className="px-4 text-center">
-            <span className="mb-4 block font-mono text-[9px] uppercase tracking-[0.35em] text-zinc-500">
-              CRAFTED FOR YOUR MOST PRECIOUS MOMENTS
+            <span className="mb-4 block font-mono text-[10px] tracking-widest text-zinc-500">
+              ساخته‌شده برای ارزشمندترین لحظات شما
             </span>
 
-            <h2 className="mb-6 font-serif text-3xl uppercase leading-snug tracking-[0.08em] text-white sm:text-4xl">
-              MORE THAN
+            <h2 className="mb-6 font-serif text-3xl leading-snug tracking-wider text-white sm:text-4xl">
+              بیشتر از
               <br />
-              A JEWELRY.
+              یک اثر هنری.
             </h2>
 
             <p className="mx-auto mb-8 max-w-sm font-serif text-base italic text-zinc-400">
-              <p>&quot;It&apos;s a timeless piece that never fades.&quot;</p>
+              «اثری جاودانه که هرگز از مد نمی‌افتد.»
             </p>
-
             <a
               href="/collections"
-              className="inline-block border-b border-white/30 pb-1 font-mono text-[9px] uppercase tracking-[0.25em] text-white transition-colors hover:border-white"
+              className="inline-block border-b border-white/30 pb-1 font-mono text-xs tracking-wider text-white transition-colors hover:border-white"
             >
-              EXPLORE COLLECTION →
+              مشاهده مجموعه آثار ←
             </a>
           </div>
 
@@ -70,3 +69,5 @@ export const BrandStory = ({ product }: BrandStoryProps) => {
     </section>
   );
 };
+
+export default BrandStory;

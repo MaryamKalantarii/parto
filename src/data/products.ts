@@ -5,38 +5,37 @@ import type {
 } from '@/types/product';
 
 /* -------------------------------------------------------------------------- */
-/* Product options                                                            */
+/* گزینه‌های محصولات                                                          */
 /* -------------------------------------------------------------------------- */
 
 const RING_OPTIONS: ProductOption[] = [
   {
     key: 'ringSize',
-    label: 'RING SIZE',
-    values: ['4', '5', '6', '7', '8', '9'],
-    guideLabel: 'SIZE GUIDE',
+    label: 'سایز انگشتر',
+    values: ['۴', '۵', '۶', '۷', '۸', '۹'],
+    guideLabel: 'راهنمای سایز',
   },
 ];
 
 const BRACELET_OPTIONS: ProductOption[] = [
   {
     key: 'braceletLength',
-    label: 'BRACELET LENGTH',
-    values: ['16 CM', '18 CM', '20 CM'],
+    label: 'طول دستبند',
+    values: ['۱۶ سانتی‌متر', '۱۸ سانتی‌متر', '۲۰ سانتی‌متر'],
   },
 ];
 
 const NECKLACE_OPTIONS: ProductOption[] = [
   {
     key: 'chainLength',
-    label: 'CHAIN LENGTH',
-    values: ['40 CM', '45 CM', '50 CM'],
+    label: 'طول زنجیر',
+    values: ['۴۰ سانتی‌متر', '۴۵ سانتی‌متر', '۵۰ سانتی‌متر'],
   },
 ];
 
 /* -------------------------------------------------------------------------- */
-/* Product image helper                                                       */
+/* کمکی تصاویر محصولات                                                        */
 /* -------------------------------------------------------------------------- */
-
 
 interface ProductImagesConfig {
   materials: ProductMaterial[];
@@ -54,7 +53,6 @@ interface ProductImagesConfig {
   };
 }
 
-
 function createImages(
   config: ProductImagesConfig,
 ): ProductImagesConfig {
@@ -62,145 +60,145 @@ function createImages(
 }
 
 /* -------------------------------------------------------------------------- */
-/* PRODUCTS                                                                   */
+/* محصولات                                                                    */
 /* -------------------------------------------------------------------------- */
 
 export const allProducts: Product[] = [
   /* ======================================================================== */
-  /* 01 - LUMIÈRE RING                                                       */
+  /* 01 - انگشتر لومیر                                                        */
   /* ======================================================================== */
 
   {
     id: '1',
-    number: '01 / 12',
+    number: '۰۱ / ۱۲',
     slug: 'lumiere-ring',
 
-    name: 'THE LUMIÈRE RING',
-    subTitle: 'SOLITAIRE DIAMOND RING',
+    name: 'انگشتر لومیر',
+    subTitle: 'انگشتر تک نگین الماس',
 
     category: 'RINGS',
 
-    price: '$3,850',
+    price: '۳,۸۵۰,۰۰۰ تومان',
     rawPrice: 3850,
 
     rating: 4.9,
     reviewsCount: 124,
 
     description:
-      'A timeless expression of pure beauty. The Lumière Ring captures light in its most refined form — crafted for a lifetime.',
+      'تجسمی جاودانه از زیبایی خالص. انگشتر لومیر نور را در ناب‌ترین شکل خود به تصویر می‌کشد — طراحی‌شده برای یک عمر.',
 
     isBestSeller: true,
     isDiscount: false,
     isNew: true,
 
-...createImages({
-  materials: [
-    {
-      id: 'white-gold',
-      label: 'White Gold',
-      gradient:
-        'from-zinc-300 via-[#e4e4e7] to-zinc-500',
-      images: [
-        '/images/products/lumiere-ring/white-gold-1.jpg',
-        '/images/products/lumiere-ring/white-gold-2.jpg',
-        '/images/products/lumiere-ring/white-gold-3.png',
-        '/images/products/lumiere-ring/white-gold-4.jpg',
+    ...createImages({
+      materials: [
+        {
+          id: 'white-gold',
+          label: 'طلای سفید',
+          gradient:
+            'from-zinc-300 via-[#e4e4e7] to-zinc-500',
+          images: [
+            '/images/products/lumiere-ring/white-gold-1.jpg',
+            '/images/products/lumiere-ring/white-gold-2.jpg',
+            '/images/products/lumiere-ring/white-gold-3.png',
+            '/images/products/lumiere-ring/white-gold-4.jpg',
+          ],
+        },
+
+        {
+          id: 'yellow-gold',
+          label: 'طلای زرد',
+          gradient:
+            'from-[#ffd700] via-[#d4af37] to-[#996515]',
+          images: [
+            '/images/products/lumiere-ring/yellow-gold-1.jpg',
+            '/images/products/lumiere-ring/yellow-gold-2.jpg',
+            '/images/products/lumiere-ring/yellow-gold-3.jpg',
+            '/images/products/lumiere-ring/yellow-gold-4.jpg',
+          ],
+        },
+
+        {
+          id: 'rose-gold',
+          label: 'طلای رزگلد',
+          gradient:
+            'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
+          images: [
+            '/images/products/lumiere-ring/rose-gold-1.jpg',
+            '/images/products/lumiere-ring/rose-gold-2.jpg',
+            '/images/products/lumiere-ring/rose-gold-3.jpg',
+            '/images/products/lumiere-ring/rose-gold-4.jpg',
+          ],
+        },
       ],
-    },
 
-    {
-      id: 'yellow-gold',
-      label: 'Yellow Gold',
-      gradient:
-        'from-[#ffd700] via-[#d4af37] to-[#996515]',
-      images: [
-        '/images/products/lumiere-ring/yellow-gold-1.jpg',
-        '/images/products/lumiere-ring/yellow-gold-2.jpg',
-        '/images/products/lumiere-ring/yellow-gold-3.jpg',
-        '/images/products/lumiere-ring/yellow-gold-4.jpg',
+      detailImages: [
+        '/images/products/lumiere-ring/detail-1.jpg',
+        '/images/products/lumiere-ring/detail-2.jpg',
       ],
-    },
 
-    {
-      id: 'rose-gold',
-      label: 'Rose Gold',
-      gradient:
-        'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
-      images: [
-        '/images/products/lumiere-ring/rose-gold-1.jpg',
-        '/images/products/lumiere-ring/rose-gold-2.jpg',
-        '/images/products/lumiere-ring/rose-gold-3.jpg',
-        '/images/products/lumiere-ring/rose-gold-4.jpg',
+      showcase: [
+        {
+          title: 'نمای روبرو',
+          image:
+            '/images/products/lumiere-ring/front.jpg',
+        },
+        {
+          title: 'نمای جانبی',
+          image:
+            '/images/products/lumiere-ring/side.jpg',
+        },
+        {
+          title: 'در دست',
+          image:
+            '/images/products/lumiere-ring/on-hand.jpg',
+        },
       ],
-    },
-  ],
 
-  detailImages: [
-    '/images/products/lumiere-ring/detail-1.jpg',
-    '/images/products/lumiere-ring/detail-2.jpg',
-  ],
-
-  showcase: [
-    {
-      title: 'FRONT VIEW',
-      image:
-        '/images/products/lumiere-ring/front.jpg',
-    },
-    {
-      title: 'SIDE VIEW',
-      image:
-        '/images/products/lumiere-ring/side.jpg',
-    },
-    {
-      title: 'ON HAND',
-      image:
-        '/images/products/lumiere-ring/on-hand.jpg',
-    },
-  ],
-
-// BRAND STORY
-BrandStory: {
-  leftImage:
-    '/images/products/lumiere-ring/brand-story-1.jpg',
-  rightImage:
-    '/images/products/lumiere-ring/brand-story-2.jpg',
-},
-}),
+      // داستان برند
+      BrandStory: {
+        leftImage:
+          '/images/products/lumiere-ring/brand-story-1.jpg',
+        rightImage:
+          '/images/products/lumiere-ring/brand-story-2.jpg',
+      },
+    }),
 
     details: {
-      centerStone: 'Natural Diamond',
-      caratWeight: '1.00 ct (approx.)',
-      cut: 'Brilliant',
-      color: 'D–F (Colorless)',
+      centerStone: 'الماس طبیعی',
+      caratWeight: '۱.۰۰ قیراط (حدود)',
+      cut: 'برلیان',
+      color: 'D–F (بی‌رنگ)',
       clarity: 'VVS1 – VS1',
-      metal: '18K White Gold / Platinum',
+      metal: 'طلای سفید ۱۸ عیار / پلاتین',
     },
 
     options: RING_OPTIONS,
   },
 
   /* ======================================================================== */
-  /* 02 - CELESTA BRACELET                                                   */
+  /* 02 - دستبند سلستا                                                        */
   /* ======================================================================== */
 
   {
     id: '2',
-    number: '02 / 12',
+    number: '۰۲ / ۱۲',
     slug: 'celesta-bracelet',
 
-    name: 'THE CELESTA BRACELET',
-    subTitle: 'DIAMOND TENNIS BRACELET',
+    name: 'دستبند سلستا',
+    subTitle: 'دستبند تنیس الماس',
 
     category: 'BRACELETS',
 
-    price: '$7,420',
+    price: '۷,۴۲۰,۰۰۰ تومان',
     rawPrice: 7420,
 
     rating: 4.8,
     reviewsCount: 96,
 
     description:
-      'Engineered for seamless movement and ultimate comfort, the Celesta Bracelet rests gracefully around the wrist.',
+      'طراحی‌شده برای حرکت روان و راحتی مطلق، دستبند سلستا با زیبایی بر روی مچ دست می‌نشیند.',
 
     isBestSeller: true,
     isDiscount: true,
@@ -210,7 +208,7 @@ BrandStory: {
       materials: [
         {
           id: 'white-gold',
-          label: 'White Gold',
+          label: 'طلای سفید',
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
@@ -223,7 +221,7 @@ BrandStory: {
 
         {
           id: 'yellow-gold',
-          label: 'Yellow Gold',
+          label: 'طلای زرد',
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
@@ -236,7 +234,7 @@ BrandStory: {
 
         {
           id: 'rose-gold',
-          label: 'Rose Gold',
+          label: 'طلای رزگلد',
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
@@ -255,17 +253,17 @@ BrandStory: {
 
       showcase: [
         {
-          title: 'FRONT VIEW',
+          title: 'نمای روبرو',
           image:
             '/images/products/celesta-bracelet/front.jpg',
         },
         {
-          title: 'SIDE VIEW',
+          title: 'نمای جانبی',
           image:
             '/images/products/celesta-bracelet/side.jpg',
         },
         {
-          title: 'ON WRIST',
+          title: 'روی مچ',
           image:
             '/images/products/celesta-bracelet/on-wrist.jpg',
         },
@@ -273,38 +271,38 @@ BrandStory: {
     }),
 
     details: {
-      centerStone: 'Natural Diamond',
-      caratWeight: '3.20 ct (approx.)',
-      metal: '18K White Gold',
-      braceletStyle: 'Tennis',
-      clasp: 'Box Clasp with Safety Lock',
+      centerStone: 'الماس طبیعی',
+      caratWeight: '۳.۲۰ قیراط (حدود)',
+      metal: 'طلای سفید ۱۸ عیار',
+      braceletStyle: 'تنیس',
+      clasp: 'قفل جعبه‌ای با ضامن ایمنی',
     },
 
     options: BRACELET_OPTIONS,
   },
 
   /* ======================================================================== */
-  /* 03 - SOLSTICE NECKLACE                                                  */
+  /* 03 - گردنبند سولستیس                                                     */
   /* ======================================================================== */
 
   {
     id: '3',
-    number: '03 / 12',
+    number: '۰۳ / ۱۲',
     slug: 'solstice-necklace',
 
-    name: 'THE SOLSTICE NECKLACE',
-    subTitle: 'DIAMOND PENDANT NECKLACE',
+    name: 'گردنبند سولستیس',
+    subTitle: 'گردنبند آویز الماس',
 
     category: 'NECKLACES',
 
-    price: '$8,760',
+    price: '۸,۷۶۰,۰۰۰ تومان',
     rawPrice: 8760,
 
     rating: 4.9,
     reviewsCount: 88,
 
     description:
-      'Designed to rest fluidly along the collarbone, crafted with delicate precision and balanced proportions.',
+      'طراحی‌شده برای قرارگیری روان در امتداد ترقوه، با دقت ظریف و تناسبی متوازن.',
 
     isBestSeller: false,
     isDiscount: false,
@@ -314,7 +312,7 @@ BrandStory: {
       materials: [
         {
           id: 'white-gold',
-          label: 'White Gold',
+          label: 'طلای سفید',
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
@@ -327,7 +325,7 @@ BrandStory: {
 
         {
           id: 'yellow-gold',
-          label: 'Yellow Gold',
+          label: 'طلای زرد',
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
@@ -340,7 +338,7 @@ BrandStory: {
 
         {
           id: 'rose-gold',
-          label: 'Rose Gold',
+          label: 'طلای رزگلد',
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
@@ -359,17 +357,17 @@ BrandStory: {
 
       showcase: [
         {
-          title: 'FRONT VIEW',
+          title: 'نمای روبرو',
           image:
             '/images/products/solstice-necklace/front.jpg',
         },
         {
-          title: 'SIDE VIEW',
+          title: 'نمای جانبی',
           image:
             '/images/products/solstice-necklace/side.jpg',
         },
         {
-          title: 'ON BODY',
+          title: 'روی بدن',
           image:
             '/images/products/solstice-necklace/on-body.jpg',
         },
@@ -377,38 +375,38 @@ BrandStory: {
     }),
 
     details: {
-      centerStone: 'Natural Diamond',
-      caratWeight: '2.40 ct (approx.)',
-      metal: '18K Yellow Gold',
-      chainLength: '45 cm',
-      clasp: 'Lobster Clasp',
+      centerStone: 'الماس طبیعی',
+      caratWeight: '۲.۴۰ قیراط (حدود)',
+      metal: 'طلای زرد ۱۸ عیار',
+      chainLength: '۴۵ سانتی‌متر',
+      clasp: 'قفل طوطکی',
     },
 
     options: NECKLACE_OPTIONS,
   },
 
   /* ======================================================================== */
-  /* 04 - VÉRITÉ EARRINGS                                                    */
+  /* 04 - گوشواره وریته                                                        */
   /* ======================================================================== */
 
   {
     id: '4',
-    number: '04 / 12',
+    number: '۰۴ / ۱۲',
     slug: 'verite-earrings',
 
-    name: 'THE VÉRITÉ EARRINGS',
-    subTitle: 'DIAMOND STUD EARRINGS',
+    name: 'گوشواره وریته',
+    subTitle: 'گوشواره میخی الماس',
 
     category: 'EARRINGS',
 
-    price: '$6,120',
+    price: '۶,۱۲۰,۰۰۰ تومان',
     rawPrice: 6120,
 
     rating: 4.8,
     reviewsCount: 71,
 
     description:
-      'Sculpted to capture light from every angle, featuring ergonomic backs designed for light weight and daily wear.',
+      'تراش‌خورده برای جذب نور از هر زاویه، مجهز به پشت‌پوشی ارگونومیک برای سبکی و استفاده روزمره.',
 
     isBestSeller: false,
     isDiscount: true,
@@ -418,7 +416,7 @@ BrandStory: {
       materials: [
         {
           id: 'white-gold',
-          label: 'White Gold',
+          label: 'طلای سفید',
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
@@ -431,7 +429,7 @@ BrandStory: {
 
         {
           id: 'yellow-gold',
-          label: 'Yellow Gold',
+          label: 'طلای زرد',
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
@@ -444,7 +442,7 @@ BrandStory: {
 
         {
           id: 'rose-gold',
-          label: 'Rose Gold',
+          label: 'طلای رزگلد',
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
@@ -463,17 +461,17 @@ BrandStory: {
 
       showcase: [
         {
-          title: 'FRONT VIEW',
+          title: 'نمای روبرو',
           image:
             '/images/products/verite-earrings/front.jpg',
         },
         {
-          title: 'SIDE VIEW',
+          title: 'نمای جانبی',
           image:
             '/images/products/verite-earrings/side.jpg',
         },
         {
-          title: 'ON EAR',
+          title: 'روی گوش',
           image:
             '/images/products/verite-earrings/on-ear.jpg',
         },
@@ -481,39 +479,38 @@ BrandStory: {
     }),
 
     details: {
-      centerStone: 'Natural Diamond',
-      caratWeight: '1.50 ct total',
-      metal: '18K White Gold',
-      closure: 'Push Back',
-      style: 'Classic Stud',
+      centerStone: 'الماس طبیعی',
+      caratWeight: '۱.۵۰ قیراط مجموع',
+      metal: 'طلای سفید ۱۸ عیار',
+      closure: 'قفل فشاری',
+      style: 'میخی کلاسیک',
     },
 
-    // Earrings سایز ندارد
     options: [],
   },
 
   /* ======================================================================== */
-  /* 05 - IMPERIAL RING                                                       */
+  /* 05 - انگشتر ایمپریال                                                     */
   /* ======================================================================== */
 
   {
     id: '5',
-    number: '05 / 12',
+    number: '۰۵ / ۱۲',
     slug: 'imperial-ring',
 
-    name: 'THE IMPERIAL',
-    subTitle: 'STATEMENT DIAMOND RING',
+    name: 'انگشتر ایمپریال',
+    subTitle: 'انگشتر استیتمنت الماس',
 
     category: 'RINGS',
 
-    price: '$9,380',
+    price: '۹,۳۸۰,۰۰۰ تومان',
     rawPrice: 9380,
 
     rating: 4.9,
     reviewsCount: 63,
 
     description:
-      'A sculptural ring designed around a luminous center stone and a refined architectural silhouette.',
+      'یک انگشتر مجسمه‌وار که پیرامون یک سنگ مرکزی درخشان و فرم معماری پالایش‌شده شکل گرفته است.',
 
     isBestSeller: true,
     isDiscount: false,
@@ -523,7 +520,7 @@ BrandStory: {
       materials: [
         {
           id: 'white-gold',
-          label: 'White Gold',
+          label: 'طلای سفید',
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
@@ -536,7 +533,7 @@ BrandStory: {
 
         {
           id: 'yellow-gold',
-          label: 'Yellow Gold',
+          label: 'طلای زرد',
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
@@ -549,7 +546,7 @@ BrandStory: {
 
         {
           id: 'rose-gold',
-          label: 'Rose Gold',
+          label: 'طلای رزگلد',
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
@@ -568,17 +565,17 @@ BrandStory: {
 
       showcase: [
         {
-          title: 'FRONT VIEW',
+          title: 'نمای روبرو',
           image:
             '/images/products/imperial-ring/front.jpg',
         },
         {
-          title: 'SIDE VIEW',
+          title: 'نمای جانبی',
           image:
             '/images/products/imperial-ring/side.jpg',
         },
         {
-          title: 'ON HAND',
+          title: 'در دست',
           image:
             '/images/products/imperial-ring/on-hand.jpg',
         },
@@ -586,39 +583,39 @@ BrandStory: {
     }),
 
     details: {
-      centerStone: 'Natural Diamond',
-      caratWeight: '1.80 ct (approx.)',
-      cut: 'Brilliant',
-      color: 'D–F (Colorless)',
+      centerStone: 'الماس طبیعی',
+      caratWeight: '۱.۸۰ قیراط (حدود)',
+      cut: 'برلیان',
+      color: 'D–F (بی‌رنگ)',
       clarity: 'VVS1 – VS1',
-      metal: '18K White Gold',
+      metal: 'طلای سفید ۱۸ عیار',
     },
 
     options: RING_OPTIONS,
   },
 
   /* ======================================================================== */
-  /* 06 - HARMONY BRACELET                                                   */
+  /* 06 - دستبند هارمونی                                                      */
   /* ======================================================================== */
 
   {
     id: '6',
-    number: '06 / 12',
+    number: '۰۶ / ۱۲',
     slug: 'harmony-bracelet-06',
 
-    name: 'THE HARMONY',
-    subTitle: 'DIAMOND BRACELET',
+    name: 'دستبند هارمونی',
+    subTitle: 'دستبند الماس',
 
     category: 'BRACELETS',
 
-    price: '$5,950',
+    price: '۵,۹۵۰,۰۰۰ تومان',
     rawPrice: 5950,
 
     rating: 4.7,
     reviewsCount: 54,
 
     description:
-      'A balanced silhouette designed to move naturally with the wrist.',
+      'سیلوئتی متوازن که برای حرکت طبیعی همراه با مچ دست طراحی شده است.',
 
     isBestSeller: false,
     isDiscount: true,
@@ -628,7 +625,7 @@ BrandStory: {
       materials: [
         {
           id: 'white-gold',
-          label: 'White Gold',
+          label: 'طلای سفید',
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
@@ -641,7 +638,7 @@ BrandStory: {
 
         {
           id: 'yellow-gold',
-          label: 'Yellow Gold',
+          label: 'طلای زرد',
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
@@ -654,7 +651,7 @@ BrandStory: {
 
         {
           id: 'rose-gold',
-          label: 'Rose Gold',
+          label: 'طلای رزگلد',
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
@@ -673,17 +670,17 @@ BrandStory: {
 
       showcase: [
         {
-          title: 'FRONT VIEW',
+          title: 'نمای روبرو',
           image:
             '/images/products/harmony-bracelet-06/front.jpg',
         },
         {
-          title: 'SIDE VIEW',
+          title: 'نمای جانبی',
           image:
             '/images/products/harmony-bracelet-06/side.jpg',
         },
         {
-          title: 'ON WRIST',
+          title: 'روی مچ',
           image:
             '/images/products/harmony-bracelet-06/on-wrist.jpg',
         },
@@ -691,42 +688,38 @@ BrandStory: {
     }),
 
     details: {
-      centerStone: 'Natural Diamond',
-      caratWeight: '2.10 ct (approx.)',
-      metal: '18K White Gold',
-      braceletStyle: 'Line Bracelet',
-      clasp: 'Lobster Clasp',
+      centerStone: 'الماس طبیعی',
+      caratWeight: '۲.۱۰ قیراط (حدود)',
+      metal: 'طلای سفید ۱۸ عیار',
+      braceletStyle: 'لاین بریستلت',
+      clasp: 'قفل طوطکی',
     },
 
     options: BRACELET_OPTIONS,
   },
 
   /* ======================================================================== */
-  /* 07 - HARMONY BRACELET                                                   */
-  /* ======================================================================== */
-
-  /* ======================================================================== */
-  /* 08 - HARMONY BRACELET                                                   */
+  /* 08 - گوشواره الماس هارمونی                                                */
   /* ======================================================================== */
 
   {
     id: '8',
-    number: '08 / 12',
+    number: '۰۸ / ۱۲',
     slug: 'harmony-bracelet-08',
 
-    name: 'THE EARRINGS DIAMOND  ',
-    subTitle: 'DIAMOND EARRINGS',
+    name: 'گوشواره الماس پرتو',
+    subTitle: 'گوشواره الماس',
 
     category: 'EARRINGS',
 
-    price: '$5,950',
+    price: '۵,۹۵۰,۰۰۰ تومان',
     rawPrice: 5950,
 
     rating: 4.7,
     reviewsCount: 43,
 
     description:
-      'A balanced silhouette designed to move naturally with the wrist.',
+      'سیلوئتی متوازن که برای حرکت طبیعی طراحی شده است.',
 
     isBestSeller: false,
     isDiscount: true,
@@ -736,7 +729,7 @@ BrandStory: {
       materials: [
         {
           id: 'white-gold',
-          label: 'White Gold',
+          label: 'طلای سفید',
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
@@ -744,13 +737,12 @@ BrandStory: {
             '/images/products/harmony-earing-08/white-gold-2.jpg',
             '/images/products/harmony-earing-08/white-gold-3.jpg',
             '/images/products/harmony-earing-08/white-gold-4.jpg',
-       
           ],
         },
 
         {
           id: 'yellow-gold',
-          label: 'Yellow Gold',
+          label: 'طلای زرد',
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
@@ -763,7 +755,7 @@ BrandStory: {
 
         {
           id: 'rose-gold',
-          label: 'Rose Gold',
+          label: 'طلای رزگلد',
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
@@ -782,17 +774,17 @@ BrandStory: {
 
       showcase: [
         {
-          title: 'FRONT VIEW',
+          title: 'نمای روبرو',
           image:
             '/images/products/harmony-bracelet-08/front.jpg',
         },
         {
-          title: 'SIDE VIEW',
+          title: 'نمای جانبی',
           image:
             '/images/products/harmony-bracelet-08/side.jpg',
         },
         {
-          title: 'ON WRIST',
+          title: 'روی مچ',
           image:
             '/images/products/harmony-bracelet-08/on-wrist.jpg',
         },
@@ -800,38 +792,38 @@ BrandStory: {
     }),
 
     details: {
-      centerStone: 'Natural Diamond',
-      caratWeight: '2.10 ct (approx.)',
-      metal: '18K White Gold',
-      braceletStyle: 'Line Bracelet',
-      clasp: 'Lobster Clasp',
+      centerStone: 'الماس طبیعی',
+      caratWeight: '۲.۱۰ قیراط (حدود)',
+      metal: 'طلای سفید ۱۸ عیار',
+      braceletStyle: 'لاین بریستلت',
+      clasp: 'قفل طوطکی',
     },
 
     options: BRACELET_OPTIONS,
   },
 
   /* ======================================================================== */
-  /* 09 - HARMONY BRACELET                                                   */
+  /* 09 - گوشواره کوالته                                                      */
   /* ======================================================================== */
 
   {
     id: '9',
-    number: '09 / 12',
+    number: '۰۹ / ۱۲',
     slug: 'harmony-bracelet-09',
 
-    name: 'THE THE cUalte EARRINGS',
-    subTitle: 'DIAMOND BRACELET',
+    name: 'گوشواره کوالته',
+    subTitle: 'دستبند الماس',
 
     category: 'EARRINGS',
 
-    price: '$5,950',
+    price: '۵,۹۵۰,۰۰۰ تومان',
     rawPrice: 5950,
 
     rating: 4.7,
     reviewsCount: 38,
 
     description:
-      'A balanced silhouette designed to move naturally with the wrist.',
+      'سیلوئتی متوازن که برای حرکت طبیعی طراحی شده است.',
 
     isBestSeller: false,
     isDiscount: true,
@@ -841,7 +833,7 @@ BrandStory: {
       materials: [
         {
           id: 'white-gold',
-          label: 'White Gold',
+          label: 'طلای سفید',
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
@@ -849,13 +841,12 @@ BrandStory: {
             '/images/products/cUalte-EARRINGS/white-gold-2.jpg',
             '/images/products/cUalte-EARRINGS/white-gold-3.jpg',
             '/images/products/cUalte-EARRINGS/white-gold-4.jpg',
-           
           ],
         },
 
         {
           id: 'yellow-gold',
-          label: 'Yellow Gold',
+          label: 'طلای زرد',
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
@@ -868,7 +859,7 @@ BrandStory: {
 
         {
           id: 'rose-gold',
-          label: 'Rose Gold',
+          label: 'طلای رزگلد',
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
@@ -887,17 +878,17 @@ BrandStory: {
 
       showcase: [
         {
-          title: 'FRONT VIEW',
+          title: 'نمای روبرو',
           image:
             '/images/products/harmony-bracelet-09/front.jpg',
         },
         {
-          title: 'SIDE VIEW',
+          title: 'نمای جانبی',
           image:
             '/images/products/harmony-bracelet-09/side.jpg',
         },
         {
-          title: 'ON WRIST',
+          title: 'روی مچ',
           image:
             '/images/products/harmony-bracelet-09/on-wrist.jpg',
         },
@@ -905,38 +896,38 @@ BrandStory: {
     }),
 
     details: {
-      centerStone: 'Natural Diamond',
-      caratWeight: '2.10 ct (approx.)',
-      metal: '18K White Gold',
-      braceletStyle: 'Line Bracelet',
-      clasp: 'Lobster Clasp',
+      centerStone: 'الماس طبیعی',
+      caratWeight: '۲.۱۰ قیراط (حدود)',
+      metal: 'طلای سفید ۱۸ عیار',
+      braceletStyle: 'لاین بریستلت',
+      clasp: 'قفل طوطکی',
     },
 
     options: BRACELET_OPTIONS,
   },
 
   /* ======================================================================== */
-  /* 10 - HARMONY BRACELET                                                   */
+  /* 10 - گردنبندهای الماس                                                    */
   /* ======================================================================== */
 
   {
     id: '10',
-    number: '10 / 12',
+    number: '۱۰ / ۱۲',
     slug: 'harmony-bracelet-10',
 
-    name: 'THE DIAMOND NECKLACES',
-    subTitle: 'DIAMOND BRACELET',
+    name: 'گردنبندهای الماس',
+    subTitle: 'دستبند الماس',
 
     category: 'NECKLACES',
 
-    price: '$5,950',
+    price: '۵,۹۵۰,۰۰۰ تومان',
     rawPrice: 5950,
 
     rating: 4.7,
     reviewsCount: 36,
 
     description:
-      'A balanced silhouette designed to move naturally with the wrist.',
+      'سیلوئتی متوازن که برای حرکت طبیعی طراحی شده است.',
 
     isBestSeller: false,
     isDiscount: true,
@@ -946,7 +937,7 @@ BrandStory: {
       materials: [
         {
           id: 'white-gold',
-          label: 'White Gold',
+          label: 'طلای سفید',
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
@@ -954,13 +945,12 @@ BrandStory: {
             '/images/products/NECKLACES-DIAMOND/white-gold-2.jpg',
             '/images/products/NECKLACES-DIAMOND/white-gold-3.jpg',
             '/images/products/NECKLACES-DIAMOND/white-gold-4.jpg',
-       
           ],
         },
 
         {
           id: 'yellow-gold',
-          label: 'Yellow Gold',
+          label: 'طلای زرد',
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
@@ -973,7 +963,7 @@ BrandStory: {
 
         {
           id: 'rose-gold',
-          label: 'Rose Gold',
+          label: 'طلای رزگلد',
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
@@ -992,17 +982,17 @@ BrandStory: {
 
       showcase: [
         {
-          title: 'FRONT VIEW',
+          title: 'نمای روبرو',
           image:
             '/images/products/harmony-bracelet-10/front.jpg',
         },
         {
-          title: 'SIDE VIEW',
+          title: 'نمای جانبی',
           image:
             '/images/products/harmony-bracelet-10/side.jpg',
         },
         {
-          title: 'ON WRIST',
+          title: 'روی مچ',
           image:
             '/images/products/harmony-bracelet-10/on-wrist.jpg',
         },
@@ -1010,38 +1000,38 @@ BrandStory: {
     }),
 
     details: {
-      centerStone: 'Natural Diamond',
-      caratWeight: '2.10 ct (approx.)',
-      metal: '18K White Gold',
-      braceletStyle: 'Line Bracelet',
-      clasp: 'Lobster Clasp',
+      centerStone: 'الماس طبیعی',
+      caratWeight: '۲.۱۰ قیراط (حدود)',
+      metal: 'طلای سفید ۱۸ عیار',
+      braceletStyle: 'لاین بریستلت',
+      clasp: 'قفل طوطکی',
     },
 
     options: BRACELET_OPTIONS,
   },
 
   /* ======================================================================== */
-  /* 11 - HARMONY BRACELET                                                   */
+  /* 11 - گردنبندهای هارمونی                                                   */
   /* ======================================================================== */
 
   {
     id: '11',
-    number: '11 / 12',
+    number: '۱۱ / ۱۲',
     slug: 'harmony-bracelet-11',
 
-    name: 'THE HARMONY NECKLACES',
-    subTitle: 'DIAMOND NECKLACES',
+    name: 'گردنبندهای هارمونی',
+    subTitle: 'گردنبندهای الماس',
 
     category: 'NECKLACES',
 
-    price: '$5,950',
+    price: '۵,۹۵۰,۰۰۰ تومان',
     rawPrice: 5950,
 
     rating: 4.7,
     reviewsCount: 31,
 
     description:
-      'A balanced silhouette designed to move naturally with the wrist.',
+      'سیلوئتی متوازن که برای حرکت طبیعی طراحی شده است.',
 
     isBestSeller: false,
     isDiscount: true,
@@ -1051,7 +1041,7 @@ BrandStory: {
       materials: [
         {
           id: 'white-gold',
-          label: 'White Gold',
+          label: 'طلای سفید',
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
@@ -1064,7 +1054,7 @@ BrandStory: {
 
         {
           id: 'yellow-gold',
-          label: 'Yellow Gold',
+          label: 'طلای زرد',
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
@@ -1077,7 +1067,7 @@ BrandStory: {
 
         {
           id: 'rose-gold',
-          label: 'Rose Gold',
+          label: 'طلای رزگلد',
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
@@ -1096,17 +1086,17 @@ BrandStory: {
 
       showcase: [
         {
-          title: 'FRONT VIEW',
+          title: 'نمای روبرو',
           image:
             '/images/products/harmony-bracelet-11/front.jpg',
         },
         {
-          title: 'SIDE VIEW',
+          title: 'نمای جانبی',
           image:
             '/images/products/harmony-bracelet-11/side.jpg',
         },
         {
-          title: 'ON WRIST',
+          title: 'روی مچ',
           image:
             '/images/products/harmony-bracelet-11/on-wrist.jpg',
         },
@@ -1114,130 +1104,21 @@ BrandStory: {
     }),
 
     details: {
-      centerStone: 'Natural Diamond',
-      caratWeight: '2.10 ct (approx.)',
-      metal: '18K White Gold',
-      braceletStyle: 'Line Bracelet',
-      clasp: 'Lobster Clasp',
+      centerStone: 'الماس طبیعی',
+      caratWeight: '۲.۱۰ قیراط (حدود)',
+      metal: 'طلای سفید ۱۸ عیار',
+      braceletStyle: 'لاین بریستلت',
+      clasp: 'قفل طوطکی',
     },
 
     options: BRACELET_OPTIONS,
   },
-
-  /* ======================================================================== */
-  /* 12 - HARMONY BRACELET                                                   */
-  /* ======================================================================== */
-
-  // {
-  //   id: '12',
-  //   number: '12 / 12',
-  //   slug: 'harmony-bracelet-12',
-
-  //   name: 'THE HARMONY',
-  //   subTitle: 'DIAMOND BRACELET',
-
-  //   category: 'NECKLACES',
-
-  //   price: '$5,950',
-  //   rawPrice: 5950,
-
-  //   rating: 4.7,
-  //   reviewsCount: 27,
-
-  //   description:
-  //     'A balanced silhouette designed to move naturally with the wrist.',
-
-  //   isBestSeller: false,
-  //   isDiscount: true,
-  //   isNew: false,
-
-  //   ...createImages({
-  //     materials: [
-  //       {
-  //         id: 'white-gold',
-  //         label: 'White Gold',
-  //         gradient:
-  //           'from-zinc-300 via-[#e4e4e7] to-zinc-500',
-  //         images: [
-  //           '/images/products/harmony-bracelet-12/white-gold-1.jpg',
-  //           '/images/products/harmony-bracelet-12/white-gold-2.jpg',
-  //           '/images/products/harmony-bracelet-12/white-gold-3.jpg',
-  //           '/images/products/harmony-bracelet-12/white-gold-4.jpg',
-  //         ],
-  //       },
-
-  //       {
-  //         id: 'yellow-gold',
-  //         label: 'Yellow Gold',
-  //         gradient:
-  //           'from-[#ffd700] via-[#d4af37] to-[#996515]',
-  //         images: [
-  //           '/images/products/harmony-bracelet-12/yellow-gold-1.jpg',
-  //           '/images/products/harmony-bracelet-12/yellow-gold-2.jpg',
-  //           '/images/products/harmony-bracelet-12/yellow-gold-3.jpg',
-  //           '/images/products/harmony-bracelet-12/yellow-gold-4.jpg',
-  //         ],
-  //       },
-
-  //       {
-  //         id: 'rose-gold',
-  //         label: 'Rose Gold',
-  //         gradient:
-  //           'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
-  //         images: [
-  //           '/images/products/harmony-bracelet-12/rose-gold-1.jpg',
-  //           '/images/products/harmony-bracelet-12/rose-gold-2.jpg',
-  //           '/images/products/harmony-bracelet-12/rose-gold-3.jpg',
-  //           '/images/products/harmony-bracelet-12/rose-gold-4.jpg',
-  //         ],
-  //       },
-  //     ],
-
-  //     detailImages: [
-  //       '/images/products/harmony-bracelet-12/detail-1.jpg',
-  //       '/images/products/harmony-bracelet-12/detail-2.jpg',
-  //     ],
-
-  //     showcase: [
-  //       {
-  //         title: 'FRONT VIEW',
-  //         image:
-  //           '/images/products/harmony-bracelet-12/front.jpg',
-  //       },
-  //       {
-  //         title: 'SIDE VIEW',
-  //         image:
-  //           '/images/products/harmony-bracelet-12/side.jpg',
-  //       },
-  //       {
-  //         title: 'ON WRIST',
-  //         image:
-  //           '/images/products/harmony-bracelet-12/on-wrist.jpg',
-  //       },
-  //     ],
-  //   }),
-
-  //   details: {
-  //     centerStone: 'Natural Diamond',
-  //     caratWeight: '2.10 ct (approx.)',
-  //     metal: '18K White Gold',
-  //     braceletStyle: 'Line Bracelet',
-  //     clasp: 'Lobster Clasp',
-  //   },
-
-  //   options: BRACELET_OPTIONS,
-  // },
 ];
 
 /* -------------------------------------------------------------------------- */
-/* Helpers                                                                    */
+/* تابع کمکی برای یافتن محصول بر اساس اسلاگ                                   */
 /* -------------------------------------------------------------------------- */
 
-export function getProductBySlug(
-  slug: string,
-) {
-  return allProducts.find(
-    (product) =>
-      product.slug === slug,
-  );
+export function getProductBySlug(slug: string): Product | undefined {
+  return allProducts.find((product) => product.slug === slug);
 }

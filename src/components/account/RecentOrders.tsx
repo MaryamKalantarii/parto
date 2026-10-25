@@ -17,45 +17,56 @@ const mockOrders: OrderItem[] = [
   {
     id: '1',
     orderNumber: '#AU-10024',
-    date: 'Apr 12, 2026',
+    date: '۲۳ فروردین ۱۴۰۵',
     status: 'DELIVERED',
-    price: '$4,850',
+    price: '۴,۸۵۰,۰۰۰ تومان',
     itemCount: 1,
     image: '/images/account/recentorder.jpg',
   },
   {
     id: '2',
     orderNumber: '#AU-10023',
-    date: 'Mar 28, 2026',
+    date: '۸ فروردین ۱۴۰۵',
     status: 'DELIVERED',
-    price: '$3,200',
+    price: '۳,۲۰۰,۰۰۰ تومان',
     itemCount: 1,
     image: '/images/account/recentorder2.jpg',
   },
   {
     id: '3',
     orderNumber: '#AU-10021',
-    date: 'Feb 14, 2026',
+    date: '۲۵ بهمن ۱۴۰۴',
     status: 'IN TRANSIT',
-    price: '$5,760',
+    price: '۵,۷۶۰,۰۰۰ تومان',
     itemCount: 2,
     image: '/images/account/recentorder3.jpg',
   },
 ];
 
 export const RecentOrders: React.FC = () => {
+  const getStatusLabel = (status: OrderItem['status']) => {
+    switch (status) {
+      case 'DELIVERED':
+        return 'تحویل‌شده';
+      case 'IN TRANSIT':
+        return 'در حال ارسال';
+      case 'PROCESSING':
+        return 'در حال پردازش';
+    }
+  };
+
   return (
-    <div className="pt-8">
+    <div className="pt-8 text-right" dir="rtl">
       {/* Header Area */}
       <div className="flex justify-between items-center mb-6 pb-2 border-b border-white/10">
         <h2 className="font-serif text-lg font-light tracking-wide text-[#F7F5F0]">
-          RECENT ORDERS
+          سفارش‌های اخیر
         </h2>
         <Link 
           href="/account/orders" 
-          className="font-sans text-[10px] uppercase tracking-[0.2em] text-[#8A857D] hover:text-[#D8C2A8] transition-colors"
+          className="font-sans text-xs tracking-wider text-[#8A857D] hover:text-[#D8C2A8] transition-colors"
         >
-          VIEW ALL ORDERS →
+          مشاهده همه سفارش‌ها ←
         </Link>
       </div>
 
@@ -76,31 +87,31 @@ export const RecentOrders: React.FC = () => {
                 />
               </div>
               <div>
-                <div className="font-mono text-xs text-[#F7F5F0] group-hover:text-[#D8C2A8] transition-colors">
+                <div className="font-mono text-xs text-[#F7F5F0] group-hover:text-[#D8C2A8] transition-colors" dir="ltr">
                   {order.orderNumber}
                 </div>
-                <div className="font-sans text-[10px] text-[#6A655D] mt-0.5">{order.date}</div>
+                <div className="font-sans text-[11px] text-[#6A655D] mt-0.5">{order.date}</div>
               </div>
             </div>
 
             <div className="flex items-center gap-6">
-              <span className={`text-[9px] font-sans px-2.5 py-1 rounded-full border ${
+              <span className={`text-[10px] font-sans px-2.5 py-1 rounded-full border ${
                 order.status === 'DELIVERED'
                   ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10'
                   : 'border-amber-500/30 text-amber-400 bg-amber-500/10'
               }`}>
-                {order.status}
+                {getStatusLabel(order.status)}
               </span>
 
               <div className="text-right">
                 <div className="font-serif text-sm text-[#F7F5F0]">{order.price}</div>
-                <div className="font-sans text-[9px] text-[#6A655D]">
-                  {order.itemCount} {order.itemCount > 1 ? 'items' : 'item'}
+                <div className="font-sans text-[11px] text-[#6A655D]">
+                  {order.itemCount} محصول
                 </div>
               </div>
 
-              <span className="text-[#8A857D] group-hover:translate-x-1 group-hover:text-[#D8C2A8] transition-all">
-                →
+              <span className="text-[#8A857D] group-hover:-translate-x-1 group-hover:text-[#D8C2A8] transition-all">
+                ←
               </span>
             </div>
           </Link>

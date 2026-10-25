@@ -13,14 +13,14 @@ import { useGSAP } from '@gsap/react';
 import { allProducts } from '@/data/products';
 
 const categories = [
-  'ALL',
-  'RINGS',
-  'NECKLACES',
-  'EARRINGS',
-  'BRACELETS',
+  { label: 'همه', value: 'ALL' },
+  { label: 'انگشترها', value: 'RINGS' },
+  { label: 'گردنبندها', value: 'NECKLACES' },
+  { label: 'گوشواره‌ها', value: 'EARRINGS' },
+  { label: 'دستبندها', value: 'BRACELETS' },
 ] as const;
 
-type Category = (typeof categories)[number];
+type CategoryValue = (typeof categories)[number]['value'];
 
 type SortOption =
   | 'bestseller'
@@ -29,7 +29,7 @@ type SortOption =
 
 export const ProductCatalog = () => {
   const [selectedCategory, setSelectedCategory] =
-    useState<Category>('ALL');
+    useState<CategoryValue>('ALL');
 
   const [sortOption, setSortOption] =
     useState<SortOption>('bestseller');
@@ -171,7 +171,7 @@ export const ProductCatalog = () => {
       <div className="mx-auto w-full max-w-[1700px] px-6 sm:px-10 lg:px-14">
 
         {/* Navigation */}
-        <div className="mb-12 flex flex-col gap-7 border-b border-white/10 pb-6">
+        <div className="mb-12 flex flex-col gap-7 border-b border-white/10 pb-6 text-right">
 
           {/* TOP ROW */}
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
@@ -179,27 +179,27 @@ export const ProductCatalog = () => {
             {/* Collection + Categories */}
             <div className="flex min-w-0 items-center gap-8">
 
-              <h1 className="shrink-0 font-mono text-[10px] uppercase tracking-[0.35em] text-[#E4E1DA]">
-                COLLECTION
+              <h1 className="shrink-0 font-serif text-sm tracking-[0.2em] text-[#E4E1DA]">
+                مجموعه آثار
               </h1>
 
               <div className="hidden h-4 w-px bg-white/15 lg:block" />
 
               <nav className="flex min-w-0 items-center gap-2.5 overflow-x-auto pb-1 scrollbar-none sm:gap-3">
-                {categories.map((category) => (
+                {categories.map((cat) => (
                   <button
-                    key={category}
+                    key={cat.value}
                     type="button"
                     onClick={() =>
-                      setSelectedCategory(category)
+                      setSelectedCategory(cat.value)
                     }
-                    className={`shrink-0 rounded-full px-5 py-2 font-mono text-[9px] uppercase tracking-[0.2em] transition-all duration-300 sm:text-[10px] ${
-                      selectedCategory === category
+                    className={`shrink-0 rounded-full px-5 py-2 font-sans text-xs tracking-wider transition-all duration-300 ${
+                      selectedCategory === cat.value
                         ? 'bg-[#E4E1DA] font-medium text-[#070707] shadow-[0_0_20px_rgba(228,225,218,0.25)]'
                         : 'border border-white/5 bg-white/[0.03] text-[#B8B6B0] hover:bg-white/[0.08] hover:text-white'
                     }`}
                   >
-                    {category}
+                    {cat.label}
                   </button>
                 ))}
               </nav>
@@ -219,7 +219,7 @@ export const ProductCatalog = () => {
                 {/* Search Icon */}
                 <button
                   type="button"
-                  aria-label="Search products"
+                  aria-label="جستجوی محصولات"
                   onClick={() =>
                     setIsSearchOpen(true)
                   }
@@ -254,20 +254,20 @@ export const ProductCatalog = () => {
                   onChange={(e) =>
                     setSearchQuery(e.target.value)
                   }
-                  placeholder="SEARCH COLLECTION"
-                  className="h-10 min-w-0 flex-1 bg-transparent pr-3 font-mono text-[9px] uppercase tracking-[0.18em] text-[#F5F2EB] outline-none placeholder:text-zinc-600"
+                  placeholder="جستجو در مجموعه..."
+                  className="h-10 min-w-0 flex-1 bg-transparent pl-3 font-sans text-xs tracking-wide text-[#F5F2EB] outline-none placeholder:text-zinc-600 text-right"
                 />
 
                 {/* Clear */}
                 {searchQuery && (
                   <button
                     type="button"
-                    aria-label="Clear search"
+                    aria-label="پاک کردن جستجو"
                     onClick={() => {
                       setSearchQuery('');
                       setIsSearchOpen(false);
                     }}
-                    className="mr-3 flex h-5 w-5 items-center justify-center rounded-full text-zinc-500 transition-colors hover:text-white"
+                    className="ml-3 flex h-5 w-5 items-center justify-center rounded-full text-zinc-500 transition-colors hover:text-white"
                   >
                     <svg
                       width="12"
@@ -294,32 +294,32 @@ export const ProductCatalog = () => {
                       e.target.value as SortOption,
                     )
                   }
-                  className="h-10 appearance-none rounded-full border border-white/10 bg-white/[0.025] px-4 pr-9 font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-400 outline-none transition-colors hover:border-white/20 hover:text-white"
+                  className="h-10 appearance-none rounded-full border border-white/10 bg-white/[0.025] px-4 pl-9 font-sans text-xs tracking-wider text-zinc-300 outline-none transition-colors hover:border-white/20 hover:text-white cursor-pointer"
                 >
                   <option
                     value="bestseller"
                     className="bg-[#070707]"
                   >
-                    BESTSELLER
+                    پرفروش‌ترین
                   </option>
 
                   <option
                     value="discount"
                     className="bg-[#070707]"
                   >
-                    DISCOUNT
+                    تخفیف‌دار
                   </option>
 
                   <option
                     value="newest"
                     className="bg-[#070707]"
                   >
-                    NEWEST
+                    جدیدترین
                   </option>
                 </select>
 
                 <svg
-                  className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500"
+                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500"
                   width="11"
                   height="11"
                   viewBox="0 0 24 24"
@@ -343,15 +343,15 @@ export const ProductCatalog = () => {
                 : 'pointer-events-none max-h-0 overflow-hidden opacity-0'
             }`}
           >
-            <span className="font-mono text-[8px] uppercase tracking-[0.25em] text-zinc-600">
-              SEARCH RESULTS
+            <span className="font-sans text-[11px] tracking-wider text-zinc-400">
+              نتایج جستجو
             </span>
 
-            <span className="font-mono text-[8px] uppercase tracking-[0.25em] text-[#B5A087]">
+            <span className="font-sans text-[11px] tracking-wider text-[#B5A087]">
               {filteredProducts.length}{' '}
               {filteredProducts.length === 1
-                ? 'OBJECT'
-                : 'OBJECTS'}
+                ? 'محصول'
+                : 'محصول'}
             </span>
           </div>
         </div>
@@ -368,7 +368,7 @@ export const ProductCatalog = () => {
             return (
               <article
                 key={product.id}
-                className="product-card-item group relative flex flex-col rounded-3xl border border-white/10 bg-gradient-to-b from-[#181715] to-[#0D0C0B] p-4 transition-all duration-500 hover:-translate-y-2.5 hover:border-[#E8D4B9]/40 hover:shadow-[0_30px_70px_rgba(0,0,0,0.95)]"
+                className="product-card-item group relative flex flex-col rounded-3xl border border-white/10 bg-gradient-to-b from-[#181715] to-[#0D0C0B] p-4 transition-all duration-500 hover:-translate-y-2.5 hover:border-[#E8D4B9]/40 hover:shadow-[0_30px_70px_rgba(0,0,0,0.95)] text-right"
               >
                 {/* Image */}
                 <Link
@@ -399,14 +399,14 @@ export const ProductCatalog = () => {
                       href={`/product/${product.slug}`}
                       className="group/title mt-1.5 block"
                     >
-                      <h2 className="font-serif text-[21px] font-extralight uppercase leading-tight tracking-[0.18em] text-[#FAF8F5] transition-colors duration-300 group-hover/title:text-[#E8D4B9]">
+                      <h2 className="font-serif text-[19px] font-light leading-tight tracking-[0.08em] text-[#FAF8F5] transition-colors duration-300 group-hover/title:text-[#E8D4B9]">
                         {product.name}
                       </h2>
                     </Link>
                   </div>
 
                   <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-3.5">
-                    <span className="font-sans text-[17px] font-medium tracking-[0.04em] text-[#E8D4B9]">
+                    <span className="font-sans text-[16px] font-medium tracking-[0.04em] text-[#E8D4B9]">
                       {product.price}
                     </span>
 
@@ -418,11 +418,11 @@ export const ProductCatalog = () => {
                           product.id,
                         )
                       }
-                      className="rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 font-mono text-[8px] uppercase tracking-[0.2em] text-[#FAF8F5] transition-all hover:bg-[#E8D4B9] hover:text-black"
+                      className="rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 font-sans text-[10px] tracking-wider text-[#FAF8F5] transition-all hover:bg-[#E8D4B9] hover:text-black"
                     >
                       {isAdded
-                        ? '✓ ADDED'
-                        : '+ ADD TO CART'}
+                        ? '✓ افزوده شد'
+                        : '+ افزودن به سبد'}
                     </button>
                   </div>
                 </div>
@@ -454,12 +454,12 @@ export const ProductCatalog = () => {
               </svg>
             </div>
 
-            <p className="font-serif text-xl uppercase tracking-[0.15em] text-zinc-400">
-              NO OBJECTS FOUND
+            <p className="font-serif text-xl tracking-wide text-zinc-400">
+              موردی یافت نشد
             </p>
 
-            <p className="mt-2 font-mono text-[8px] uppercase tracking-[0.25em] text-zinc-600">
-              TRY ANOTHER SEARCH
+            <p className="mt-2 font-sans text-xs tracking-wider text-zinc-600">
+              لطفاً عبارت دیگری را جستجو کنید
             </p>
           </div>
         )}
@@ -467,3 +467,5 @@ export const ProductCatalog = () => {
     </section>
   );
 };
+
+export default ProductCatalog;

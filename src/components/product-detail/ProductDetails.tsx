@@ -68,11 +68,11 @@ export const ProductDetails = ({
               THE DETAILS
             </span>
 
-            <h2 className="mb-6 font-serif text-3xl uppercase tracking-[0.05em] text-white sm:text-4xl lg:text-5xl">
-              EXCEPTIONAL
-              <br />
-              IN EVERY ANGLE
-            </h2>
+      <h2 className="mb-6 font-serif text-3xl leading-snug tracking-wider text-white sm:text-4xl lg:text-5xl">
+  بی‌نظیر
+  <br />
+  از هر زاویه
+</h2>
 
             <p className="mb-10 font-serif text-sm leading-relaxed text-zinc-400">
               {product.description}
