@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useRef } from 'react';
@@ -9,13 +10,10 @@ import { useGSAP } from '@gsap/react';
 gsap.registerPlugin(ScrollTrigger);
 
 export const Newsletter = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      // -----------------------------------------
-      // CONTENT REVEAL
-      // -----------------------------------------
       gsap.from('.newsletter-item', {
         opacity: 0,
         y: 18,
@@ -29,9 +27,6 @@ export const Newsletter = () => {
         },
       });
 
-      // -----------------------------------------
-      // SUBTLE BACKGROUND MOVEMENT
-      // -----------------------------------------
       gsap.to('.newsletter-bg', {
         scale: 1.035,
         ease: 'none',
@@ -43,229 +38,145 @@ export const Newsletter = () => {
         },
       });
     },
-    {
-      scope: sectionRef,
-    }
+    { scope: sectionRef }
   );
 
   return (
     <section
       ref={sectionRef}
+      dir="rtl"
+      lang="fa"
       className="
-        relative
-        w-full
-        aspect-[3/1]
-        min-h-[300px]
-        overflow-hidden
-        bg-[#050505]
-        text-[#eee9e1]
+        relative aspect-[3/1] min-h-[300px] w-full
+        overflow-hidden bg-[#050505] text-[#eee9e1]
       "
     >
-      {/* =====================================================
-          BACKGROUND
-          ===================================================== */}
-
+      {/* BACKGROUND */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="newsletter-bg absolute -inset-[2%]">
           <Image
-            src="/images/newsletter-bg.png"
+            src="/images/collection/newsletter-bg.png"
             alt=""
             fill
             priority
             sizes="100vw"
-            className="
-              object-cover
-              object-center
-            "
+            className="object-cover object-center"
           />
         </div>
 
-        {/* Very subtle dark overlay */}
-        <div
-          className="
-            absolute
-            inset-0
-            bg-black/10
-          "
-        />
+        <div className="absolute inset-0 bg-black/20" />
       </div>
 
-      {/* =====================================================
-          CENTER CONTENT
-          ===================================================== */}
-
+      {/* CENTER CONTENT */}
       <div
         className="
-          relative
-          z-10
-          flex
-          h-full
-          w-full
-          items-center
-          justify-center
-          text-center
+          relative z-10 flex h-full w-full
+          items-center justify-center text-center
         "
       >
         <div
           className="
-            flex
-            w-full
-            max-w-[430px]
-            flex-col
-            items-center
-            px-6
+            flex w-full max-w-[430px]
+            flex-col items-center px-6
           "
         >
-          {/* -----------------------------------------------
-              EYEBROW
-          ------------------------------------------------ */}
-
+          {/* EYEBROW */}
           <span
             className="
-              newsletter-item
-              mb-[10px]
-              text-[6px]
-              sm:text-[7px]
-              md:text-[8px]
-              font-light
-              uppercase
-              tracking-[0.34em]
+              newsletter-item mb-[10px]
+              font-sans text-[8px] sm:text-[9px]
+              font-light tracking-normal
               text-[#a9a29a]
             "
           >
-            STAY CONNECTED
+            همراه پرتو باشید
           </span>
 
-          {/* -----------------------------------------------
-              TITLE
-          ------------------------------------------------ */}
-
+          {/* TITLE */}
           <h2
             className="
-              newsletter-item
-              m-0
-              font-serif
-              text-[25px]
-              sm:text-[29px]
-              md:text-[32px]
-              lg:text-[35px]
-              xl:text-[38px]
-              font-light
-              uppercase
-              leading-[0.95]
-              tracking-[-0.025em]
+              newsletter-item m-0
+              font-sans font-light
+              text-[23px] sm:text-[27px] md:text-[31px]
+              lg:text-[34px] xl:text-[37px]
+              leading-[1.4] tracking-normal
               text-[#eeeae4]
             "
           >
-            JOIN OUR WORLD
+            به دنیای ما بپیوندید
           </h2>
 
-          {/* -----------------------------------------------
-              DESCRIPTION
-          ------------------------------------------------ */}
-
+          {/* DESCRIPTION */}
           <p
             className="
-              newsletter-item
-              mt-[11px]
-              mb-0
-              max-w-[245px]
-            text-[8px]
-            sm:text-[9px]
-            md:text-[10px]
-              font-light
-              leading-[1.55]
+              newsletter-item mt-[11px] mb-0
+              max-w-[290px]
+              font-sans text-[8px] sm:text-[9px] md:text-[10px]
+              font-light leading-[1.9]
               text-[#aaa49d]
             "
           >
-            Be the first to know about new collections,
+            از جدیدترین مجموعه‌ها، پیش‌نمایش‌های اختصاصی
             <br />
-            exclusive previews and special events.
+            و رویدادهای ویژه‌ی پرتو زودتر از همه باخبر شوید.
           </p>
 
-          {/* -----------------------------------------------
-              EMAIL FORM
-          ------------------------------------------------ */}
-
+          {/* EMAIL FORM */}
           <form
             onSubmit={(e) => e.preventDefault()}
             className="
-              newsletter-item
-              mt-[17px]
-              flex
-            w-[245px]
-            sm:w-[270px]
-            md:w-[290px]
-              items-center
-              border-b
-              border-[#77716b]/70
-              pb-[9px]
+              newsletter-item mt-[17px]
+              flex w-[245px] items-center
+              border-b border-[#77716b]/70 pb-[9px]
+              sm:w-[270px] md:w-[290px]
             "
           >
             <input
               type="email"
-              placeholder="Your email address"
+              dir="ltr"
+              required
+              aria-label="نشانی ایمیل"
+              placeholder="نشانی ایمیل شما"
               className="
-                w-full
-                bg-transparent
-                border-none
-                outline-none
-                p-0
-               text-[8px]
-                sm:text-[9px]
-                md:text-[10px]
-                font-light
-                tracking-[0.01em]
-                text-[#d9d3ca]
+                w-full border-none bg-transparent p-0
+                text-right font-sans
+                text-[9px] sm:text-[10px] md:text-[11px]
+                font-light tracking-normal
+                text-[#d9d3ca] outline-none
                 placeholder:text-[#77716f]
+                focus:ring-0
               "
             />
 
             <button
               type="submit"
-              aria-label="Subscribe"
+              aria-label="عضویت در خبرنامه"
               className="
-                group
-                ml-3
-                flex
-                shrink-0
-                items-center
-                justify-center
+                group mr-3 flex shrink-0
+                items-center justify-center
               "
             >
               <span
                 className="
-                  text-[14px]
-                  sm:text-[15px]
-                  font-light
-                  leading-none
+                  text-[17px] font-light leading-none
                   text-[#c7c1b9]
-                  transition-all
-                  duration-500
-                  group-hover:translate-x-1
+                  transition-all duration-500
+                  group-hover:-translate-x-1
                   group-hover:text-white
                 "
               >
-                →
+                ←
               </span>
             </button>
           </form>
         </div>
       </div>
 
-      {/* =====================================================
-          SUBTLE BOTTOM LINE
-          ===================================================== */}
-
+      {/* SUBTLE BOTTOM LINE */}
       <div
         className="
-          absolute
-          bottom-0
-          left-0
-          right-0
-          z-20
-          h-px
-          bg-white/10
+          absolute bottom-0 left-0 right-0
+          z-20 h-px bg-white/10
         "
       />
     </section>

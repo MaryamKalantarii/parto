@@ -1,3 +1,4 @@
+
 'use client';
 
 import { FormEvent, useState } from 'react';
@@ -28,365 +29,476 @@ export default function SignupPage() {
 
         .signup-page {
           position: relative;
-          width: 100vw;
+          isolation: isolate;
+          width: 100%;
           min-height: 100vh;
           overflow: hidden;
-          color: #f5f1e9;
-          font-family: Arial, Helvetica, sans-serif;
           background: #080706;
+          color: #f5f1e9;
+          font-family: var(--font-sans), 'Vazirmatn', sans-serif;
         }
 
-        /* ================= BACKGROUND ================= */
+        /* BACKGROUND */
 
-        .background {
+        .signup-page .background {
           position: absolute;
           inset: 0;
-          z-index: 0;
-          background-image: url('/images/aurel-signup.png');
-          background-size: 1000px auto;
-          background-position: right 4% center;
+          z-index: -2;
+          background-image: url('/images/signup/aurel-signup.png');
+          background-size: cover;
+          background-position: right center;
           background-repeat: no-repeat;
         }
 
-        .overlay {
+        .signup-page .overlay {
           position: absolute;
           inset: 0;
-          z-index: 1;
+          z-index: -1;
+          pointer-events: none;
           background: linear-gradient(
             90deg,
-            rgba(8, 7, 6, 0.98) 0%,
-            rgba(8, 7, 6, 0.92) 35%,
-            rgba(8, 7, 6, 0.65) 60%,
-            rgba(8, 7, 6, 0.25) 85%,
-            rgba(8, 7, 6, 0.1) 100%
+            #080706 0%,
+            rgba(8, 7, 6, 0.97) 25%,
+            rgba(8, 7, 6, 0.88) 43%,
+            rgba(8, 7, 6, 0.45) 65%,
+            rgba(8, 7, 6, 0.12) 100%
           );
         }
 
-        /* ================= HEADER ================= */
+        /* HEADER */
 
-        .header {
+        .signup-page .header {
           position: relative;
-          z-index: 5;
-          width: 100%;
-          padding: 38px 52px;
+          z-index: 2;
           display: flex;
-          justify-content: space-between;
           align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+          width: 100%;
+          padding: 32px 5vw;
+          direction: rtl;
         }
 
-        .logo {
+        .signup-page .logo {
           display: inline-flex;
           align-items: center;
-          gap: 11px;
+          gap: 10px;
           color: #f5f1e9;
-          text-decoration: none;
-          font-family: Georgia, 'Times New Roman', serif;
+          font-family: var(--font-serif), Georgia, serif;
           font-size: 19px;
           font-weight: 400;
-          letter-spacing: 6px;
+          letter-spacing: 5px;
+          text-decoration: none;
+          direction: ltr;
         }
 
-        .logo-star {
+        .signup-page .logo-star {
           font-size: 17px;
           line-height: 1;
         }
 
-        .tagline {
+        .signup-page .tagline {
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
-          font-size: 8.5px;
-          font-weight: 500;
-          letter-spacing: 5px;
-          color: rgba(255, 255, 255, 0.8);
-          white-space: nowrap;
-        }
-
-        .back-link {
-          display: flex;
-          align-items: center;
-          gap: 9px;
-          color: rgba(255, 255, 255, 0.85);
-          text-decoration: none;
-          font-size: 9px;
-          letter-spacing: 3px;
-          transition: 0.3s ease;
-        }
-
-        .back-link:hover {
-          opacity: 0.6;
-          transform: translateX(3px);
-        }
-
-        .back-arrow {
-          font-size: 14px;
-        }
-
-        /* ================= CONTENT ================= */
-
-        .content {
-          position: relative;
-          z-index: 5;
-          width: 390px;
-          margin-left: 6vw;
-          margin-top: 4vh;
-          padding-bottom: 50px;
-        }
-
-        .welcome {
-          margin-bottom: 12px;
-          font-size: 9px;
-          font-weight: 500;
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 20px;
           letter-spacing: 4px;
-          color: rgba(255, 255, 255, 0.75);
+          white-space: nowrap;
+          direction: ltr;
         }
 
-        .content h1 {
+        .signup-page .back-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 12px;
+          text-decoration: none;
+          transition: opacity 0.3s ease;
+        }
+
+        .signup-page .back-link:hover {
+          opacity: 0.6;
+        }
+
+        /* CONTENT — LEFT SIDE */
+
+        .signup-page .content {
+          position: relative;
+          z-index: 2;
+          width: min(390px, 38vw);
+          margin: 3vh auto 60px 8vw;
+          text-align: right;
+          direction: rtl;
+        }
+
+        .signup-page .welcome {
+          margin-bottom: 12px;
+          color: #c7b18a;
+          font-size: 13px;
+          font-weight: 400;
+        }
+
+        .signup-page .content h1 {
           margin: 0;
           color: #f6f2eb;
-          font-family: Georgia, 'Times New Roman', serif;
-          font-size: 32px;
+          font-family: var(--font-sans), 'Vazirmatn', sans-serif;
+          font-size: 29px;
           font-weight: 400;
-          line-height: 1.2;
-          letter-spacing: 0.8px;
+          line-height: 1.9;
         }
 
-        .subtitle {
-          margin: 12px 0 0;
+        .signup-page .brand-name {
+          font-family: var(--font-serif), Georgia, serif;
+          letter-spacing: 2px;
+          direction: ltr;
+          unicode-bidi: isolate;
+        }
+
+        .signup-page .subtitle {
+          margin: 8px 0 0;
           color: rgba(255, 255, 255, 0.65);
-          font-family: Georgia, 'Times New Roman', serif;
-          font-size: 13.5px;
-          line-height: 1.4;
+          font-size: 13px;
+          line-height: 2;
         }
 
-        /* ================= FORM ================= */
+        /* FORM */
 
-        .form {
+        .signup-page .form {
           width: 100%;
           margin-top: 24px;
         }
 
-        .field {
+        .signup-page .field {
+          display: flex;
+          flex-direction: column;
+          gap: 9px;
           width: 100%;
-          margin-bottom: 18px;
+          margin-bottom: 19px;
         }
 
-        .field label {
+        .signup-page .field label {
           display: block;
-          margin-bottom: 6px;
-          color: rgba(255, 255, 255, 0.75);
-          font-size: 8.5px;
-          font-weight: 500;
-          letter-spacing: 3.5px;
+          color: rgba(255, 255, 255, 0.82);
+          font-size: 12px;
+          font-weight: 400;
+          text-align: right;
         }
 
-        .field input {
+        .signup-page .field input {
+          display: block;
           width: 100%;
-          height: 30px;
-          padding: 0 0 4px;
-          border: none;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+          height: 43px;
+          padding: 0 12px;
+          border: 1px solid rgba(221, 203, 171, 0.25);
+          border-radius: 2px;
           outline: none;
-          background: transparent;
-          color: white;
-          font-size: 14px;
-          transition: 0.3s ease;
+          background: rgba(255, 255, 255, 0.035);
+          color: #f5f1e9;
+          font-family: var(--font-sans), 'Vazirmatn', sans-serif;
+          font-size: 13px;
+          text-align: right;
+          direction: rtl;
+          transition:
+            border-color 0.3s ease,
+            background 0.3s ease;
         }
 
-        .field input:focus {
-          border-bottom-color: rgba(255, 255, 255, 0.9);
+        .signup-page .field input::placeholder {
+          color: rgba(255, 255, 255, 0.35);
+          font-size: 12px;
         }
 
-        /* ================= PASSWORD ================= */
+        .signup-page .field input:focus {
+          border-color: rgba(221, 203, 171, 0.75);
+          background: rgba(255, 255, 255, 0.055);
+        }
 
-        .password-wrapper {
+        .signup-page .field input#signup-email {
+          direction: ltr;
+          text-align: left;
+        }
+
+        /* PASSWORD VISIBILITY */
+
+        .signup-page .password-wrapper {
           position: relative;
+          width: 100%;
         }
 
-        .password-wrapper input {
-          padding-right: 35px;
+        .signup-page .password-wrapper input {
+          padding-left: 44px;
         }
 
-        .eye-button {
+        .signup-page .eye-button {
           position: absolute;
-          right: 0;
-          bottom: 4px;
+          top: 50%;
+          left: 12px;
+          display: flex;
+          width: 25px;
+          height: 25px;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
+          transform: translateY(-50%);
           border: none;
           background: transparent;
           color: rgba(255, 255, 255, 0.6);
-          font-size: 15px;
+          font-size: 16px;
           cursor: pointer;
-          padding: 0;
         }
 
-        .eye-button:hover {
-          color: white;
+        .signup-page .eye-button:hover {
+          color: #e4d2b0;
         }
 
-        /* ================= BUTTON ================= */
+        /* SIGNUP BUTTON */
 
-        .sign-in-button {
-          width: 100%;
-          height: 42px;
-          margin-top: 20px;
+        .signup-page .sign-in-button {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 12px;
-          border: 1px solid rgba(255, 255, 255, 0.35);
-          background: rgba(255, 255, 255, 0.02);
-          color: rgba(255, 255, 255, 0.9);
+          gap: 10px;
+          width: 100%;
+          height: 48px;
+          margin-top: 23px;
+          border: 1px solid rgba(221, 203, 171, 0.5);
+          background: rgba(221, 203, 171, 0.07);
+          color: #f5f1e9;
+          font-family: var(--font-sans), 'Vazirmatn', sans-serif;
+          font-size: 13px;
           cursor: pointer;
-          font-size: 9px;
-          font-weight: 500;
-          letter-spacing: 3.5px;
-          backdrop-filter: blur(2px);
-          transition: 0.35s ease;
+          transition:
+            background 0.3s ease,
+            border-color 0.3s ease;
         }
 
-        .sign-in-button:hover {
-          background: rgba(255, 255, 255, 0.08);
-          border-color: rgba(255, 255, 255, 0.7);
+        .signup-page .sign-in-button:hover {
+          border-color: #e4d2b0;
+          background: rgba(221, 203, 171, 0.15);
         }
 
-        .sign-in-arrow {
-          font-size: 14px;
+        .signup-page .sign-in-arrow {
+          font-size: 16px;
         }
 
-        /* ================= LOGIN LINK ================= */
+        /* LOGIN LINK */
 
-        .create-account {
-          margin-top: 24px;
+        .signup-page .create-account {
           display: flex;
           flex-direction: column;
-          gap: 7px;
+          align-items: flex-start;
+          gap: 11px;
+          margin-top: 25px;
+          padding-bottom: 25px;
         }
 
-        .create-account-label {
-          color: rgba(255, 255, 255, 0.5);
-          font-size: 8px;
-          font-weight: 500;
-          letter-spacing: 3px;
+        .signup-page .create-account-label {
+          color: rgba(255, 255, 255, 0.55);
+          font-size: 12px;
         }
 
-        .create-account a {
-          display: flex;
+        .signup-page .create-account a {
+          display: inline-flex;
           align-items: center;
-          gap: 8px;
-          width: fit-content;
+          gap: 9px;
           color: rgba(255, 255, 255, 0.9);
+          font-size: 12px;
           text-decoration: none;
-          font-size: 9px;
-          font-weight: 500;
-          letter-spacing: 3px;
-          transition: 0.25s ease;
+          transition: opacity 0.25s ease;
         }
 
-        .create-account a:hover {
-          opacity: 0.6;
-          transform: translateX(3px);
+        .signup-page .create-account a:hover {
+          opacity: 0.65;
         }
 
-        .create-arrow {
-          font-size: 14px;
-        }
-
-        /* ================= RESPONSIVE ================= */
+        /* TABLET */
 
         @media (max-width: 900px) {
-          .background {
-            background-size: 850px auto;
+          .signup-page .background {
+            background-size: auto 85vh;
+            background-position: right top;
           }
-          .header {
-            padding: 30px 32px;
+
+          .signup-page .overlay {
+            background: linear-gradient(
+              90deg,
+              #080706 0%,
+              rgba(8, 7, 6, 0.97) 30%,
+              rgba(8, 7, 6, 0.85) 48%,
+              rgba(8, 7, 6, 0.3) 75%,
+              rgba(8, 7, 6, 0.12) 100%
+            );
           }
-          .tagline {
+
+          .signup-page .header {
+            padding: 28px 4vw;
+          }
+
+          .signup-page .tagline {
             display: none;
           }
-          .content {
-            width: 340px;
-            margin-left: 6vw;
+
+          .signup-page .content {
+            width: min(360px, 43vw);
+            margin-left: 5vw;
+            margin-right: auto;
           }
         }
 
-        @media (max-width: 700px) {
-          .background {
-            background-size: cover;
-            background-position: 65% center;
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+          .signup-page {
+            min-height: 100vh;
           }
-          .header {
-            padding: 24px 22px;
+
+          .signup-page .background {
+            background-size: auto 45vh;
+            background-position: right top;
           }
-          .content {
+
+          .signup-page .overlay {
+            background: linear-gradient(
+              180deg,
+              rgba(8, 7, 6, 0.02) 0%,
+              rgba(8, 7, 6, 0.08) 25%,
+              rgba(8, 7, 6, 0.65) 42%,
+              #080706 55%,
+              #080706 100%
+            );
+          }
+
+          .signup-page .header {
+            padding: 22px 20px;
+          }
+
+          .signup-page .logo {
+            font-size: 17px;
+          }
+
+          .signup-page .back-link {
+            font-size: 11px;
+          }
+
+          .signup-page .content {
             width: auto;
-            margin: 4vh 24px 0;
+            margin: 34vh 24px 0;
           }
-          .content h1 {
-            font-size: 28px;
+
+          .signup-page .content h1 {
+            font-size: 25px;
+            line-height: 1.9;
+          }
+
+          .signup-page .subtitle {
+            font-size: 12px;
+          }
+
+          .signup-page .form {
+            margin-top: 22px;
+          }
+
+          .signup-page .field {
+            margin-bottom: 17px;
+          }
+        }
+
+        @media (max-width: 380px) {
+          .signup-page .content {
+            margin-right: 18px;
+            margin-left: 18px;
+          }
+
+          .signup-page .content h1 {
+            font-size: 23px;
+          }
+
+          .signup-page .header {
+            padding-right: 16px;
+            padding-left: 16px;
           }
         }
       `}</style>
 
-      <main className="signup-page">
-        <div className="background" />
-        <div className="overlay" />
+      <main className="signup-page" dir="rtl">
+        <div className="background" aria-hidden="true" />
+        <div className="overlay" aria-hidden="true" />
 
-        {/* HEADER */}
         <header className="header">
           <Link href="/" className="logo">
             <span className="logo-star">✦</span>
-            <span>AUREL</span>
+            <span>پرتو</span>
           </Link>
 
-          <div className="tagline">
-            OBJECTS OF LIGHT.
-          </div>
+          <div className="tagline">صفحه ثبت نام</div>
 
           <Link href="/" className="back-link">
-            BACK TO SITE
-            <span className="back-arrow">→</span>
+            <span>بازگشت به سایت</span>
+            <span aria-hidden="true">←</span>
           </Link>
         </header>
 
-        {/* SIGN UP CONTENT */}
         <section className="content">
-          <div className="welcome">
-            BECOME A MEMBER
-          </div>
+          <div className="welcome">به جمع ما بپیوندید</div>
 
           <h1>
-            CREATE YOUR
+            حساب کاربری
             <br />
-            AUREL ACCOUNT.
+            <span className="brand-name">پرتو</span> بسازید.
           </h1>
 
           <p className="subtitle">
-            Join us to experience exclusive collections.
+            برای تجربه مجموعه‌های ویژه، حساب خود را ایجاد کنید.
           </p>
 
           <form className="form" onSubmit={handleSubmit}>
             <div className="field">
-              <label htmlFor="fullname">FULL NAME</label>
-              <input id="fullname" type="text" required />
+              <label htmlFor="fullname">نام و نام خانوادگی</label>
+              <input
+                id="fullname"
+                name="fullname"
+                type="text"
+                placeholder="نام کامل خود را وارد کنید"
+                autoComplete="name"
+                required
+              />
             </div>
 
             <div className="field">
-              <label htmlFor="email">EMAIL</label>
-              <input id="email" type="email" required />
+              <label htmlFor="signup-email">آدرس ایمیل</label>
+              <input
+                id="signup-email"
+                name="email"
+                type="email"
+                placeholder="example@email.com"
+                autoComplete="email"
+                required
+              />
             </div>
 
-           <div className="field">
-              <label htmlFor="password">PASSWORD</label>
+            <div className="field">
+              <label htmlFor="signup-password">رمز عبور</label>
+
               <div className="password-wrapper">
                 <input
-                  id="password"
+                  id="signup-password"
+                  name="password"
                   type={showPassword ? 'text' : 'password'}
+                  placeholder="رمز عبور دلخواه را وارد کنید"
+                  autoComplete="new-password"
+                  minLength={8}
                   required
                 />
+
                 <button
                   type="button"
                   className="eye-button"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => setShowPassword((previous) => !previous)}
+                  aria-label={
+                    showPassword ? 'مخفی کردن رمز عبور' : 'نمایش رمز عبور'
+                  }
                 >
                   {showPassword ? '◉' : '◌'}
                 </button>
@@ -394,17 +506,30 @@ export default function SignupPage() {
             </div>
 
             <div className="field">
-              <label htmlFor="confirmPassword">CONFIRM PASSWORD</label>
+              <label htmlFor="confirmPassword">تکرار رمز عبور</label>
+
               <div className="password-wrapper">
                 <input
                   id="confirmPassword"
+                  name="confirmPassword"
                   type={showConfirmPassword ? 'text' : 'password'}
+                  placeholder="رمز عبور را دوباره وارد کنید"
+                  autoComplete="new-password"
+                  minLength={8}
                   required
                 />
+
                 <button
                   type="button"
                   className="eye-button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  onClick={() =>
+                    setShowConfirmPassword((previous) => !previous)
+                  }
+                  aria-label={
+                    showConfirmPassword
+                      ? 'مخفی کردن رمز عبور'
+                      : 'نمایش رمز عبور'
+                  }
                 >
                   {showConfirmPassword ? '◉' : '◌'}
                 </button>
@@ -412,19 +537,21 @@ export default function SignupPage() {
             </div>
 
             <button type="submit" className="sign-in-button">
-              <span>CREATE ACCOUNT</span>
-              <span className="sign-in-arrow">→</span>
+              <span>ایجاد حساب کاربری</span>
+              <span className="sign-in-arrow" aria-hidden="true">
+                ←
+              </span>
             </button>
           </form>
 
           <div className="create-account">
             <span className="create-account-label">
-              ALREADY HAVE AN ACCOUNT?
+              قبلاً در پرتو عضو شده‌اید؟
             </span>
 
             <Link href="/login">
-              SIGN IN
-              <span className="create-arrow">→</span>
+              <span>ورود به حساب کاربری</span>
+              <span aria-hidden="true">←</span>
             </Link>
           </div>
         </section>

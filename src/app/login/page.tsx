@@ -1,3 +1,4 @@
+
 'use client';
 
 import { FormEvent, useState } from 'react';
@@ -27,62 +28,69 @@ export default function LoginPage() {
 
         .login-page {
           position: relative;
-          width: 100vw;
+          isolation: isolate;
           min-height: 100vh;
           overflow: hidden;
-          color: #f5f1e9;
-          font-family: Arial, Helvetica, sans-serif;
           background: #080706;
+          color: #f5f1e9;
+          font-family: var(--font-sans), 'Vazirmatn', sans-serif;
         }
 
-        /* ================= BACKGROUND ================= */
+        /* BACKGROUND IMAGE — LEFT SIDE */
 
-        .background {
-          position: absolute;
-          inset: 0;
-          z-index: 0;
-          background-image: url('/images/aurel-login.png');
-          background-size: 1000px auto;
-          background-position: right 4% center;
-          background-repeat: no-repeat;
-        }
+        
+      .background {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        background-image: url('/images/login/test.png');
+        background-size: cover;
+        background-position: right center;
+        background-repeat: no-repeat;
+      }
 
-        .overlay {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          background: linear-gradient(
-            90deg,
-            rgba(8, 7, 6, 0.98) 0%,
-            rgba(8, 7, 6, 0.92) 35%,
-            rgba(8, 7, 6, 0.65) 60%,
-            rgba(8, 7, 6, 0.25) 85%,
-            rgba(8, 7, 6, 0.1) 100%
-          );
-        }
 
-        /* ================= HEADER ================= */
+       
+      .overlay {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background: linear-gradient(
+          90deg,
+          #080706 0%,
+          rgba(8, 7, 6, 0.97) 25%,
+          rgba(8, 7, 6, 0.82) 43%,
+          rgba(8, 7, 6, 0.25) 68%,
+          rgba(8, 7, 6, 0.05) 100%
+        );
+      }
+
+        /* HEADER */
 
         .header {
           position: relative;
-          z-index: 5;
-          width: 100%;
-          padding: 38px 52px;
+          z-index: 2;
           display: flex;
-          justify-content: space-between;
           align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+          width: 100%;
+          padding: 32px 5vw;
+          direction: rtl;
         }
 
         .logo {
           display: inline-flex;
           align-items: center;
-          gap: 11px;
+          gap: 10px;
           color: #f5f1e9;
-          text-decoration: none;
-          font-family: Georgia, 'Times New Roman', serif;
+          font-family: var(--font-serif), Georgia, serif;
           font-size: 19px;
           font-weight: 400;
-          letter-spacing: 6px;
+          letter-spacing: 5px;
+          text-decoration: none;
+          direction: ltr;
         }
 
         .logo-star {
@@ -94,310 +102,385 @@ export default function LoginPage() {
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
-          font-size: 8.5px;
-          font-weight: 500;
-          letter-spacing: 5px;
-          color: rgba(255, 255, 255, 0.8);
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 20px;
+          letter-spacing: 4px;
           white-space: nowrap;
+          direction: ltr;
         }
 
         .back-link {
-          display: flex;
+          display: inline-flex;
           align-items: center;
-          gap: 9px;
-          color: rgba(255, 255, 255, 0.85);
+          gap: 8px;
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 12px;
           text-decoration: none;
-          font-size: 9px;
-          letter-spacing: 3px;
-          transition: 0.3s ease;
+          transition: opacity 0.3s ease;
         }
 
         .back-link:hover {
           opacity: 0.6;
-          transform: translateX(3px);
         }
 
-        .back-arrow {
-          font-size: 14px;
-        }
+        /* MAIN CONTENT — RIGHT SIDE */
 
-        /* ================= CONTENT ================= */
+         
+      .content {
+        position: relative;
+        z-index: 2;
+        width: min(390px, 38vw);
+        margin: 5vh auto 60px 8vw;
+        text-align: right;
+        direction: rtl;
+      }
 
-        .content {
-          position: relative;
-          z-index: 5;
-          width: 390px;
-          margin-left: 6vw;
-          margin-top: 6vh;
-        }
 
         .welcome {
-          margin-bottom: 12px;
-          font-size: 9px;
-          font-weight: 500;
-          letter-spacing: 4px;
-          color: rgba(255, 255, 255, 0.75);
+          margin-bottom: 14px;
+          color: #c7b18a;
+          font-size: 13px;
+          font-weight: 400;
         }
 
-        /* کوچک‌تر و متناسب‌تر کردن متن عنوان */
         .content h1 {
           margin: 0;
           color: #f6f2eb;
-          font-family: Georgia, 'Times New Roman', serif;
-          font-size: 34px;
+          font-family: var(--font-sans), 'Vazirmatn', sans-serif;
+          font-size: 29px;
           font-weight: 400;
-          line-height: 1.2;
-          letter-spacing: 0.8px;
+          line-height: 1.9;
+        }
+
+        .brand-name {
+          font-family: var(--font-serif), Georgia, serif;
+          letter-spacing: 2px;
+          direction: ltr;
+          unicode-bidi: isolate;
         }
 
         .subtitle {
-          margin: 14px 0 0;
+          margin: 10px 0 0;
           color: rgba(255, 255, 255, 0.65);
-          font-family: Georgia, 'Times New Roman', serif;
-          font-size: 14px;
-          line-height: 1.4;
+          font-size: 13px;
+          line-height: 2;
         }
 
-        /* ================= FORM ================= */
+        /* FORM */
 
         .form {
           width: 100%;
-          margin-top: 28px;
+          margin-top: 30px;
         }
 
         .field {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
           width: 100%;
-          margin-bottom: 22px;
+          margin-bottom: 24px;
         }
 
         .field label {
           display: block;
-          margin-bottom: 7px;
-          color: rgba(255, 255, 255, 0.75);
-          font-size: 8.5px;
-          font-weight: 500;
-          letter-spacing: 3.5px;
+          color: rgba(255, 255, 255, 0.82);
+          font-size: 12px;
+          font-weight: 400;
+          text-align: right;
         }
 
         .field input {
+          display: block;
           width: 100%;
-          height: 32px;
-          padding: 0 0 5px;
-          border: none;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+          height: 46px;
+          padding: 0 13px;
+          border: 1px solid rgba(221, 203, 171, 0.25);
+          border-radius: 2px;
           outline: none;
-          background: transparent;
-          color: white;
-          font-size: 14.5px;
-          transition: 0.3s ease;
+          background: rgba(255, 255, 255, 0.035);
+          color: #f5f1e9;
+          font-family: var(--font-sans), 'Vazirmatn', sans-serif;
+          font-size: 13px;
+          text-align: right;
+          direction: rtl;
+          transition:
+            border-color 0.3s ease,
+            background 0.3s ease;
+        }
+
+        .field input::placeholder {
+          color: rgba(255, 255, 255, 0.35);
+          font-size: 12px;
         }
 
         .field input:focus {
-          border-bottom-color: rgba(255, 255, 255, 0.9);
+          border-color: rgba(221, 203, 171, 0.75);
+          background: rgba(255, 255, 255, 0.055);
         }
 
-        /* ================= PASSWORD ================= */
+        .field input#email {
+          direction: ltr;
+          text-align: left;
+        }
+
+        /* PASSWORD VISIBILITY */
 
         .password-wrapper {
           position: relative;
+          width: 100%;
         }
 
         .password-wrapper input {
-          padding-right: 35px;
+          padding-right: 13px;
+          padding-left: 44px;
         }
 
         .eye-button {
           position: absolute;
-          right: 0;
-          bottom: 5px;
+          top: 50%;
+          left: 12px;
+          display: flex;
+          width: 25px;
+          height: 25px;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
+          transform: translateY(-50%);
           border: none;
           background: transparent;
           color: rgba(255, 255, 255, 0.6);
-          font-size: 15px;
+          font-size: 16px;
           cursor: pointer;
-          padding: 0;
         }
 
         .eye-button:hover {
-          color: white;
+          color: #e4d2b0;
         }
 
-        /* ================= FORGOT ================= */
+        /* FORGOT PASSWORD */
 
         .forgot {
           display: inline-block;
-          color: rgba(255, 255, 255, 0.65);
+          margin-top: 0;
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 11px;
           text-decoration: none;
-          font-size: 8px;
-          font-weight: 500;
-          letter-spacing: 2.5px;
-          margin-top: 2px;
-          transition: 0.25s ease;
+          transition: color 0.25s ease;
         }
 
         .forgot:hover {
-          color: white;
+          color: #e4d2b0;
         }
 
-        /* ================= BUTTON ================= */
+        /* SIGN IN BUTTON */
 
         .sign-in-button {
-          width: 100%;
-          height: 44px;
-          margin-top: 24px;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 12px;
-          border: 1px solid rgba(255, 255, 255, 0.35);
-          background: rgba(255, 255, 255, 0.02);
-          color: rgba(255, 255, 255, 0.9);
+          gap: 10px;
+          width: 100%;
+          height: 48px;
+          margin-top: 25px;
+          border: 1px solid rgba(221, 203, 171, 0.5);
+          background: rgba(221, 203, 171, 0.07);
+          color: #f5f1e9;
+          font-family: var(--font-sans), 'Vazirmatn', sans-serif;
+          font-size: 13px;
           cursor: pointer;
-          font-size: 9px;
-          font-weight: 500;
-          letter-spacing: 3.5px;
-          backdrop-filter: blur(2px);
-          transition: 0.35s ease;
+          transition:
+            background 0.3s ease,
+            border-color 0.3s ease;
         }
 
         .sign-in-button:hover {
-          background: rgba(255, 255, 255, 0.08);
-          border-color: rgba(255, 255, 255, 0.7);
+          border-color: #e4d2b0;
+          background: rgba(221, 203, 171, 0.15);
         }
 
         .sign-in-arrow {
-          font-size: 14px;
+          font-size: 16px;
         }
 
-        /* ================= CREATE ACCOUNT ================= */
+        /* CREATE ACCOUNT */
 
         .create-account {
-          margin-top: 28px;
           display: flex;
           flex-direction: column;
-          gap: 7px;
+          align-items: flex-start;
+          gap: 11px;
+          margin-top: 30px;
         }
 
         .create-account-label {
-          color: rgba(255, 255, 255, 0.5);
-          font-size: 8px;
-          font-weight: 500;
-          letter-spacing: 3px;
+          color: rgba(255, 255, 255, 0.55);
+          font-size: 12px;
         }
 
         .create-account a {
-          display: flex;
+          display: inline-flex;
           align-items: center;
-          gap: 8px;
-          width: fit-content;
+          gap: 9px;
           color: rgba(255, 255, 255, 0.9);
+          font-size: 12px;
           text-decoration: none;
-          font-size: 9px;
-          font-weight: 500;
-          letter-spacing: 3px;
-          transition: 0.25s ease;
+          transition: opacity 0.25s ease;
         }
 
         .create-account a:hover {
-          opacity: 0.6;
-          transform: translateX(3px);
+          opacity: 0.65;
         }
 
-        .create-arrow {
-          font-size: 14px;
-        }
-
-        /* ================= RESPONSIVE ================= */
+        /* TABLET */
 
         @media (max-width: 900px) {
           .background {
-            background-size: 850px auto;
+          background-size: auto 85vh;
+          background-position: right top;
+          background-repeat: no-repeat;
+        }
+          .overlay {
+            background: linear-gradient(
+              270deg,
+              #080706 0%,
+              rgba(8, 7, 6, 0.97) 38%,
+              rgba(8, 7, 6, 0.82) 55%,
+              rgba(8, 7, 6, 0.18) 100%
+            );
           }
+
+          .content {
+              width: min(360px, 43vw);
+              margin-left: 5vw;
+              margin-right: auto;
+            }
+
           .header {
-            padding: 30px 32px;
+            padding: 28px 4vw;
           }
+
           .tagline {
             display: none;
           }
-          .content {
-            width: 340px;
-            margin-left: 6vw;
-          }
         }
 
-        @media (max-width: 700px) {
-          .background {
-            background-size: cover;
-            background-position: 65% center;
-          }
-          .header {
-            padding: 24px 22px;
-          }
-          .content {
-            width: auto;
-            margin: 5vh 24px 0;
-          }
-          .content h1 {
-            font-size: 30px;
-          }
-        }
+        /* MOBILE */
+
+       @media (max-width: 600px) {
+  .login-page {
+    min-height: 100vh;
+  }
+
+  .background {
+    background-size: auto 45vh;
+    background-position: right top;
+    background-repeat: no-repeat;
+  }
+
+  .overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(8, 7, 6, 0.02) 0%,
+      rgba(8, 7, 6, 0.08) 45%,
+      rgba(8, 7, 6, 0.65) 75%,
+      #080706 100%
+    );
+  }
+
+  .header {
+    padding: 22px 20px;
+  }
+
+  .logo {
+    font-size: 17px;
+  }
+
+  .back-link {
+    font-size: 11px;
+  }
+
+  .content {
+    width: auto;
+    margin: 34vh 24px 45px;
+  }
+
+  .content h1 {
+    font-size: 25px;
+    line-height: 1.9;
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
+
+  .form {
+    margin-top: 25px;
+  }
+}
       `}</style>
 
-      <main className="login-page">
-        <div className="background" />
-        <div className="overlay" />
+      <main className="login-page" dir="rtl">
+        <div className="background" aria-hidden="true" />
+        <div className="overlay" aria-hidden="true" />
 
-        {/* HEADER */}
         <header className="header">
           <Link href="/" className="logo">
             <span className="logo-star">✦</span>
-            <span>AUREL</span>
+            <span>پرتو</span>
           </Link>
 
-          <div className="tagline">
-            OBJECTS OF LIGHT.
-          </div>
+          <div className="tagline">صفحه ورود</div>
 
           <Link href="/" className="back-link">
-            BACK TO SITE
-            <span className="back-arrow">→</span>
+            <span>بازگشت به سایت</span>
+            <span aria-hidden="true">←</span>
           </Link>
         </header>
 
-        {/* LOGIN */}
         <section className="content">
-          <div className="welcome">
-            WELCOME BACK
-          </div>
+          <div className="welcome">خوش برگشتید</div>
 
           <h1>
-            ENTER THE
+            به دنیای
             <br />
-            WORLD OF AUREL.
+            <span className="brand-name">پرتو</span> خوش آمدید.
           </h1>
 
           <p className="subtitle">
-            Sign in to continue your journey.
+            برای ادامه مسیر خود وارد حساب کاربری‌تان شوید.
           </p>
 
           <form className="form" onSubmit={handleSubmit}>
             <div className="field">
-              <label htmlFor="email">EMAIL</label>
-              <input id="email" type="email" required />
+              <label htmlFor="email">آدرس ایمیل</label>
+              <input
+                id="email"
+                type="email"
+                placeholder="example@email.com"
+                autoComplete="email"
+                required
+              />
             </div>
 
             <div className="field">
-              <label htmlFor="password">PASSWORD</label>
+              <label htmlFor="password">رمز عبور</label>
+
               <div className="password-wrapper">
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
+                  placeholder="رمز عبور خود را وارد کنید"
+                  autoComplete="current-password"
                   required
                 />
+
                 <button
                   type="button"
                   className="eye-button"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => setShowPassword((previous) => !previous)}
+                  aria-label={
+                    showPassword ? 'مخفی کردن رمز عبور' : 'نمایش رمز عبور'
+                  }
                 >
                   {showPassword ? '◉' : '◌'}
                 </button>
@@ -405,23 +488,25 @@ export default function LoginPage() {
             </div>
 
             <Link href="/forgot-password" className="forgot">
-              FORGOT PASSWORD?
+              رمز عبور خود را فراموش کرده‌اید؟
             </Link>
 
             <button type="submit" className="sign-in-button">
-              <span>SIGN IN</span>
-              <span className="sign-in-arrow">→</span>
+              <span>ورود به حساب کاربری</span>
+              <span className="sign-in-arrow" aria-hidden="true">
+                ←
+              </span>
             </button>
           </form>
 
           <div className="create-account">
             <span className="create-account-label">
-              NEW TO AUREL?
+              هنوز عضو پرتو نشده‌اید؟
             </span>
 
             <Link href="/signup">
-              CREATE ACCOUNT
-              <span className="create-arrow">→</span>
+              <span>ایجاد حساب کاربری</span>
+              <span aria-hidden="true">←</span>
             </Link>
           </div>
         </section>

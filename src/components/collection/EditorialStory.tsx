@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useRef } from 'react';
@@ -9,14 +10,11 @@ import { useGSAP } from '@gsap/react';
 gsap.registerPlugin(ScrollTrigger);
 
 export const EditorialStory = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      // --------------------------------------------------
-      // IMAGE PARALLAX
-      // --------------------------------------------------
       gsap.to(imageRef.current, {
         yPercent: 4,
         scale: 1.03,
@@ -29,9 +27,6 @@ export const EditorialStory = () => {
         },
       });
 
-      // --------------------------------------------------
-      // CONTENT REVEAL
-      // --------------------------------------------------
       gsap.from('.story-reveal', {
         opacity: 0,
         y: 18,
@@ -45,266 +40,142 @@ export const EditorialStory = () => {
         },
       });
     },
-    {
-      scope: containerRef,
-    }
+    { scope: containerRef }
   );
 
   return (
     <section
       ref={containerRef}
+      dir="rtl"
+      lang="fa"
       className="
-        relative
-        w-full
-        aspect-[3/1]
-        overflow-hidden
-        bg-[#100e0c]
-        text-[#f4f0e9]
+        relative aspect-[3/1] w-full overflow-hidden
+        bg-[#100e0c] text-[#f4f0e9]
       "
     >
-      {/* =====================================================
-          BACKGROUND IMAGE
-          ===================================================== */}
+      {/* Background image */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div
           ref={imageRef}
-          className="
-            absolute
-            -inset-[3%]
-            w-[106%]
-            h-[106%]
-          "
+          className="absolute -inset-[3%] h-[106%] w-[106%]"
         >
           <Image
-            src="/images/editorial-story.png"
-            alt="AUREL Jewellery Story"
+            src="/images/collection/editorial-story.png"
+            alt="داستان جواهرات اورل"
             fill
             priority
             sizes="100vw"
-            className="
-              object-cover
-              object-center
-            "
+            className="object-cover object-center"
           />
         </div>
 
-
-
-        {/* Dark left side — exactly like reference */}
+        {/* Overlay for text readability */}
         <div
           className="
-            absolute
-            inset-0
-            bg-gradient-to-r
+            absolute inset-0
+            bg-gradient-to-l
             from-[#100d0b]/95
-            via-[#17120f]/20
+            via-[#17120f]/25
             to-transparent
           "
         />
 
-        {/* Slight dark vignette on right */}
         <div
           className="
-            absolute
-            inset-0
-            bg-gradient-to-l
-            from-[#090807]/45
+            absolute inset-0
+            bg-gradient-to-r
+            from-[#090807]/40
             via-transparent
             to-transparent
           "
         />
 
-        {/* Warm brown cinematic tint */}
-        <div
-          className="
-            absolute
-            inset-0
-            bg-[#4a382b]/10
-            mix-blend-color
-          "
-        />
+        <div className="absolute inset-0 bg-[#4a382b]/10 mix-blend-color" />
       </div>
 
-      {/* =====================================================
-          CONTENT
-          ===================================================== */}
-      <div
-        className="
-          relative
-          z-10
-          w-full
-          h-full
-          flex
-          items-center
-        "
-      >
+      {/* Main content */}
+      <div className="relative z-10 flex h-full w-full items-center">
         <div
           className="
-            ml-[8.5%]
-            w-[28%]
-            max-w-[300px]
-            flex
-            flex-col
-            justify-center
+            mr-[8.5%] flex w-[35%] max-w-[340px]
+            flex-col justify-center
           "
         >
-          {/* =================================================
-              BRAND
-              ================================================= */}
-          <span
-            className="
-              story-reveal
-              block
-              mb-[12px]
-              text-[6px]
-              sm:text-[7px]
-              md:text-[8px]
-              tracking-[0.38em]
-              uppercase
-              font-light
-              text-[#c9c0b5]
-            "
-          >
-            AUREL
-          </span>
+          
 
-          {/* =================================================
-              TITLE
-              ================================================= */}
           <h2
             className="
-              story-reveal
-              m-0
-              p-0
-              font-serif
-              font-light
-              uppercase
+              story-reveal m-0 p-0
+              font-sans font-light
+              text-[22px] sm:text-[27px] md:text-[32px]
+              lg:text-[36px] xl:text-[40px]
+              leading-[1.45] tracking-normal
               text-[#f2eee8]
-              text-[27px]
-              sm:text-[30px]
-              md:text-[33px]
-              lg:text-[36px]
-              xl:text-[39px]
-              leading-[0.9]
-              tracking-[-0.035em]
             "
           >
-            MORE THAN
+            فراتر از
             <br />
-
-            <span
-              className="
-                italic
-                font-normal
-                tracking-[-0.045em]
-              "
-            >
-              JEWELRY
+            <span className="font-sans font-normal">
+              جواهرات
             </span>
           </h2>
 
-          {/* =================================================
-              DESCRIPTION
-              ================================================= */}
           <p
             className="
-              story-reveal
-              mt-[17px]
-              mb-0
-              max-w-[175px]
-              text-[7px]
-              sm:text-[8px]
-              md:text-[9px]
-              lg:text-[8px]
-              font-light
-              leading-[1.55]
-              tracking-[0.01em]
+              story-reveal mt-4 mb-0 max-w-[240px]
+              font-sans font-light
+              text-[8px] sm:text-[9px] md:text-[10px]
+              leading-[1.9] tracking-normal
               text-[#c5beb6]
             "
           >
-            It&apos;s a feeling. A moment. A memory.
+            حسی فراتر از زیبایی؛ لحظه‌ای برای ماندن در خاطر.
             <br />
-            A reminder of what truly matters.
+            یادآوری آنچه در زندگی واقعاً ارزشمند است.
           </p>
         </div>
       </div>
 
-      {/* =====================================================
-          WATCH THE STORY — RIGHT SIDE
-          ===================================================== */}
+      {/* Story button */}
       <div
         className="
-          story-reveal
-          absolute
-          right-[7.5%]
-          top-1/2
-          z-20
+          story-reveal absolute left-[7.5%] top-1/2 z-20
           -translate-y-1/2
         "
       >
         <button
+          type="button"
+          aria-label="تماشای داستان اورل"
           className="
-            group
-            flex
-            items-center
-            gap-[9px]
-            text-[#e9e4dc]
+            group flex items-center gap-2.5
+            font-sans text-[#e9e4dc]
           "
         >
-          {/* PLAY CIRCLE */}
           <span
             className="
-              flex
-              h-[27px]
-              w-[27px]
-              items-center
-              justify-center
-              rounded-full
-              border
-              border-[#aaa39a]/70
-              transition-all
-              duration-500
+              flex h-7 w-7 items-center justify-center
+              rounded-full border border-[#aaa39a]/70
+              transition-all duration-500
+              group-hover:scale-110
               group-hover:border-[#f5f1eb]
               group-hover:bg-white/5
-              group-hover:scale-110
             "
           >
-            <span
-              className="
-                ml-[1px]
-                text-[5px]
-                text-[#eee9e1]
-              "
-            >
-              ▶
-            </span>
+            <span className="text-[8px]">▶</span>
           </span>
 
-          {/* TEXT */}
           <span
             className="
-              relative
-              pb-[2px]
-              text-[7px]
-              sm:text-[8px]
-              tracking-[0.24em]
-              uppercase
-              font-light
-              whitespace-nowrap
+              relative whitespace-nowrap pb-1
+              font-sans text-[8px] sm:text-[9px]
+              font-light tracking-normal
             "
           >
-            WATCH THE STORY
-
+            تماشای داستان
             <span
               className="
-                absolute
-                left-0
-                bottom-0
-                h-px
-                w-0
-                bg-[#eee9e1]
-                transition-all
-                duration-500
+                absolute bottom-0 right-0 h-px w-0
+                bg-[#eee9e1] transition-all duration-500
                 group-hover:w-full
               "
             />
@@ -312,20 +183,11 @@ export const EditorialStory = () => {
         </button>
       </div>
 
-      {/* =====================================================
-          SUBTLE FILM GRAIN / VIGNETTE
-          ===================================================== */}
+      {/* Subtle vignette */}
       <div
         className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-30
-          bg-[radial-gradient(
-            ellipse_at_center,
-            transparent_35%,
-            rgba(0,0,0,0.28)_100%
-          )]
+          pointer-events-none absolute inset-0 z-30
+          bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,0.28)_100%)]
         "
       />
     </section>
