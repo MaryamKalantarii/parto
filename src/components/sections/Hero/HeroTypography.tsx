@@ -86,7 +86,7 @@ export function HeroTypography() {
     <div
       ref={containerRef}
       dir="rtl"
-      className="pointer-events-none absolute inset-y-0 right-0 z-10 flex w-full flex-col justify-center px-6 text-right select-none sm:w-auto sm:px-12 md:px-16 lg:px-20"
+      className="pointer-events-none absolute inset-y-0 right-0 z-10 flex w-full flex-col justify-start pt-28 sm:justify-center sm:pt-0 px-6 text-right select-none sm:w-auto sm:px-12 md:px-16 lg:px-20"
     >
       {/* 1. زیرعنوان ظریف */}
       <div ref={tagRef} className="mb-2 flex items-center gap-2.5 sm:mb-3">

@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from "react";
@@ -16,27 +15,27 @@ interface CollectionItem {
 const COLLECTION_ITEMS: CollectionItem[] = [
   {
     id: "ring",
-    number: "01",
-    title: "NOCTURNE",
-    subtitle: "SOLITAIRE RING",
-    materials: "PLATINUM · DIAMOND",
-    positionClass: "left-[14%] bottom-[12%]",
+    number: "۰۱",
+    title: "نوکترن",
+    subtitle: "انگشتر تک نگین",
+    materials: "پلاتین · الماس",
+    positionClass: "right-[14%] bottom-[12%]", // تبدیل از left به right برای هماهنگی با فارسی
   },
   {
     id: "necklace",
-    number: "02",
-    title: "ÉCLAT",
-    subtitle: "DIAMOND NECKLACE",
-    materials: "PLATINUM · DIAMOND",
-    positionClass: "left-[45%] bottom-[12%]",
+    number: "۰۲",
+    title: "اکلا",
+    subtitle: "گردنبند الماس",
+    materials: "پلاتین · الماس",
+    positionClass: "right-[45%] bottom-[12%]",
   },
   {
     id: "earrings",
-    number: "03",
-    title: "FORMA",
-    subtitle: "SCULPTURAL EARRINGS",
-    materials: "WHITE GOLD · DIAMOND",
-    positionClass: "left-[76%] bottom-[12%]",
+    number: "۰۳",
+    title: "فورما",
+    subtitle: "گوشواره مجسمه‌ای",
+    materials: "طلای سفید · الماس",
+    positionClass: "right-[76%] bottom-[12%]",
   },
 ];
 
@@ -120,59 +119,55 @@ export function CollectionSection() {
         />
       </div>
 
-      {/* Top editorial heading */}
+      {/* Top editorial heading (در سمت راست برای زبان فارسی) */}
       <div
         className="
           absolute z-10
-          left-5 top-7
+          right-5 top-7
           max-w-[260px]
-          space-y-3
-          sm:left-8 sm:top-10
+          space-y-3 text-right
+          sm:right-8 sm:top-10
           sm:max-w-xs
-          md:left-16 md:top-12
+          md:right-16 md:top-12
         "
       >
-        <div className="flex items-center gap-3">
-          <span className="font-mono text-[9px] tracking-[0.3em] text-[#B6A58C] sm:text-[10px]">
-            04
-          </span>
-
+        <div className="flex items-center justify-end gap-3">
           <span className="h-px w-6 bg-[#B6A58C]/50" />
+          <span className="font-mono text-[9px] tracking-[0.3em] text-[#B6A58C] sm:text-[10px]">
+            ۰۴
+          </span>
         </div>
 
-        <h2
+   <h2
           className="
             font-serif font-extralight
             text-[clamp(1.8rem,7vw,2.5rem)]
             leading-[1.08]
-            tracking-[0.1em]
+            tracking-[0.05em]
             uppercase
+            whitespace-nowrap
             sm:text-4xl
             lg:text-5xl
-            lg:tracking-[0.15em]
           "
         >
-          THE
-          <br />
-          COLLECTION
+          مجموعه آثار
         </h2>
 
         <p
           className="
-            max-w-[220px]
+            ml-auto max-w-[220px]
             pt-1
             font-serif font-light
-            text-[10px]
+            text-[11px]
             leading-[1.8]
-            tracking-[0.08em]
+            tracking-[0.05em]
             text-[#E4E1DA]/75
-            sm:text-[11px]
-            sm:tracking-[0.12em]
+            sm:text-[12px]
           "
         >
-          Objects shaped by light,
+          اشیایی شکل‌گرفته از نور،
           <br />
-          designed to be remembered.
+          طراحی‌شده برای ماندگاری در خاطر.
         </p>
       </div>
 
@@ -183,28 +178,27 @@ export function CollectionSection() {
             key={item.id}
             className={`
               absolute ${item.positionClass}
-              space-y-1
+              space-y-1 text-right
               transition-opacity duration-500
               ${activeIndex === index ? "opacity-100" : "opacity-65"}
             `}
           >
-            <div className="mb-1 flex items-center gap-2">
+            <div className="mb-1 flex items-center justify-end gap-2">
+              <span className="h-px w-5 bg-[#B6A58C]/50" />
               <span className="font-mono text-[10px] tracking-[0.2em] text-[#B6A58C]">
                 {item.number}
               </span>
-
-              <span className="h-px w-5 bg-[#B6A58C]/50" />
             </div>
 
-            <h3 className="font-serif text-lg font-light tracking-[0.2em] text-[#F7F5F0]">
+            <h3 className="font-serif text-lg font-light tracking-[0.1em] text-[#F7F5F0]">
               {item.title}
             </h3>
 
-            <p className="font-mono text-[9px] tracking-[0.15em] text-[#E4E1DA]/65">
+            <p className="font-mono text-[9px] tracking-[0.1em] text-[#E4E1DA]/65">
               {item.subtitle}
             </p>
 
-            <p className="pt-0.5 font-mono text-[8px] tracking-[0.18em] text-[#B6A58C]/90">
+            <p className="pt-0.5 font-mono text-[8px] tracking-[0.1em] text-[#B6A58C]/90">
               {item.materials}
             </p>
           </div>
@@ -216,45 +210,44 @@ export function CollectionSection() {
         className="
           absolute z-10
           bottom-[132px]
-          left-5 right-16
+          right-5 left-16 text-right
           md:hidden
         "
         aria-live="polite"
       >
-        <div className="mb-3 flex items-center gap-2">
+        <div className="mb-3 flex items-center justify-end gap-2">
+          <span className="h-px w-7 bg-[#B6A58C]/50" />
           <span className="font-mono text-[9px] tracking-[0.25em] text-[#B6A58C]">
             {activeItem.number}
           </span>
-
-          <span className="h-px w-7 bg-[#B6A58C]/50" />
         </div>
 
-        <h3 className="font-serif text-2xl font-light tracking-[0.2em]">
+        <h3 className="font-serif text-2xl font-light tracking-[0.1em]">
           {activeItem.title}
         </h3>
 
-        <p className="mt-1 font-mono text-[9px] tracking-[0.17em] text-[#E4E1DA]/75">
+        <p className="mt-1 font-mono text-[9px] tracking-[0.1em] text-[#E4E1DA]/75">
           {activeItem.subtitle}
         </p>
 
-        <p className="mt-2 font-mono text-[8px] tracking-[0.17em] text-[#B6A58C]">
+        <p className="mt-2 font-mono text-[8px] tracking-[0.1em] text-[#B6A58C]">
           {activeItem.materials}
         </p>
       </div>
 
-      {/* Right pagination indicator */}
+      {/* Left pagination indicator (جابجا شده به سمت چپ صفحه) */}
       <div
         className="
           absolute z-10
-          right-5 top-1/2
+          left-5 top-1/2
           -translate-y-1/2
           flex flex-col items-center gap-5
-          sm:right-8
-          md:right-12 md:gap-6
+          sm:left-8
+          md:left-12 md:gap-6
         "
       >
         <span className="font-mono text-[8px] tracking-[0.15em] text-[#E4E1DA]/55">
-          01
+          ۰۱
         </span>
 
         <div className="relative h-16 w-px bg-[#F7F5F0]/20 sm:h-20">
@@ -272,23 +265,23 @@ export function CollectionSection() {
         </div>
 
         <span className="font-mono text-[8px] tracking-[0.15em] text-[#E4E1DA]/55">
-          03
+          ۰۳
         </span>
       </div>
 
-      {/* Bottom navigation */}
+      {/* Bottom navigation (جابجا شده به سمت راست پایین) */}
       <div
         className="
           absolute z-20
-          bottom-6 left-5
+          bottom-6 right-5
           flex items-center gap-4
-          sm:bottom-8 sm:left-8 sm:gap-6
-          md:bottom-10 md:left-16
+          sm:bottom-8 sm:right-8 sm:gap-6
+          md:bottom-10 md:right-16
         "
       >
         <button
           type="button"
-          onClick={handlePrev}
+          onClick={handleNext}
           className="
             flex h-10 w-8 items-center justify-center
             text-lg text-[#E4E1DA]/75
@@ -298,7 +291,7 @@ export function CollectionSection() {
             focus-visible:outline-1
             focus-visible:outline-[#B6A58C]
           "
-          aria-label="Previous collection item"
+          aria-label="محصول بعدی"
         >
           ←
         </button>
@@ -314,12 +307,12 @@ export function CollectionSection() {
           "
           aria-live="polite"
         >
-          0{activeIndex + 1} / 03
+          ۰{activeIndex + 1} / ۰۳
         </span>
 
         <button
           type="button"
-          onClick={handleNext}
+          onClick={handlePrev}
           className="
             flex h-10 w-8 items-center justify-center
             text-lg text-[#E4E1DA]/75
@@ -329,22 +322,22 @@ export function CollectionSection() {
             focus-visible:outline-1
             focus-visible:outline-[#B6A58C]
           "
-          aria-label="Next collection item"
+          aria-label="محصول قبلی"
         >
           →
         </button>
       </div>
 
-      {/* Small bottom-right signature */}
+      {/* Small bottom-left signature (جابجا شده به سمت چپ پایین) */}
       <div
         className="
-          absolute bottom-9 right-5 z-10
+          absolute bottom-9 left-5 z-10
           hidden sm:block
-          md:right-12
+          md:left-12
         "
       >
         <span className="font-mono text-[8px] tracking-[0.3em] text-[#B6A58C]/65">
-          AUREL · OBJECTS OF LIGHT
+          آورل · اشیایی از نور
         </span>
       </div>
     </section>

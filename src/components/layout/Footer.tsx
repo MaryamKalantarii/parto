@@ -14,8 +14,8 @@ export function Footer() {
         {/* تصویر پس‌زمینه سنگی و تاریک */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <Image
-            src="/images/footer.png"
-            alt="AUREL Atmosphere"
+            src="/images/footer/footer.jpg"
+            alt="فضای پرتو"
             fill
             priority
             className="object-cover object-center brightness-[0.3] contrast-[1.2]"
@@ -23,26 +23,23 @@ export function Footer() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#0D0C0B]/90 via-transparent to-[#0D0C0B]/90" />
         </div>
 
-        {/* عنوان بزرگ سمت چپ */}
-        <div className="relative z-10">
+        {/* عنوان بزرگ (در سمت راست برای زبان فارسی و کاملاً در یک راستا) */}
+        <div className="relative z-10 text-right">
           <Link
             href="/collection"
             className="group inline-flex items-center gap-4 text-3xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight text-[#F3EFE6] transition-colors duration-300 hover:text-[#D8CCB8]"
           >
-            <span>
-              DISCOVER <br />
-              THE COLLECTION
+            <span className="transform transition-transform duration-500 group-hover:-translate-x-3 text-3xl md:text-5xl font-sans font-extralight">
+              ←
             </span>
-            <span className="text-3xl md:text-5xl font-sans font-extralight transform transition-transform duration-500 group-hover:translate-x-3">
-              →
-            </span>
+            <span>مشاهده مجموعه آثار</span>
           </Link>
         </div>
 
-        {/* لوگو و اسلوگان سمت راست بالای فوتر */}
-        <div className="relative z-10 hidden sm:flex flex-col items-end space-y-1">
+        {/* لوگو و اسلوگان در سمت چپ بالای فوتر (بدون فاصله: پرتو) */}
+        <div className="relative z-10 hidden sm:flex flex-col items-start space-y-1">
           <span className="font-serif tracking-[0.4em] text-lg md:text-xl text-[#F3EFE6] uppercase">
-            A U R E L
+            پرتو
           </span>
           <span className="text-[8px] md:text-[9px] font-mono tracking-[0.35em] text-[#A89379] uppercase">
             OBJECTS OF LIGHT.
@@ -54,110 +51,111 @@ export function Footer() {
       {/* 2. بخش اصلی لینک‌ها و ناوبری فوتر */}
       {/* ------------------------------------------------------------- */}
       <div className="max-w-7xl mx-auto px-6 md:px-16 lg:px-20 pt-16 pb-12">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-10 md:gap-8 pb-16 border-b border-white/[0.08]">
-          {/* ستون اول: برند و لوگو */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-10 md:gap-8 pb-16 border-b border-white/[0.08] text-right">
+          
+          {/* ستون اول: برند و لوگو (بدون فاصله: پرتو) */}
           <div className="col-span-2 md:col-span-1 space-y-3">
             <h2 className="font-serif tracking-[0.35em] text-xl text-[#F3EFE6] uppercase">
-              A U R E L
+              پرتو
             </h2>
             <p className="text-[9px] font-mono tracking-[0.3em] text-[#A89379] uppercase">
               OBJECTS OF LIGHT.
             </p>
           </div>
 
-          {/* ستون دوم: SHOP */}
+          {/* ستون دوم: فروشگاه */}
           <div className="space-y-4">
             <h3 className="text-[10px] font-mono tracking-[0.3em] text-[#A89379] uppercase">
-              SHOP
+              فروشگاه
             </h3>
-            <ul className="space-y-2.5 text-[11px] font-light tracking-[0.05em] text-[#D8CCB8]/80">
+            <ul className="space-y-2.5 text-[12px] font-light tracking-[0.05em] text-[#D8CCB8]/80">
               <li>
                 <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-                  Rings
+                  انگشترها
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-                  Necklaces
+                  گردنبندها
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-                  Earrings
+                  گوشواره‌ها
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-                  Bracelets
+                  دستبندها
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* ستون سوم: ABOUT */}
+          {/* ستون سوم: درباره ما */}
           <div className="space-y-4">
             <h3 className="text-[10px] font-mono tracking-[0.3em] text-[#A89379] uppercase">
-              ABOUT
+              درباره ما
             </h3>
-            <ul className="space-y-2.5 text-[11px] font-light tracking-[0.05em] text-[#D8CCB8]/80">
+            <ul className="space-y-2.5 text-[12px] font-light tracking-[0.05em] text-[#D8CCB8]/80">
               <li>
                 <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-                  Our Story
+                  داستان ما
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-                  Craftsmanship
+                  هنر ساخت
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-                  Sustainability
+                  پایداری
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-                  Journal
+                  مجله
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* ستون چهارم: SUPPORT */}
+          {/* ستون چهارم: پشتیبانی */}
           <div className="space-y-4">
             <h3 className="text-[10px] font-mono tracking-[0.3em] text-[#A89379] uppercase">
-              SUPPORT
+              پشتیبانی
             </h3>
-            <ul className="space-y-2.5 text-[11px] font-light tracking-[0.05em] text-[#D8CCB8]/80">
+            <ul className="space-y-2.5 text-[12px] font-light tracking-[0.05em] text-[#D8CCB8]/80">
               <li>
                 <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-                  Shipping
+                  روش‌های ارسال
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-                  Returns
+                  بازگرداندن کالا
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-                  Size Guide
+                  راهنمای سایز
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-                  FAQ
+                  سوالات متداول
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* ستون پنجم: FOLLOW US (جایگزین آیکون‌های شبکه اجتماعی با SVG اختصاصی) */}
+          {/* ستون پنجم: شبکه‌های اجتماعی */}
           <div className="space-y-4 col-span-2 md:col-span-1">
             <h3 className="text-[10px] font-mono tracking-[0.3em] text-[#A89379] uppercase">
-              FOLLOW US
+              ما را دنبال کنید
             </h3>
-            <div className="flex items-center gap-4 text-[#D8CCB8]/80">
+            <div className="flex items-center justify-end md:justify-start gap-4 text-[#D8CCB8]/80">
               {/* Instagram */}
               <Link href="#" aria-label="Instagram" className="hover:text-[#F3EFE6] transition-colors">
                 <svg className="w-4 h-4 fill-none stroke-current stroke-[1.5]" viewBox="0 0 24 24">
@@ -186,21 +184,22 @@ export function Footer() {
               </Link>
             </div>
           </div>
+
         </div>
 
         {/* ------------------------------------------------------------- */}
         {/* 3. کپی‌رایت و لینک‌های پایین فوتر */}
         {/* ------------------------------------------------------------- */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[10px] font-mono text-[#A89379]/70 tracking-[0.15em] gap-4">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] font-sans text-[#A89379]/70 tracking-wider gap-4">
           <div>
-            © {new Date().getFullYear()} AUREL. All rights reserved.
+            © {new Date().getFullYear()} پرتو. تمامی حقوق محفوظ است.
           </div>
           <div className="flex items-center gap-6">
             <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-              Terms & Conditions
+              قوانین و مقررات
             </Link>
             <Link href="#" className="hover:text-[#F3EFE6] transition-colors">
-              Privacy Policy
+              حریم خصوصی
             </Link>
           </div>
         </div>

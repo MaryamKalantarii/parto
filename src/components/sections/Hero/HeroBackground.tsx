@@ -56,10 +56,10 @@ export function HeroBackground() {
   <picture>
     <source
       media="(max-width: 1023px)"
-      srcSet="/images/hero/hero-mobile.png"
+      srcSet="/images/hero/phonehero.jpg"
     />
     <img
-      src="/images/hero-bggg.png"
+      src="/images/hero/hero.png"
       alt=""
       className="h-full w-full object-cover object-center"
     />

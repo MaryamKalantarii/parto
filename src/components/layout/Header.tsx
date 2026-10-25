@@ -9,10 +9,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "COLLECTION", href: "/collection" },
-  { label: "PRODUCT", href: "/product" },
-  { label: "ABOUT", href: "/about" },
-  { label: "CONTACT", href: "/contact" },
+  { label: "مجموعه آثار", href: "/collection" },
+  { label: "محصولات", href: "/products" },
+  { label: "درباره ما", href: "/about" },
+  { label: "تماس با ما", href: "/contact" },
 ];
 
 export function Header() {
@@ -51,7 +51,7 @@ export function Header() {
         className={`
           fixed top-0 left-0 w-full z-50 transition-all duration-500
           px-8 sm:px-14 py-6
-          flex items-center justify-between
+          hidden lg:flex items-center justify-between
           ${
             scrolled
               ? "bg-[#050505]/80 backdrop-blur-md py-4 border-b border-white/5"
@@ -59,35 +59,35 @@ export function Header() {
           }
         `}
       >
-        {/* DESKTOP LEFT: LOGO + EDITION — ORIGINAL STRUCTURE PRESERVED */}
+        {/* سمت راست دسکتاپ: لوگو و نسخه */}
         <div className="flex items-center gap-6">
           <Link
             href="/"
             className="text-sm tracking-[0.3em] font-serif font-light text-[#F7F5F0] hover:text-[#D8C2A8] transition-colors duration-300"
           >
-            AUREL
+            پرتو
           </Link>
 
-          <div className="hidden md:flex items-center gap-2 pl-6 border-l border-white/10">
+          <div className="flex items-center gap-2 pr-6 border-r border-white/10">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
             </span>
 
             <span className="text-[9px] tracking-[0.25em] text-[#E8E5DF]/50 uppercase font-mono">
-              2026 EDITION
+              نسخه ۲۰۲۶
             </span>
           </div>
         </div>
 
-        {/* DESKTOP NAVIGATION — UNCHANGED */}
-        <nav className="hidden lg:flex items-center gap-10">
+        {/* ناوبری دسکتاپ */}
+        <nav className="flex items-center gap-10">
           {navItems.map((item) => (
             <Link
               key={item.label}
               href={item.href}
               className="
-                relative text-[10px] tracking-[0.25em] text-[#E8E5DF]/70 uppercase font-light
+                relative text-[11px] tracking-[0.15em] text-[#E8E5DF]/70 uppercase font-light
                 transition-colors duration-300 hover:text-[#F7F5F0]
                 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px]
                 after:bg-white/60 after:transition-all after:duration-300 hover:after:w-full
@@ -98,12 +98,12 @@ export function Header() {
           ))}
         </nav>
 
-        {/* RIGHT ACTIONS — DESKTOP STRUCTURE PRESERVED */}
-        <div className="flex items-center gap-6">
+        {/* سمت چپ دسکتاپ: سبد خرید، حساب کاربری و ورود */}
+        <div className="flex items-center gap-4">
           <Link
             href="/cart"
-            aria-label="Shopping Bag"
-            className="group relative flex items-center justify-center p-1.5 text-[#E8E5DF]/70 hover:text-[#D8C2A8] transition-colors duration-300"
+            aria-label="سبد خرید"
+            className="group relative flex items-center justify-center p-1.5 text-[#E8E5DF]/70 hover:text-[#D8C2A8] transition-colors duration-300 ml-2"
           >
             <svg
               className="w-5 h-5 stroke-[1.2] transition-transform duration-300 group-hover:scale-110"
@@ -122,32 +122,28 @@ export function Header() {
           </Link>
 
           <Link
-            href="/login"
-            className="px-5 py-1.5 rounded-full border border-white/15 text-[10px] tracking-[0.25em] text-[#E8E5DF] hover:border-[#D8C2A8] hover:text-[#D8C2A8] hover:bg-white/5 transition-all duration-300 uppercase font-light"
+            href="/account"
+            className="px-4 py-1.5 rounded-full border border-white/15 text-[10px] tracking-[0.15em] text-[#E8E5DF] hover:border-[#D8C2A8] hover:text-[#D8C2A8] hover:bg-white/5 transition-all duration-300 uppercase font-light"
           >
-            LOGIN
+            حساب کاربری
+          </Link>
+
+          <Link
+            href="/login"
+            className="px-4 py-1.5 rounded-full bg-[#F7F5F0] text-[#050505] text-[10px] tracking-[0.15em] hover:bg-[#D8C2A8] transition-all duration-300 uppercase font-light"
+          >
+            ورود
           </Link>
         </div>
-
-        {/* MOBILE HAMBURGER — ONLY VISIBLE ON MOBILE */}
-        <button
-          type="button"
-          onClick={() => setMenuOpen((open) => !open)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          aria-controls="aurel-mobile-navigation"
-          className="hidden"
-        />
       </header>
 
-      {/* MOBILE NAVIGATION — SEPARATE FROM DESKTOP HEADER */}
+      {/* ناوبری موبایل */}
       <div className="lg:hidden">
-        {/* Mobile top bar */}
-        <div className="fixed top-0 inset-x-0 z-[70] flex h-[68px] items-center justify-between border-b border-white/10 bg-[#11100F]/85 px-5 text-[#F7F5F0] backdrop-blur-xl lg:hidden">
+        <div className="fixed top-0 inset-x-0 z-[70] flex h-[68px] items-center justify-between border-b border-white/10 bg-[#11100F]/85 px-5 text-[#F7F5F0] backdrop-blur-xl">
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-label={menuOpen ? "بستن منو" : "باز کردن منو"}
             aria-expanded={menuOpen}
             aria-controls="aurel-mobile-navigation"
             className="flex h-10 w-10 items-center justify-center"
@@ -175,23 +171,23 @@ export function Header() {
             onClick={closeMenu}
             className="absolute left-1/2 -translate-x-1/2 font-serif text-xl font-light tracking-[0.3em]"
           >
-            AUREL
+            پرتو
           </Link>
 
           <Link
             href="/login"
             onClick={closeMenu}
-            className="text-[9px] tracking-[0.18em] transition-colors hover:text-[#D8C2A8]"
+            className="text-[10px] tracking-[0.15em] transition-colors hover:text-[#D8C2A8]"
           >
-            SIGN IN <span className="ml-1">↗</span>
+            ورود
           </Link>
         </div>
 
-        {/* Full-screen menu */}
+        {/* منوی تمام صفحه موبایل */}
         <div
           id="aurel-mobile-navigation"
           aria-hidden={!menuOpen}
-          className={`fixed inset-0 z-[65] bg-[#11100F] text-[#F7F5F0] transition-all duration-500 ${
+          className={`fixed inset-0 z-[65] bg-[#11100F] text-[#F7F5F0] transition-all duration-500 text-right ${
             menuOpen
               ? "visible translate-y-0 opacity-100"
               : "invisible -translate-y-3 pointer-events-none opacity-0"
@@ -199,7 +195,7 @@ export function Header() {
         >
           <div className="flex h-full flex-col justify-center px-7 pb-12 pt-20">
             <p className="mb-8 font-mono text-[9px] tracking-[0.3em] text-white/40">
-              AUREL — OBJECTS OF LIGHT.
+              پرتو — اصالت و درخشش.
             </p>
 
             <nav className="flex flex-col">
@@ -211,10 +207,10 @@ export function Header() {
                   onClick={closeMenu}
                   className="flex items-center justify-between border-b border-white/15 py-5 font-serif text-xl font-light tracking-wide transition-colors hover:text-[#D8C2A8]"
                 >
-                  <span>{item.label}</span>
                   <span className="font-sans text-[10px] text-white/35">
-                    0{index + 1}
+                    ۰{index + 1}
                   </span>
+                  <span>{item.label}</span>
                 </Link>
               ))}
             </nav>
@@ -223,25 +219,31 @@ export function Header() {
               href="/cart"
               tabIndex={menuOpen ? 0 : -1}
               onClick={closeMenu}
-              className="mt-7 flex items-center justify-between border-b border-white/15 py-4 text-[10px] tracking-[0.2em]"
+              className="mt-7 flex items-center justify-between border-b border-white/15 py-4 text-[11px] tracking-[0.15em]"
             >
-              SHOPPING BAG
-              <span>↗</span>
+              <span>←</span>
+              <span>سبد خرید</span>
+            </Link>
+
+            <Link
+              href="/account"
+              tabIndex={menuOpen ? 0 : -1}
+              onClick={closeMenu}
+              className="mt-5 flex items-center justify-between border border-white/25 px-5 py-4 text-[11px] tracking-[0.15em] transition-colors hover:border-[#D8C2A8] hover:text-[#D8C2A8]"
+            >
+              <span>←</span>
+              <span>حساب کاربری</span>
             </Link>
 
             <Link
               href="/login"
               tabIndex={menuOpen ? 0 : -1}
               onClick={closeMenu}
-              className="mt-5 flex items-center justify-between border border-white/25 px-5 py-4 text-[10px] tracking-[0.2em] transition-colors hover:border-[#D8C2A8] hover:text-[#D8C2A8]"
+              className="mt-4 flex items-center justify-between bg-[#F7F5F0] text-[#050505] px-5 py-4 text-[11px] tracking-[0.15em] transition-colors hover:bg-[#D8C2A8]"
             >
-              SIGN IN TO YOUR ACCOUNT
-              <span>↗</span>
+              <span>←</span>
+              <span>ورود به حساب</span>
             </Link>
-
-            <p className="mt-10 font-mono text-[8px] tracking-[0.2em] text-white/30">
-              A STUDY IN FORM, MATERIAL & PERMANENCE
-            </p>
           </div>
         </div>
       </div>

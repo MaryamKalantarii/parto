@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useEffect, useRef } from "react";
@@ -14,65 +13,16 @@ export function SavoirFaire() {
   const sectionRef = useRef<HTMLElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const eyebrowRef = useRef<HTMLSpanElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const desc1Ref = useRef<HTMLParagraphElement>(null);
-  const desc2Ref = useRef<HTMLParagraphElement>(null);
-  const linkRef = useRef<HTMLAnchorElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
-
     if (!section) return;
 
-    const mediaQuery = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    );
-
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mediaQuery.matches) return;
 
     const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-
-      // Responsive image parallax
-      mm.add(
-        {
-          mobile: "(max-width: 639px)",
-          tablet: "(min-width: 640px) and (max-width: 1023px)",
-          desktop: "(min-width: 1024px)",
-        },
-        (context) => {
-          const conditions = context.conditions as {
-            mobile: boolean;
-            tablet: boolean;
-            desktop: boolean;
-          };
-
-          const isMobile = conditions.mobile;
-          const isTablet = conditions.tablet;
-
-          gsap.fromTo(
-            imageRef.current,
-            {
-              y: isMobile ? -8 : isTablet ? -15 : -25,
-              scale: isMobile ? 1.02 : 1.05,
-            },
-            {
-              y: isMobile ? 8 : isTablet ? 15 : 25,
-              scale: 1,
-              ease: "none",
-              scrollTrigger: {
-                trigger: section,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1,
-              },
-            }
-          );
-        }
-      );
-
-      // Cinematic entrance animation
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -83,64 +33,14 @@ export function SavoirFaire() {
 
       tl.fromTo(
         imageContainerRef.current,
-        {
-          opacity: 0,
-          clipPath: "inset(0 100% 0 0)",
-        },
-        {
-          opacity: 1,
-          clipPath: "inset(0 0% 0 0)",
-          duration: 1.3,
-          ease: "expo.out",
-        }
-      )
-        .fromTo(
-          eyebrowRef.current,
-          { opacity: 0, y: 15 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power2.out",
-          },
-          "-=0.8"
-        )
-        .fromTo(
-          titleRef.current,
-          { opacity: 0, y: 25 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power2.out",
-          },
-          "-=0.6"
-        )
-        .fromTo(
-          [desc1Ref.current, desc2Ref.current],
-          { opacity: 0, y: 15 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.12,
-            ease: "power2.out",
-          },
-          "-=0.65"
-        )
-        .fromTo(
-          linkRef.current,
-          { opacity: 0, y: 12 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            ease: "power2.out",
-          },
-          "-=0.45"
-        );
-
-      return () => mm.revert();
+        { opacity: 0, scale: 0.98 },
+        { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out" }
+      ).fromTo(
+        contentRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
+        "-=0.8"
+      );
     }, section);
 
     return () => ctx.revert();
@@ -149,288 +49,110 @@ export function SavoirFaire() {
   return (
     <section
       ref={sectionRef}
-      className="
-        relative isolate w-full
-        overflow-hidden
-        bg-[#080807] text-[#F7F5F0]
-        py-16
-        sm:py-20
-        lg:flex lg:min-h-[110vh] lg:items-center
-        lg:py-28
-        xl:py-32
-        select-none
-      "
+      className="relative isolate w-full overflow-hidden bg-[#080807] text-[#F7F5F0] py-12 px-4 sm:px-6 lg:px-12 select-none"
     >
-      {/* Background lighting */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+      <div className="mx-auto w-full max-w-[1700px]">
+        
+        {/* کادر اصلی افقی با ارتفاع بیشتر */}
         <div
-          className="
-            absolute left-1/3 top-1/4
-            h-[260px] w-[260px]
-            rounded-full bg-[#B6A58C]/[0.035]
-            blur-[100px]
-            sm:h-[400px] sm:w-[400px]
-            lg:h-[500px] lg:w-[500px]
-            lg:blur-[140px]
-          "
-        />
-
-        <div
-          className="
-            absolute bottom-0 right-0
-            h-[250px] w-[250px]
-            rounded-full bg-[#171513]/40
-            blur-[90px]
-            sm:h-[350px] sm:w-[350px]
-            lg:h-[400px] lg:w-[400px]
-          "
-        />
-      </div>
-
-      <div
-        className="
-          relative z-10 mx-auto w-full
-          max-w-[1700px]
-          px-5
-          sm:px-8
-          md:px-12
-          lg:px-16
-          xl:px-20
-        "
-      >
-        <div
-          className="
-            grid grid-cols-1
-            items-center
-            gap-9
-            sm:gap-12
-            lg:grid-cols-12
-            lg:gap-12
-            xl:gap-16
-          "
+          ref={imageContainerRef}
+          className="relative w-full h-[440px] sm:h-[520px] lg:h-[580px] rounded-2xl overflow-hidden border border-[#F7F5F0]/10 bg-[#0D0C0B] shadow-2xl flex items-center"
         >
-          {/* Image */}
-          <div className="min-w-0 lg:col-span-7">
-            <div
-              ref={imageContainerRef}
-              className="
-                relative isolate w-full
-                overflow-hidden
-                border border-[#F7F5F0]/10
-                bg-[#0D0C0B]
-                shadow-2xl
-
-                aspect-[4/3]
-                min-h-0
-
-                sm:aspect-[16/11]
-
-                lg:aspect-[4/3]
-              "
-            >
-              <div
-                ref={imageRef}
-                className="absolute inset-0 will-change-transform"
-              >
-                <Image
-                  src="/images/craft-macro.jpg"
-                  alt="AUREL Haute Joaillerie Craftsmanship Detail"
-                  fill
-                  sizes="
-                    (max-width: 639px) 100vw,
-                    (max-width: 1023px) 100vw,
-                    (max-width: 1279px) 58vw,
-                    58vw
-                  "
-                  className="
-                    object-cover
-                    object-[center_45%]
-                    sm:object-center
-                    brightness-[0.86]
-                    contrast-[1.06]
-                  "
-                />
-              </div>
-
-              {/* Desktop edge blending */}
-              <div
-                className="
-                  pointer-events-none absolute inset-0
-                  hidden lg:block
-                  bg-gradient-to-r
-                  from-transparent
-                  via-transparent
-                  to-[#080807]/70
-                "
-              />
-
-              {/* Mobile bottom blending */}
-              <div
-                className="
-                  pointer-events-none absolute inset-0
-                  bg-gradient-to-t
-                  from-[#080807]/65
-                  via-transparent
-                  to-transparent
-                  lg:hidden
-                "
-              />
-
-              {/* Soft cinematic overlay */}
-              <div
-                className="
-                  pointer-events-none absolute inset-0
-                  bg-gradient-to-br
-                  from-white/[0.025]
-                  via-transparent
-                  to-black/10
-                "
-              />
-            </div>
+          {/* عکس پس‌زمینه سراسری افقی */}
+          <div ref={imageRef} className="absolute inset-0 w-full h-full">
+            <Image
+              src="/images/craft-macro.jpg" // مسیر عکس خود را اینجا بگذارید
+              alt="پرتو — فراتر از یک جواهر، یک داستان"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center brightness-[0.78] contrast-[1.08]"
+            />
+            {/* گرادینت تیره برای خوانایی کامل متن‌ها روی عکس */}
+            <div className="absolute inset-0 bg-gradient-to-l from-[#080807]/95 via-[#080807]/65 to-transparent" />
           </div>
 
-          {/* Editorial content */}
+          {/* محتوا و متن‌ها در سمت راست عکس */}
           <div
-            className="
-              flex min-w-0 flex-col justify-center
-              space-y-6
-              sm:space-y-7
-              lg:col-span-5
-              lg:space-y-8
-              lg:pl-3
-              xl:pl-8
-              2xl:pl-10
-            "
+            ref={contentRef}
+            className="relative z-10 mr-auto max-w-xl pl-6 pr-8 sm:pr-16 lg:pr-24 text-right space-y-5 w-full"
           >
-            {/* Eyebrow */}
             <div>
-              <span
-                ref={eyebrowRef}
-                className="
-                  inline-block
-                  font-mono
-                  text-[9px]
-                  tracking-[0.35em]
-                  text-[#B6A58C]
-                  uppercase
-                  sm:text-[10px]
-                  sm:tracking-[0.45em]
-                "
-              >
-                SAVOIR-FAIRE
+              <span className="inline-block font-serif text-sm tracking-[0.25em] text-[#B6A58C] uppercase">
+                پرتو
               </span>
             </div>
 
-            {/* Heading */}
-            <h2
-              ref={titleRef}
-              className="
-                font-serif font-extralight
-                text-[clamp(2.6rem,8vw,3.5rem)]
-                leading-[1.04]
-                tracking-wide
-                text-[#F7F5F0]
-                uppercase
-
-                sm:text-5xl
-                md:text-6xl
-                lg:text-5xl
-                xl:text-6xl
-              "
-            >
-              THE ART
-              <br />
-              <span className="font-light italic text-[#E4E1DA]">
-                OF LIGHT
-              </span>
+            <h2 className="font-serif font-extralight text-3xl sm:text-4xl lg:text-5xl tracking-wide text-[#F7F5F0]">
+              فراتر از یک جواهر، یک داستان
             </h2>
 
-            {/* Descriptions */}
-            <div className="max-w-xl space-y-4 pt-1 sm:pt-2">
-              <p
-                ref={desc1Ref}
-                className="
-                  font-serif font-light
-                  text-base
-                  leading-relaxed
-                  tracking-wide
-                  text-[#F7F5F0]/90
+            <p className="font-serif font-light text-sm sm:text-base leading-relaxed text-[#F7F5F0]/90">
+              با الهام از هنر و فرهنگ ایرانی، هر قطعه از مجموعه پرتو بازتابی از اصالت، ظرافت و درخشش است.
+            </p>
 
-                  sm:text-lg
-                  xl:text-xl
-                "
-              >
-                Every Aurel piece begins where precision meets imagination.
-              </p>
-
-              <p
-                ref={desc2Ref}
-                className="
-                  max-w-md
-                  font-sans font-light
-                  text-[11px]
-                  leading-[1.9]
-                  tracking-[0.06em]
-                  text-[#E4E1DA]/65
-
-                  sm:text-xs
-                  sm:tracking-wider
-                  xl:text-sm
-                "
-              >
-                Forged in absolute darkness, refined by master artisans.
-                Each diamond facet is calculated to capture, bend, and
-                amplify the quietest nuances of ambient light.
-              </p>
-            </div>
-
-            {/* Discover link */}
-            <div className="pt-2 sm:pt-3">
+            <div className="pt-3">
               <a
-                ref={linkRef}
-                href="#craftsmanship"
-                className="
-                  group relative inline-flex
-                  min-h-11
-                  items-center gap-3
-                  py-2
-                  font-mono
-                  text-[9px]
-                  tracking-[0.2em]
-                  text-[#B6A58C]
-                  uppercase
-                  transition-colors duration-500
-                  hover:text-[#F7F5F0]
-                  sm:text-[10px]
-                  sm:tracking-[0.3em]
-                "
+                href="#about"
+                className="group relative inline-flex items-center gap-3 px-7 py-3 border border-[#F7F5F0]/30 rounded-full font-serif text-xs text-[#F7F5F0] hover:bg-[#F7F5F0] hover:text-[#080807] transition-all duration-500"
               >
-                <span>DISCOVER OUR CRAFT</span>
-
-                <span
-                  aria-hidden="true"
-                  className="
-                    text-sm
-                    transition-transform duration-500 ease-out
-                    group-hover:translate-x-1.5
-                  "
-                >
-                  →
-                </span>
-
-                <span
-                  className="
-                    absolute bottom-0 left-0
-                    h-px w-0
-                    bg-[#B6A58C]
-                    transition-all duration-500 ease-out
-                    group-hover:w-full
-                  "
-                />
+                <span className="transition-transform duration-500 group-hover:-translate-x-1">←</span>
+                <span>درباره ما</span>
               </a>
             </div>
           </div>
         </div>
+
+        {/* بخش خدمات چهارگانه در پایین */}
+        <div className="mt-16 pt-10 border-t border-[#F7F5F0]/10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          
+          <div className="flex flex-col items-center space-y-3">
+            <div className="text-[#B6A58C]">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+              </svg>
+            </div>
+            <h4 className="font-serif text-sm font-light text-[#F7F5F0]">پشتیبانی ۲۴ ساعته</h4>
+            <p className="font-sans text-[11px] text-[#E4E1DA]/60">در تمام مراحل خرید</p>
+          </div>
+
+          <div className="flex flex-col items-center space-y-3">
+            <div className="text-[#B6A58C]">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                <line x1="1" y1="10" x2="23" y2="10" />
+              </svg>
+            </div>
+            <h4 className="font-serif text-sm font-light text-[#F7F5F0]">پرداخت امن</h4>
+            <p className="font-sans text-[11px] text-[#E4E1DA]/60">با درگاه‌های بانکی معتبر</p>
+          </div>
+
+          <div className="flex flex-col items-center space-y-3">
+            <div className="text-[#B6A58C]">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <h4 className="font-serif text-sm font-light text-[#F7F5F0]">ضمانت اصالت کالا</h4>
+            <p className="font-sans text-[11px] text-[#E4E1DA]/60">همراه با شناسنامه معتبر</p>
+          </div>
+
+          <div className="flex flex-col items-center space-y-3">
+            <div className="text-[#B6A58C]">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="1" y="3" width="15" height="13" />
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                <circle cx="5.5" cy="18.5" r="2.5" />
+                <circle cx="18.5" cy="18.5" r="2.5" />
+              </svg>
+            </div>
+            <h4 className="font-serif text-sm font-light text-[#F7F5F0]">ارسال سریع</h4>
+            <p className="font-sans text-[11px] text-[#E4E1DA]/60">به سراسر کشور</p>
+          </div>
+
+        </div>
+
       </div>
     </section>
   );
