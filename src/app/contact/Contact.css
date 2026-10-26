@@ -1,4 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap');
+/* فونت‌ها به‌صورت لوکال از src/fonts سرو می‌شوند — بدون هیچ درخواست شبکه‌ای خارجی */
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../../fonts/DMSans-latin-var.woff2') format('woff2');
+  font-weight: 300 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../../fonts/CormorantGaramond-latin-var.woff2') format('woff2');
+  font-weight: 300 500;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --aurel-gold: #c8ad83;
