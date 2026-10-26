@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Vazirmatn } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 // ۱. تنظیم فونت Serif انگلیسی برای اعداد و برند
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
+// فونت‌ها به‌صورت لوکال از src/fonts سرو می‌شوند؛ هیچ درخواست شبکه‌ای در زمان build/dev انجام نمی‌شود
+const cormorant = localFont({
+  src: "../fonts/CormorantGaramond-latin-var.woff2",
+  weight: "300 500",
+  style: "normal",
   variable: "--font-serif",
   display: "swap",
 });
 
-// ۲. تنظیم فونت فارسی لوکس، نرم و مدرن (وزیرمتن)
-const vazirmatn = Vazirmatn({
-  subsets: ["arabic"],
-  weight: ["200", "300", "400", "500", "600"],
+// ۲. تنظیم فونت فارسی لوکس، نرم و مدرن (وزیرمتن) — فونت متغیر زیرمجموعه عربی/فارسی
+const vazirmatn = localFont({
+  src: "../fonts/Vazirmatn-arabic-var.woff2",
+  weight: "200 600",
+  style: "normal",
   variable: "--font-sans",
   display: "swap",
 });
