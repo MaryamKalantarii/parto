@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -57,20 +58,21 @@ export const RecentOrders: React.FC = () => {
 
   return (
     <div className="pt-8 text-right" dir="rtl">
-      {/* Header Area */}
+      {/* بخش عنوان */}
       <div className="flex justify-between items-center mb-6 pb-2 border-b border-white/10">
         <h2 className="font-serif text-lg font-light tracking-wide text-[#F7F5F0]">
           سفارش‌های اخیر
         </h2>
-        <Link 
-          href="/account/orders" 
+
+        <Link
+          href="/account/orders"
           className="font-sans text-xs tracking-wider text-[#8A857D] hover:text-[#D8C2A8] transition-colors"
         >
           مشاهده همه سفارش‌ها ←
         </Link>
       </div>
 
-      {/* Orders List */}
+      {/* لیست سفارش‌ها */}
       <div className="space-y-4">
         {mockOrders.map((order) => (
           <Link
@@ -80,31 +82,43 @@ export const RecentOrders: React.FC = () => {
           >
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-lg overflow-hidden border border-white/10 bg-white/5 flex-none">
-                <img 
-                  src={order.image} 
-                  alt={order.orderNumber} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                <img
+                  src={order.image}
+                  alt={order.orderNumber}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
+
               <div>
-                <div className="font-mono text-xs text-[#F7F5F0] group-hover:text-[#D8C2A8] transition-colors" dir="ltr">
+                <div
+                  className="font-mono text-xs text-[#F7F5F0] group-hover:text-[#D8C2A8] transition-colors"
+                  dir="ltr"
+                >
                   {order.orderNumber}
                 </div>
-                <div className="font-sans text-[11px] text-[#6A655D] mt-0.5">{order.date}</div>
+
+                <div className="font-sans text-[11px] text-[#6A655D] mt-0.5">
+                  {order.date}
+                </div>
               </div>
             </div>
 
             <div className="flex items-center gap-6">
-              <span className={`text-[10px] font-sans px-2.5 py-1 rounded-full border ${
-                order.status === 'DELIVERED'
-                  ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10'
-                  : 'border-amber-500/30 text-amber-400 bg-amber-500/10'
-              }`}>
+              <span
+                className={`text-[10px] font-sans px-2.5 py-1 rounded-full border ${
+                  order.status === 'DELIVERED'
+                    ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10'
+                    : 'border-amber-500/30 text-amber-400 bg-amber-500/10'
+                }`}
+              >
                 {getStatusLabel(order.status)}
               </span>
 
               <div className="text-right">
-                <div className="font-serif text-sm text-[#F7F5F0]">{order.price}</div>
+                <div className="font-serif text-sm text-[#F7F5F0]">
+                  {order.price}
+                </div>
+
                 <div className="font-sans text-[11px] text-[#6A655D]">
                   {order.itemCount} محصول
                 </div>

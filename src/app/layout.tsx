@@ -19,7 +19,7 @@ const vazirmatn = Vazirmatn({
 });
 
 export const metadata: Metadata = {
-  title: "AUREL — Objects of Light",
+  title: "PARTO — Objects of Light",
   description: "A luxury jewelry brand featuring sculptural and cinematic designs.",
 };
 
