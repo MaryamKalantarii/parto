@@ -440,17 +440,11 @@ export const AboutSection = () => {
 
           <div ref={titleWrapperRef} className="relative cursor-default text-center will-change-transform">
 
-            <h1 className="relative z-10 flex items-center justify-center whitespace-nowrap font-sans text-[22vw] font-extralight uppercase leading-none tracking-[0.06em] text-transparent bg-clip-text bg-gradient-to-b from-[#F3EEE5] via-[#D1BD9F] to-[#4F463B] drop-shadow-[0_30px_60px_rgba(0,0,0,0.9)] sm:text-[19vw]">
+            <h1 className="relative z-10 flex items-center justify-center whitespace-nowrap font-sans text-[22vw] font-extralight uppercase leading-none tracking-normal text-transparent bg-clip-text bg-gradient-to-b from-[#F3EEE5] via-[#D1BD9F] to-[#4F463B] drop-shadow-[0_30px_60px_rgba(0,0,0,0.9)] sm:text-[19vw]">
 
-              {'پرتو'.split('').map((char, index) => (
-
-                <span key={index} className="aurel-letter inline-block will-change-transform">
-
-                  {char}
-
-                </span>
-
-              ))}
+             <span className="inline-block whitespace-nowrap tracking-normal">
+              پرتو
+            </span>
 
             </h1>
 
