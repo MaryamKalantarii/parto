@@ -2,9 +2,29 @@
 
 import React from "react";
 import Link from "next/link";
-import { Logo } from "@/components/home/primitives";
+import { Ico, DiamondLogo } from "@/components/icons/Ico";
+
+/* فوتر اصلی سایت */
 
 const columns = [
+  {
+    title: "راهنمای خرید",
+    links: [
+      { label: "شیوه‌های سفارش", href: "/customer-services#faq" },
+      { label: "روش‌های پرداخت", href: "/customer-services#faq" },
+      { label: "ارسال و تحویل", href: "/customer-services#faq" },
+      { label: "ضمانت اصالت", href: "/about" },
+    ],
+  },
+  {
+    title: "خدمات مشتریان",
+    links: [
+      { label: "راهنمای خرید", href: "/customer-services" },
+      { label: "شرایط بازگشت کالا", href: "/customer-services#faq" },
+      { label: "پیگیری سفارش", href: "/customer-services#track" },
+      { label: "پشتیبانی مشتریان", href: "/customer-services#support" },
+    ],
+  },
   {
     title: "دسترسی سریع",
     links: [
@@ -15,101 +35,92 @@ const columns = [
       { label: "تماس با ما", href: "/contact" },
     ],
   },
-  {
-    title: "خدمات مشتریان",
-    links: [
-      { label: "راهنمای خرید", href: "#" },
-      { label: "شرایط بازگشت کالا", href: "#" },
-      { label: "پیگیری سفارش", href: "/account" },
-      { label: "پشتیبانی مشتریان", href: "/customer-services#support" },
-    ],
-  },
-  {
-    title: "راهنمای خرید",
-    links: [
-      { label: "شیوه ثبت سفارش", href: "#" },
-      { label: "روش‌های پرداخت", href: "#" },
-      { label: "ارسال و تحویل", href: "#" },
-      { label: "ضمانت اصالت", href: "#" },
-    ],
-  },
 ];
 
-function Social({ children, label }: { children: React.ReactNode; label: string }) {
+function FooterLogo() {
   return (
-    <a href="#" aria-label={label} className="grid h-8 w-8 place-items-center rounded-full border border-[#c8a07c]/40 text-[#e2bf9f] transition hover:bg-[#e2bf9f] hover:text-[#2a1a12]">
+    <Link href="/" dir="ltr" aria-label="PARTO" className="inline-flex flex-col items-center leading-none text-[#f3dcc4]">
+      <DiamondLogo className="h-[30px] w-[36px]" />
+      <span className="mt-1 font-serif text-[40px] tracking-[0.1em]">PARTO</span>
+      <span className="mt-0.5 font-serif text-[9px] italic tracking-[0.06em] text-[#d9b48f]">Jewelry for a lifetime</span>
+    </Link>
+  );
+}
+
+function Social({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <a href="#" aria-label={label} className="grid h-[26px] w-[26px] place-items-center text-[#e8c9aa] transition hover:text-white">
       {children}
     </a>
   );
 }
 
-export function Footer() {
-  return (
-    <footer
-      className="relative w-full text-[#eadccd]"
-      style={{ background: "radial-gradient(60% 80% at 85% 0%, rgba(120,78,52,0.35), transparent 60%), linear-gradient(180deg,#1c110c,#120a07)" }}
-    >
-      <div className="mx-auto max-w-[1360px] px-5 pb-8 pt-12 sm:px-10 sm:pt-14">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 text-right md:grid-cols-3 lg:grid-cols-5 lg:gap-10">
-          {/* تماس با ما + لوگو (راست) */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-1">
-            <Logo className="!items-start" />
-            <div className="mt-6 flex gap-2.5">
-              <Social label="اینستاگرام">
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="4" y="4" width="16" height="16" rx="5" /><circle cx="12" cy="12" r="3.6" /><circle cx="17" cy="7" r=".8" fill="currentColor" /></svg>
-              </Social>
-              <Social label="تلگرام">
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"><path d="M21 4 3 11l5.5 2L10 19l3-3.5 4.5 3.5L21 4Z" /></svg>
-              </Social>
-              <Social label="واتساپ">
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7L4 20Z" /></svg>
-              </Social>
-            </div>
-          </div>
+function scrollToTop() {
+  const l = (window as unknown as { __lenis?: { scrollTo: (t: number, o?: object) => void } }).__lenis;
+  if (l) l.scrollTo(0, { duration: 1.6 });
+  else window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
-          {columns.map((c) => (
-            <div key={c.title}>
-              <h3 className="mb-4 text-[14px] font-bold text-[#e8c9aa]">{c.title}</h3>
-              <ul className="space-y-2.5 text-[12px] text-[#eadccd]/80">
-                {c.links.map((l) => (
-                  <li key={l.label}>
-                    <Link href={l.href} className="transition hover:text-[#f3dcc4]">{l.label}</Link>
-                  </li>
-                ))}
+export function Footer({ className = "" }: { className?: string }) {
+  return (
+    <footer className={`relative text-[#ecd9c6] ${className}`}>
+      {/* لبه موجی بالای فوتر */}
+      <div aria-hidden className="parto-footer-wave absolute inset-x-0 -top-[44px] h-[46px] bg-[#2a170e]" />
+      <div
+        className="relative bg-gradient-to-b from-[#2a170e] to-[#1c0f08]"
+        style={{ backgroundImage: "radial-gradient(60% 90% at 90% 0%, rgba(140,90,60,0.28), transparent 65%), linear-gradient(180deg,#2c180f,#1b0e07)" }}
+      >
+        <div className="mx-auto w-full max-w-[1200px] px-5 pb-6 pt-9 lg:px-11">
+          <div className="grid grid-cols-2 gap-y-8 text-right lg:grid-cols-[1fr_1fr_1fr_1fr_1.15fr]">
+            <div className="border-white/15 px-2 lg:border-l lg:px-8 lg:first:pr-0">
+              <h3 className="mb-4 text-[15px] font-bold text-[#f3dcc4]">تماس با ما</h3>
+              <ul className="space-y-3 text-[13px] text-[#ecd9c6]/90">
+                <li className="flex items-center gap-2"><Ico name="phone" className="h-[14px] w-[14px] flex-none text-[#d9b48f]" /><span dir="ltr">۰۲۱-۷۷۷۴۸۴۶</span></li>
+                <li className="flex items-center gap-2"><Ico name="mail" className="h-[14px] w-[14px] flex-none text-[#d9b48f]" /><span dir="ltr">info@parto.com</span></li>
+                <li className="flex items-center gap-2"><Ico name="pin" className="h-[14px] w-[14px] flex-none text-[#d9b48f]" />تهران، ایران</li>
               </ul>
             </div>
-          ))}
 
-          <div>
-            <h3 className="mb-4 text-[14px] font-bold text-[#e8c9aa]">تماس با ما</h3>
-            <ul className="space-y-2.5 text-[12px] text-[#eadccd]/80">
-              <li dir="ltr" className="text-right">۰۲۱-۷۷۷۶۴۹۸۸</li>
-              <li dir="ltr" className="text-right">info@parto.com</li>
-              <li>تهران، ایران</li>
-            </ul>
+            {columns.map((c) => (
+              <div key={c.title} className="border-white/15 px-2 lg:border-l lg:px-8">
+                <h3 className="mb-4 text-[15px] font-bold text-[#f3dcc4]">{c.title}</h3>
+                <ul className="space-y-2.5 text-[13px] text-[#ecd9c6]/90">
+                  {c.links.map((l) => (
+                    <li key={l.label}><Link href={l.href} className="transition hover:text-white">{l.label}</Link></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            <div className="col-span-2 flex flex-col items-center justify-center lg:col-span-1">
+              <FooterLogo />
+              <div className="mt-5 flex items-center gap-3" dir="ltr">
+                <Social label="اینستاگرام"><Ico name="instagram" className="h-[22px] w-[22px]" /></Social>
+                <Social label="تلگرام"><Ico name="send" className="h-[22px] w-[22px]" /></Social>
+                <Social label="واتساپ"><Ico name="whatsapp" className="h-[22px] w-[22px]" /></Social>
+                <Social label="ایتا"><Ico name="chat" className="h-[22px] w-[22px]" /></Social>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div className="mt-10 flex flex-col items-center gap-5 border-t border-white/10 pt-6 text-center text-[11px] text-[#eadccd]/60 md:mt-12 md:flex-row md:justify-between md:text-right">
-          <p>کلیه حقوق مادی و معنوی متعلق به پارتو محفوظ است © ۲۰۲۶</p>
-          <div className="flex items-center gap-3" dir="ltr">
-            <span className="grid h-9 w-9 place-items-center rounded-md bg-white/90 text-[9px] font-bold text-[#2a1a12]">نماد</span>
-            <span className="grid h-9 w-12 place-items-center rounded-md bg-white/90 text-[9px] font-bold text-[#2a1a12]">زرین‌پال</span>
-            <span className="relative h-8 w-12">
-              <span className="absolute left-1 top-1 h-6 w-6 rounded-full bg-[#d9442a]" />
-              <span className="absolute left-5 top-1 h-6 w-6 rounded-full bg-[#f2a33a]/90" />
-            </span>
-            <button
-              onClick={() => {
-                const l = (window as unknown as { __lenis?: { scrollTo: (t: number, o?: object) => void } }).__lenis;
-                if (l) l.scrollTo(0, { duration: 1.6 });
-                else window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              aria-label="بازگشت به بالا"
-              className="grid h-9 w-9 place-items-center rounded-full border border-[#e2bf9f]/70 text-[#e2bf9f] transition duration-300 hover:-translate-y-1 hover:bg-[#e2bf9f] hover:text-[#2a1a12]"
-            >
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m6 15 6-6 6 6" /></svg>
-            </button>
+          <div className="mt-8 flex flex-col-reverse items-center justify-between gap-5 border-t border-white/10 pt-5 text-[12px] text-[#ecd9c6]/75 sm:flex-row">
+            <div className="flex items-center gap-5" dir="ltr">
+              <button
+                type="button"
+                onClick={scrollToTop}
+                aria-label="بازگشت به بالا"
+                className="grid h-[38px] w-[38px] place-items-center rounded-full border border-[#e8c9aa]/70 text-[#e8c9aa] transition hover:bg-[#e8c9aa] hover:text-[#2a170e]"
+              >
+                <Ico name="chevU" className="h-[18px] w-[18px]" sw={1.8} />
+              </button>
+              <span className="relative block h-8 w-[46px]" aria-label="مستر کارت">
+                <span className="absolute left-0 top-0 h-8 w-8 rounded-full bg-[#e3262e]" />
+                <span className="absolute left-[14px] top-0 h-8 w-8 rounded-full bg-[#f79e1b]/95 mix-blend-screen" />
+              </span>
+              <span className="grid h-[28px] w-[48px] place-items-center rounded-[5px] bg-[#2a5fb0] text-[9px] font-bold text-white" aria-label="شاپرک">سامان</span>
+              <span className="grid h-[34px] w-[34px] place-items-center rounded-full border-2 border-[#3a6fd0] font-serif text-[18px] font-bold italic text-[#3a6fd0]" aria-label="نماد اعتماد">e</span>
+            </div>
+            <p>© کلیه حقوق مادی و معنوی متعلق به پرتو محفوظ است. ۱۴۰۴</p>
           </div>
         </div>
       </div>

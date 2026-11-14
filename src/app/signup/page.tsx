@@ -1,9 +1,11 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import { AuthLayout, AuthHeading, EyeToggle, CheckBox, SocialDivider } from '@/components/parto/Auth';
-import { PField, DarkBtn, Ico, Link } from '@/components/parto/Parto';
-import { AppleIcon, GoogleIcon } from '@/components/parto/icons';
+import Link from 'next/link';
+import { AuthLayout } from '@/components/auth/AuthLayout';
+import { AuthHeading, EyeToggle, CheckBox, SocialDivider } from '@/components/auth/AuthParts';
+import { PField, DarkBtn } from '@/components/ui/FormControls';
+import { Ico, AppleIcon, GoogleIcon } from '@/components/icons/Ico';
 
 function PasswordField({ label, name }: { label: string; name: string }) {
   const [show, setShow] = useState(false);

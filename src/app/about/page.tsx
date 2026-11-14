@@ -1,4 +1,11 @@
-import { PartoPage, PartoHero, Container, Bg, Ico, DarkBtn, Ornament, IMG } from '@/components/parto/Parto';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { PageHero } from '@/components/ui/PageHero';
+import { Bg } from '@/components/ui/Bg';
+import { Ornament } from '@/components/ui/Ornament';
+import { DarkBtn } from '@/components/ui/FormControls';
+import { Ico } from '@/components/icons/Ico';
+import { IMG } from '@/lib/themeImages';
 
 const stats = [
   { icon: 'gem', value: '+۱۰', unit: 'سال', sub: 'تجربه درخشان' },
@@ -21,10 +28,11 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <PartoPage active="about">
-      <PartoHero title="درباره ما" subtitle="داستانی از عشق، زیبایی و اعتماد" crumb="درباره ما" />
+    <main className="parto-bg relative min-h-screen w-full overflow-x-hidden font-sans text-[#2a170e]">
+      <Header />
+      <PageHero title="درباره ما" subtitle="داستانی از عشق، زیبایی و اعتماد" crumb="درباره ما" />
 
-      <Container className="-mt-2 space-y-5">
+      <div className="mx-auto w-full max-w-[1200px] px-5 pb-12 lg:px-11 -mt-2 space-y-5">
         {/* معرفی + ویدیو */}
         <section className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[1fr_1.12fr] lg:gap-10">
           <div className="text-center lg:px-4">
@@ -104,7 +112,9 @@ export default function AboutPage() {
             <Ornament className="mx-auto mt-5 w-full max-w-[330px]" />
           </div>
         </section>
-      </Container>
-    </PartoPage>
+      </div>
+
+      <Footer className="mt-6" />
+    </main>
   );
 }

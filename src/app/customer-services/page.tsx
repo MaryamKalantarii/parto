@@ -1,8 +1,15 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import { PartoPage, PartoHero, Container, Bg, Ico, DarkBtn, SoftBtn, FeatureStrip, Ornament, IMG } from '@/components/parto/Parto';
-import { DiamondLogo } from '@/components/parto/icons';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { PageHero } from '@/components/ui/PageHero';
+import { Bg } from '@/components/ui/Bg';
+import { Ornament } from '@/components/ui/Ornament';
+import { DarkBtn, SoftBtn } from '@/components/ui/FormControls';
+import { FeatureStrip } from '@/components/customer-services/FeatureStrip';
+import { Ico, DiamondLogo } from '@/components/icons/Ico';
+import { IMG } from '@/lib/themeImages';
 
 const features = [
   { icon: 'gift', title: 'بسته‌بندی لوکس', sub: 'هدیه‌ای خاص برای شما' },
@@ -66,10 +73,11 @@ export default function CustomerServicesPage() {
   };
 
   return (
-    <PartoPage active="services">
-      <PartoHero title="خدمات مشتریان" subtitle="همیشه در کنار شما هستیم" crumb="خدمات مشتریان" />
+    <main className="parto-bg relative min-h-screen w-full overflow-x-hidden font-sans text-[#2a170e]">
+      <Header />
+      <PageHero title="خدمات مشتریان" subtitle="همیشه در کنار شما هستیم" crumb="خدمات مشتریان" />
 
-      <Container className="-mt-3 space-y-5">
+      <div className="mx-auto w-full max-w-[1200px] px-5 pb-12 lg:px-11 -mt-3 space-y-5">
         <FeatureStrip items={features} />
 
         {/* سوالات متداول + بنر */}
@@ -138,7 +146,9 @@ export default function CustomerServicesPage() {
             </form>
           </section>
         </div>
-      </Container>
-    </PartoPage>
+      </div>
+
+      <Footer className="mt-6" />
+    </main>
   );
 }
