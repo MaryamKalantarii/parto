@@ -1,8 +1,13 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import { PartoPage, PartoHero, Container, Bg, Ico, DarkBtn, SoftBtn, PField, IMG } from '@/components/parto/Parto';
-import { DiamondLogo } from '@/components/parto/icons';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { PageHero } from '@/components/ui/PageHero';
+import { Bg } from '@/components/ui/Bg';
+import { DarkBtn, SoftBtn, PField } from '@/components/ui/FormControls';
+import { Ico, DiamondLogo } from '@/components/icons/Ico';
+import { IMG } from '@/lib/themeImages';
 
 const channels = [
   { icon: 'pin', title: 'آدرس فروشگاه', lines: ['تهران، خیابان ایران، پلاک ۱۲۲'], cta: 'مشاهده نقشه', href: '#map' },
@@ -42,10 +47,11 @@ export default function ContactPage() {
   };
 
   return (
-    <PartoPage active="contact">
-      <PartoHero title="تماس با ما" subtitle="همیشه در کنار شما هستیم" crumb="تماس با ما" />
+    <main className="parto-bg relative min-h-screen w-full overflow-x-hidden font-sans text-[#2a170e]">
+      <Header />
+      <PageHero title="تماس با ما" subtitle="همیشه در کنار شما هستیم" crumb="تماس با ما" />
 
-      <Container className="-mt-3 space-y-5">
+      <div className="mx-auto w-full max-w-[1200px] space-y-5 px-5 pb-10 lg:px-11 -mt-3">
         {/* کارت‌های راه ارتباطی */}
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {channels.map((c) => (
@@ -149,7 +155,9 @@ export default function ContactPage() {
             مشاهده سوالات متداول <Ico name="chevL" className="h-4 w-4" sw={1.8} />
           </SoftBtn>
         </section>
-      </Container>
-    </PartoPage>
+      </div>
+
+      <Footer className="mt-6" />
+    </main>
   );
 }

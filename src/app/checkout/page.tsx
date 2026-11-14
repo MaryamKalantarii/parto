@@ -1,9 +1,14 @@
 'use client';
 
 import { useMemo, useState, type FormEvent, type ChangeEvent } from 'react';
-import {
-  PartoPage, PartoHero, Container, Bg, Ico, Link, DarkBtn, PField, IMG,
-} from '@/components/parto/Parto';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { PageHero } from '@/components/ui/PageHero';
+import Link from 'next/link';
+import { Bg } from '@/components/ui/Bg';
+import { DarkBtn, PField } from '@/components/ui/FormControls';
+import { Ico } from '@/components/icons/Ico';
+import { IMG } from '@/lib/themeImages';
 
 type Pay = 'online' | 'gateway' | 'cod';
 
@@ -198,10 +203,11 @@ export default function CheckoutPage() {
   );
 
   return (
-    <PartoPage active="home">
-      <PartoHero title="تکمیل خرید" subtitle="لطفاً اطلاعات خود را بررسی و سفارش خود را نهایی کنید" big />
+    <main className="parto-bg relative min-h-screen w-full overflow-x-hidden font-sans text-[#2a170e]">
+      <Header />
+      <PageHero title="تکمیل خرید" subtitle="لطفاً اطلاعات خود را بررسی و سفارش خود را نهایی کنید" big />
 
-      <Container className="-mt-3">
+      <div className="mx-auto w-full max-w-[1200px] px-5 pb-12 lg:px-11 -mt-3">
         <Stepper current={done ? 4 : step} />
 
         {done ? (
@@ -371,7 +377,9 @@ export default function CheckoutPage() {
             </li>
           ))}
         </ul>
-      </Container>
-    </PartoPage>
+      </div>
+
+      <Footer className="mt-6" />
+    </main>
   );
 }
