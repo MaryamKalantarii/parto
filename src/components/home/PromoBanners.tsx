@@ -104,7 +104,7 @@ const bottom: Banner[] = [
     sub: "نظر شما، افتخار ماست",
     cta: "مشاهده نظرات",
     href: "/about",
-    img: "/images/theme/gift-box.jpg",
+    img: "/images/banners/ban1.png",
     gradient: "linear-gradient(135deg,#f1d9c3,#d9b08c)",
     tone: "light",
     extra: (
@@ -120,7 +120,7 @@ const bottom: Banner[] = [
     sub: "راهنمای انتخاب و نگهداری",
     cta: "مطالعه مقالات",
     href: "/collection",
-    img: "/images/theme/necklace-silk.jpg",
+    img: "/images/banners/ban2.png",
     gradient: "linear-gradient(135deg,#d9b08c,#8d6243)",
     tone: "light",
   },
