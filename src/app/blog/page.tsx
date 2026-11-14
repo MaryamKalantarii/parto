@@ -1,0 +1,27 @@
+import type { Metadata } from "next";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import { BlogList } from "@/components/blog/BlogList";
+
+export const metadata: Metadata = {
+  title: "مجله جواهرات | پرتو",
+  description: "راهنمای خرید، نگهداری و دانستنی‌های جواهر و طلا از زرگران پرتو.",
+};
+
+export default function BlogPage() {
+  return (
+    <main
+      className="relative w-full overflow-x-hidden text-[#3a2418]"
+      style={{
+        background:
+          "radial-gradient(70% 30% at 15% 12%, rgba(255,255,255,0.55), transparent 70%), radial-gradient(60% 25% at 90% 55%, rgba(255,255,255,0.4), transparent 70%), linear-gradient(180deg,#f0e1d3 0%,#f6ebe0 35%,#ecd9c7 70%,#f2e4d6 100%)",
+      }}
+    >
+      <SmoothScroll />
+      <Header />
+      <BlogList />
+      <Footer />
+    </main>
+  );
+}

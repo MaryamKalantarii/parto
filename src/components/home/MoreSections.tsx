@@ -273,9 +273,9 @@ export function Testimonials({ reviews = reviewsDefault }: { reviews?: Review[] 
 export type Post = { title: string; excerpt: string; tag: string; read: string; img: string; href: string };
 
 const postsDefault: Post[] = [
-  { title: "راهنمای انتخاب حلقه‌ی ازدواج؛ از عیار تا مدل", excerpt: "پیش از خرید این پنج نکته را بدانید تا انتخابی ماندگار داشته باشید.", tag: "راهنمای خرید", read: "۵ دقیقه", img: "/images/post/post-1.png", href: "/blog/wedding-ring-guide" },
-  { title: "چطور طلا را سال‌ها براق و نو نگه داریم؟", excerpt: "روش‌های ساده و ایمن برای تمیزکردن و نگهداری از جواهرات در خانه.", tag: "نگهداری", read: "۴ دقیقه", img: "/images/post/post-2.png", href: "/blog/gold-care" },
-  { title: "الماس طبیعی یا آزمایشگاهی؟ تفاوت‌ها و انتخاب درست", excerpt: "مقایسه‌ی قیمت، ارزش در بازفروش و گواهی‌ها در یک نگاه.", tag: "دانش جواهر", read: "۷ دقیقه", img: "/images/post/post-3.png", href: "/blog/natural-vs-lab-diamond" },
+  { title: "راهنمای انتخاب حلقه‌ی ازدواج؛ از عیار تا مدل", excerpt: "پیش از خرید این پنج نکته را بدانید تا انتخابی ماندگار داشته باشید.", tag: "راهنمای خرید", read: "۵ دقیقه", img: "/images/post/post-1.png", href: "/blog" },
+  { title: "چطور طلا را سال‌ها براق و نو نگه داریم؟", excerpt: "روش‌های ساده و ایمن برای تمیزکردن و نگهداری از جواهرات در خانه.", tag: "نگهداری", read: "۴ دقیقه", img: "/images/post/post-2.png", href: "/blog" },
+  { title: "الماس طبیعی یا آزمایشگاهی؟ تفاوت‌ها و انتخاب درست", excerpt: "مقایسه‌ی قیمت، ارزش در بازفروش و گواهی‌ها در یک نگاه.", tag: "دانش جواهر", read: "۷ دقیقه", img: "/images/post/post-3.png", href: "/blog" },
 ];
 
 export function JournalPosts({ posts = postsDefault }: { posts?: Post[] }) {

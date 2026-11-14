@@ -9,6 +9,7 @@ const navItems = [
   { label: "خانه", href: "/" },
   { label: "محصولات", href: "/product" },
   { label: "درباره ما", href: "/about" },
+  { label: " بلاگ", href: "/blog" },
   { label: "خدمات مشتریان", href: "/customer-services"},
   { label: "کالکشن", href: "/collection" },
   { label: "تماس با ما", href: "/contact" },
