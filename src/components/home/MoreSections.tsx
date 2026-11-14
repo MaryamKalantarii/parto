@@ -286,7 +286,7 @@ export function JournalPosts({ posts = postsDefault }: { posts?: Post[] }) {
       </Reveal>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {posts.map((p, i) => (
-          <Reveal key={p.href} delay={i * 120} className="h-full">
+          <Reveal key={`${p.href}-${i}`} delay={i * 120} className="h-full">
             <article className="group h-full overflow-hidden rounded-[28px] border border-white/80 bg-gradient-to-b from-[#fffaf4] to-[#f6e5d4] shadow-[0_14px_30px_rgba(90,56,34,0.12)] transition duration-500 hover:-translate-y-1.5 hover:shadow-[0_22px_40px_rgba(90,56,34,0.2)]">
               <Link href={p.href} className="flex h-full flex-col">
                 <div className="relative aspect-[16/10] overflow-hidden">

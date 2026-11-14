@@ -2,8 +2,8 @@
 export const IMG = {
   silk: '/images/theme/silk.jpg',
   ringHero: '/images/theme/ring-hero.png',
-  ringLogin: '/images/theme/ring-login.png',
-  ringFlowers: '/images/theme/ring-flowers.png',
+  ringLogin: '/images/theme/ring-login.jpg',
+  ringFlowers: '/images/theme/ring-flowers.jpg',
   ringBox: '/images/theme/ring-box.jpg',
   giftBox: '/images/theme/gift-box.jpg',
   necklace: '/images/theme/necklace-silk.jpg',

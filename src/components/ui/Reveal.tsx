@@ -7,20 +7,25 @@ type Variant = "up" | "fade" | "left" | "right" | "scale";
 interface RevealProps {
   children: React.ReactNode;
   className?: string;
-  /** تأخیر به میلی‌ثانیه (برای ورود پله‌ای آیتم‌ها) */
+  /** تأخیر به میلی‌ثانیه برای ورود پله‌ای آیتم‌ها */
   delay?: number;
   variant?: Variant;
 }
 
-const hidden: Record<Variant, string> = {
-  up: "translate3d(0,28px,0)",
+const hiddenTransforms: Record<Variant, string> = {
+  up: "translate3d(0, 28px, 0)",
   fade: "none",
-  left: "translate3d(-36px,0,0)",
-  right: "translate3d(36px,0,0)",
+  left: "translate3d(-36px, 0, 0)",
+  right: "translate3d(36px, 0, 0)",
   scale: "scale(0.94)",
 };
 
-export function Reveal({ children, className = "", delay = 0, variant = "up" }: RevealProps) {
+export function Reveal({
+  children,
+  className = "",
+  delay = 0,
+  variant = "up",
+}: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -28,7 +33,14 @@ export function Reveal({ children, className = "", delay = 0, variant = "up" }: 
     const element = ref.current;
     if (!element) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // احترام به تنظیمات کاهش حرکت سیستم‌عامل
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      setIsVisible(true);
+      return;
+    }
+
+    // اگر IntersectionObserver در محیط اجرا موجود نبود، محتوا مخفی نماند.
+    if (typeof IntersectionObserver === "undefined") {
       setIsVisible(true);
       return;
     }
@@ -40,11 +52,17 @@ export function Reveal({ children, className = "", delay = 0, variant = "up" }: 
           observer.unobserve(element);
         }
       },
-      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -40px 0px",
+      }
     );
 
     observer.observe(element);
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -54,7 +72,7 @@ export function Reveal({ children, className = "", delay = 0, variant = "up" }: 
       data-revealed={isVisible}
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "none" : hidden[variant],
+        transform: isVisible ? "none" : hiddenTransforms[variant],
         transition: `opacity 900ms ease ${delay}ms, transform 1000ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
         willChange: isVisible ? "auto" : "opacity, transform",
       }}

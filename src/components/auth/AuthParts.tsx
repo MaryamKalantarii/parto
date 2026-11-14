@@ -8,8 +8,14 @@ import { Ico } from '@/components/icons/Ico';
 export function AuthHeading({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <div className="text-center">
-      <h1 className="text-[28px] font-bold text-[#2a170e]">{title}</h1>
+      <h1
+        className="bg-clip-text text-[28px] font-bold text-transparent"
+        style={{ backgroundImage: 'linear-gradient(90deg,#2a170e,#8a552f 50%,#2a170e)' }}
+      >
+        {title}
+      </h1>
       <p className="mt-2 text-[14px] text-[#4a2f20]">{subtitle}</p>
+      <span aria-hidden className="mx-auto mt-3 block h-[2px] w-[56px] rounded-full bg-gradient-to-r from-transparent via-[#c8955f] to-transparent" />
     </div>
   );
 }
@@ -46,7 +52,11 @@ export function SocialDivider({ text = 'یا' }: { text?: string }) {
   return (
     <div className="mt-6 flex items-center gap-4 text-[14px] text-[#3a2418]" aria-hidden>
       <span className="h-px flex-1 bg-gradient-to-l from-[#7a4a2c]/45 to-transparent" />
-      {text}
+      <span className="flex items-center gap-2">
+        <span className="h-[5px] w-[5px] rotate-45 bg-[#c8955f]" />
+        {text}
+        <span className="h-[5px] w-[5px] rotate-45 bg-[#c8955f]" />
+      </span>
       <span className="h-px flex-1 bg-gradient-to-r from-[#7a4a2c]/45 to-transparent" />
     </div>
   );
