@@ -51,7 +51,7 @@ export default function ContactPage() {
       <Header />
       <PageHero title="تماس با ما" subtitle="همیشه در کنار شما هستیم" crumb="تماس با ما" />
 
-      <div className="mx-auto w-full max-w-[1200px] space-y-5 px-5 pb-10 lg:px-11 -mt-3">
+      <div className="relative z-20 mx-auto w-full max-w-[1200px] space-y-5 px-5 pb-10 lg:px-11 -mt-3">
         {/* کارت‌های راه ارتباطی */}
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {channels.map((c) => (
