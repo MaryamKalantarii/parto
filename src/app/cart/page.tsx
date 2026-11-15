@@ -20,8 +20,10 @@ import {
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Photo } from '@/components/home/primitives';
+import { ProductCardView } from '@/components/product/ProductCard';
+import { bestSellers } from '@/data/bestSellers';
 import { allProducts } from '@/data/products';
-import { faNum } from '@/lib/pricing';
+import { faNum, getPricing } from '@/lib/pricing';
 import type { Product } from '@/types/product';
 
 /* -------------------------------------------------------------------------- */
@@ -87,8 +89,6 @@ export default function CartPage() {
   const remaining = Math.max(0, FREE_SHIPPING_FROM - subtotal);
   const progress = Math.min(100, (subtotal / FREE_SHIPPING_FROM) * 100);
 
-  const suggestions = allProducts.filter((p) => !items.some((i) => i.id === p.slug)).slice(0, 8);
-
   const changeQty = (id: string, d: number) =>
     setItems((cur) => cur.map((i) => (i.id === id ? { ...i, quantity: Math.max(1, i.quantity + d) } : i)));
   const remove = (id: string) => setItems((cur) => cur.filter((i) => i.id !== id));
@@ -108,7 +108,7 @@ export default function CartPage() {
       },
     ]);
 
-  const scrollSlider = (d: number) => sliderRef.current?.scrollBy({ left: d * 280, behavior: 'smooth' });
+  const scrollSlider = (d: number) => sliderRef.current?.scrollBy({ left: d * 340, behavior: 'smooth' });
 
   return (
     <main
@@ -357,8 +357,7 @@ export default function CartPage() {
       </section>
 
       {/* ------------------------- شاید دوست داشته باشید ------------------------- */}
-      {suggestions.length > 0 && (
-        <section className="mx-auto mt-10 max-w-[1360px] px-5 pb-20 sm:px-10">
+      <section className="mx-auto mt-10 max-w-[1360px] px-5 pb-20 sm:px-10">
           <div className="mb-7 flex items-center gap-5">
             <span className="h-px flex-1 bg-gradient-to-l from-[#c8a07c]/70 to-transparent" />
             <h2 className="text-[22px] font-bold text-[#24140d]">شاید دوست داشته باشید</h2>
@@ -375,36 +374,33 @@ export default function CartPage() {
               <ChevronRight size={18} />
             </button>
 
-            <div ref={sliderRef} className="no-scrollbar flex flex-1 gap-5 overflow-x-auto py-3">
-              {suggestions.map((p) => (
-                <article key={p.id} className="glass-panel group relative w-[250px] shrink-0 overflow-hidden rounded-[24px]">
-                  <Link href={`/product/${p.slug}`} className="block">
-                    <div className="relative aspect-[1/0.62] w-full overflow-hidden" style={{ background: silk }}>
-                      {firstImage(p) && (
-                        <Image
-                          src={firstImage(p)}
-                          alt={p.name}
-                          fill
-                          sizes="250px"
-                          className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-                        />
-                      )}
-                    </div>
-                    <h3 className="px-4 pt-3 text-center text-[14px] font-semibold text-[#24140d]">{p.name}</h3>
-                  </Link>
-                  <div className="flex items-center justify-between px-4 pb-4 pt-2.5">
-                    <button
-                      type="button"
-                      aria-label={`افزودن ${p.name} به سبد`}
-                      onClick={() => add(p)}
-                      className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-[#f6e0c8] to-[#dcb896] text-[#3a2418] shadow-[0_4px_10px_rgba(110,72,46,0.25)] transition hover:brightness-105"
-                    >
-                      <Plus size={16} />
-                    </button>
-                    <span className="text-[13px] font-medium text-[#3a2418]">{money(p.rawPrice * 1000)}</span>
+            <div ref={sliderRef} className="no-scrollbar flex flex-1 snap-x snap-mandatory gap-5 overflow-x-auto pb-6 pt-4">
+              {bestSellers.map((p) => {
+                const { price, oldPrice, discount } = getPricing(p);
+                const inCart = items.some((i) => i.id === p.slug);
+                return (
+                  <div key={p.id} className="w-[270px] shrink-0 snap-center sm:w-[310px]">
+                    <ProductCardView
+                      name={p.name}
+                      subTitle={p.subTitle}
+                      href={`/product/${p.slug}`}
+                      images={(p.materials[0]?.images ?? []).slice(0, 3)}
+                      price={price}
+                      oldPrice={oldPrice}
+                      discount={discount}
+                      rating={p.rating}
+                      reviewsCount={p.reviewsCount}
+                      badge="پرفروش‌ترین"
+                      added={inCart}
+                      onAddToCart={(e) => {
+                        e.preventDefault();
+                        if (!inCart) add(p);
+                      }}
+                      className="h-full"
+                    />
                   </div>
-                </article>
-              ))}
+                );
+              })}
             </div>
 
             <button
@@ -416,8 +412,7 @@ export default function CartPage() {
               <ChevronLeft size={18} />
             </button>
           </div>
-        </section>
-      )}
+      </section>
 
       {/* موج بالای فوتر */}
       <div aria-hidden className="hero-wave -mb-px h-[70px] w-full bg-[#1c110c]" />

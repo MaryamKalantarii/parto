@@ -5,18 +5,13 @@ import { RoundArrow, SectionHeading } from "./primitives";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { allProducts } from "@/data/products";
+import { bestSellers } from "@/data/bestSellers";
 
 /* جدیدترین محصولات: محصولات isNew، و در صورت کمبود، بقیه محصولات */
 const newest = [
   ...allProducts.filter((p) => p.isNew),
   ...allProducts.filter((p) => !p.isNew),
 ].slice(0, 4);
-
-/* پرفروش‌ترین‌ها */
-const bestSellers = [
-  ...allProducts.filter((p) => p.isBestSeller),
-  ...allProducts.filter((p) => !p.isBestSeller),
-].slice(0, 6);
 
 export function NewestProducts() {
   return (
