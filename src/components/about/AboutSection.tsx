@@ -1,74 +1,65 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useSpring,
+  useInView,
+  animate,
+} from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 
-// EDITORIAL MAGAZINE GALLERY DATA
+/* ─────────────────────────── DATA ─────────────────────────── */
 
 interface EditorialItem {
   id: string;
   title: string;
   category: string;
   image: string;
-  aspect: string; // for masonry-like variation
+  aspect: string;
   description: string;
-
 }
 
 const magazineItems: EditorialItem[] = [
-
   {
-
     id: '1',
     title: 'تراش تک‌نگین',
     category: 'جواهرسازی فاخر',
     image: '/images/about/archive1.jpg',
-    aspect: 'col-span-12 lg:col-span-8 h-[550px]',
+    aspect: 'col-span-12 lg:col-span-8 h-[420px] lg:h-[550px]',
     description: 'منشورهای کریستالی با تراش دقیق که گرمای ملایم نور را در فضا بازتاب می‌دهند.',
-
   },
-
   {
     id: '2',
     title: 'چراغ برنجی ساتن',
     category: 'مجموعه معماری',
     image: '/images/about/archive2.jpg',
-    aspect: 'col-span-12 lg:col-span-4 h-[550px]',
+    aspect: 'col-span-12 lg:col-span-4 h-[420px] lg:h-[550px]',
     description: 'پوشش نانویی طلای ۲۴ عیار با پرداخت دستی روی آلیاژهای مقاوم.',
-
   },
-
   {
-
     id: '3',
     title: 'بازتاب یکپارچه',
     category: 'طراحی و اجرای سفارشی',
     image: '/images/about/archive3.jpg',
-    aspect: 'col-span-12 lg:col-span-5 h-[480px]',
+    aspect: 'col-span-12 lg:col-span-5 h-[380px] lg:h-[480px]',
     description: 'اتصالات یکپارچه و پنهان برای خلق فرمی مجسمه‌وار و خالص.',
-
   },
-
   {
-
     id: '4',
     title: 'شکست نور',
     category: 'ویژگی‌های کریستال',
     image: '/images/about/archive4.jpg',
-    aspect: 'col-span-12 lg:col-span-7 h-[480px]',
+    aspect: 'col-span-12 lg:col-span-7 h-[380px] lg:h-[480px]',
     description: 'هندسه نوری دقیق که مسیرهایی ظریف از سایه را در فضاهای مینیمال ایجاد می‌کند.',
-
   },
-
 ];
 
-// دیتای چندبعدی متریال‌ها و نظرات
-
 interface CraftDetail {
-
   id: string;
   number: string;
   title: string;
@@ -81,15 +72,12 @@ interface CraftDetail {
   role: string;
   location: string;
   accentGlow: string;
-
 }
 
 const craftData: CraftDetail[] = [
-
   {
-
     id: 'brass',
-    number: '01',
+    number: '۰۱',
     title: 'معماریِ لمس‌پذیر',
     materialName: 'برنج یکپارچه با پرداخت دستی',
     materialCode: 'BR-2200K',
@@ -101,15 +89,11 @@ const craftData: CraftDetail[] = [
     author: 'النا روستووا',
     role: 'معمار ارشد داخلی',
     location: 'میلان',
-    accentGlow:
-      'from-[#D8C2A8]/20 via-[#D8C2A8]/5 to-transparent',
-
+    accentGlow: 'from-[#D8C2A8]/20 via-[#D8C2A8]/5 to-transparent',
   },
-
   {
-
     id: 'glass',
-    number: '02',
+    number: '۰۲',
     title: 'شکست نور',
     materialName: 'شیشه دقیق شیاردار',
     materialCode: 'GL-OPTIC-X',
@@ -121,15 +105,11 @@ const craftData: CraftDetail[] = [
     author: 'مارکوس ونس',
     role: 'مدیر طراحی، استودیو آتلیه',
     location: 'زوریخ',
-    accentGlow:
-      'from-[#E2D5C3]/20 via-[#E2D5C3]/5 to-transparent',
-
+    accentGlow: 'from-[#E2D5C3]/20 via-[#E2D5C3]/5 to-transparent',
   },
-
   {
-
     id: 'frame',
-    number: '03',
+    number: '۰۳',
     title: 'ساختار یکپارچه',
     materialName: 'قاب تیره آنودایزشده',
     materialCode: 'AL-BLK-90',
@@ -137,19 +117,13 @@ const craftData: CraftDetail[] = [
       'قاب آلومینیومی مات و آنودایزشده با ساختاری یکپارچه و بدون پیچ یا بست قابل‌مشاهده.',
     image: '/images/about/tactile3.png',
     quote:
-
       'مینیمالیسم با مهارتی ممتاز اجرا شده است؛ هر قطعه مانند اثری ماندگار از هنر معماری به نظر می‌رسد.',
     author: 'سوفی لوران',
     role: 'کلکسیونر خصوصی',
     location: 'پاریس',
-    accentGlow:
-      'from-[#8A857D]/20 via-[#8A857D]/5 to-transparent',
-
+    accentGlow: 'from-[#8A857D]/20 via-[#8A857D]/5 to-transparent',
   },
-
 ];
-
-// دیتای تابلوی آکاردئونی سکشن پایانی (Momento Legal Style)
 
 interface AccordionPanel {
   id: string;
@@ -159,48 +133,100 @@ interface AccordionPanel {
   description: string;
   tag: string;
   ctaText: string;
-
 }
 
 const panelsData: AccordionPanel[] = [
-
   {
-
     id: 'bespoke',
-    number: '01',
+    number: '۰۱',
     subtitle: 'سفارش اختصاصی',
     title: 'نورپردازی فاخرِ سفارشی',
-    description: 'همکاری مستقیم با معماران و کلکسیونرهای خصوصی جهت طراحی و ساخت قطعات سفارشی تک‌نسخه با روکش طلا و متریال‌های نادر.',
+    description:
+      'همکاری مستقیم با معماران و کلکسیونرهای خصوصی جهت طراحی و ساخت قطعات سفارشی تک‌نسخه با روکش طلا و متریال‌های نادر.',
     tag: 'مشتریان خصوصی',
     ctaText: 'ثبت سفارش اختصاصی',
-
   },
-
   {
-
     id: 'catalog',
-    number: '02',
+    number: '۰۲',
     subtitle: 'پرونده فنی معماری',
     title: 'کاتالوگ و مشخصات فنی',
-    description: 'دریافت کاتالوگ جامع، فایل‌های سه‌بعدی CAD/BIM و جزئیات تنظیم نور برای پروژه‌های معماری فاخر.',
+    description:
+      'دریافت کاتالوگ جامع، فایل‌های سه‌بعدی CAD/BIM و جزئیات تنظیم نور برای پروژه‌های معماری فاخر.',
     tag: 'مشخصات فنی',
     ctaText: 'دریافت کاتالوگ فنی',
-
   },
-
   {
-
     id: 'atelier',
-    number: '03',
+    number: '۰۳',
     subtitle: 'بازدید از استودیو',
     title: 'جلسه خصوصی در آتلیه',
-    description: 'تجربه لمس متریال‌ها و مشاهده کیفیت پخش نور در استودیوی اختصاصی اورل با تعیین وقت قبلی.',
+    description:
+      'تجربه لمس متریال‌ها و مشاهده کیفیت پخش نور در استودیوی اختصاصی اورل با تعیین وقت قبلی.',
     tag: 'رزرو وقت',
     ctaText: 'رزرو بازدید خصوصی',
-
   },
-
 ];
+
+const marqueeWords = [
+  'برنج دست‌ساز',
+  'کریستال اپتیکی',
+  'طلای ۲۴ عیار',
+  'نور ۲۲۰۰ کلوین',
+  'آنودایز مات',
+  'تراش الماسی',
+  'معماری نور',
+];
+
+/* ─────────────────────────── HELPERS ─────────────────────────── */
+
+const fa = (n: number) => Math.round(n).toLocaleString('fa-IR', { useGrouping: false });
+
+const Counter = ({ to, suffix = '' }: { to: number; suffix?: string }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+  const [val, setVal] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    const controls = animate(0, to, {
+      duration: 2.2,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: (v) => setVal(v),
+    });
+    return () => controls.stop();
+  }, [inView, to]);
+
+  return (
+    <span ref={ref}>
+      {fa(val)}
+      {suffix}
+    </span>
+  );
+};
+
+const reveal = {
+  hidden: { opacity: 0, y: 40 },
+  show: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.9, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] as const },
+  }),
+};
+
+const SectionTag = ({ children, ping = false }: { children: React.ReactNode; ping?: boolean }) => (
+  <div className="mb-4 flex items-center gap-3 font-sans text-[11px] text-[#8a5a3a]">
+    <span className="relative flex h-2 w-2">
+      {ping && (
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3a2418] opacity-60" />
+      )}
+      <span className="relative inline-flex h-2 w-2 rounded-full bg-[#3a2418]" />
+    </span>
+    <span>{children}</span>
+  </div>
+);
+
+/* ─────────────────────────── COMPONENT ─────────────────────────── */
 
 export const AboutSection = () => {
   const [mounted, setMounted] = useState(false);
@@ -211,63 +237,66 @@ export const AboutSection = () => {
   const flareRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
-  // سکشن Horizontal Showcase Section
-  const horizontalSectionRef = useRef<HTMLDivElement>(null);
-  const horizontalTrackRef = useRef<HTMLDivElement>(null);
-  // استیت برای سکشن 04 (Materiality و Critique)
+
   const [activeIndex, setActiveIndex] = useState(0);
-  // استیت برای سکشن پایانی (Momento Legal Accordion)
   const [activePanel, setActivePanel] = useState<number>(0);
-  // Interactive spotlight state
+
+  // Spotlight box
   const spotlightRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const handleSpotlightMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!spotlightRef.current) return;
     const rect = spotlightRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setMousePos({ x, y });
-
+    setMousePos({
+      x: ((e.clientX - rect.left) / rect.width) * 100,
+      y: ((e.clientY - rect.top) / rect.height) * 100,
+    });
   };
 
+  // Color temperature box
+  const [kelvin, setKelvin] = useState(2200);
+  const warmth = (kelvin - 1800) / (4000 - 1800); // 0 warm → 1 cool
+  const lampColor = `rgb(${Math.round(255 - warmth * 35)}, ${Math.round(
+    170 + warmth * 70
+  )}, ${Math.round(90 + warmth * 150)})`;
+
+  // Scroll progress bar
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
+
   useEffect(() => {
-
     setMounted(true);
-
   }, []);
 
   useGSAP(
     () => {
-
       if (!mounted || !containerRef.current || !heroPinnedRef.current) return;
       gsap.registerPlugin(ScrollTrigger);
       const letters = containerRef.current.querySelectorAll('.aurel-letter');
-      // 1. INITIAL STATES (SECTION 1)
+
       gsap.set(titleWrapperRef.current, { opacity: 0, scale: 0.94 });
-      gsap.set(letters, { y: 45, opacity: 0, filter: 'blur(14px)', scale: 1.02 });
-      gsap.set(subtitleRef.current, { y: 18, opacity: 0, letterSpacing: '0.05em' });
+      if (letters.length) {
+        gsap.set(letters, { y: 45, opacity: 0, filter: 'blur(14px)', scale: 1.02 });
+      }
+      gsap.set(subtitleRef.current, { y: 18, opacity: 0 });
       gsap.set(streakRef.current, { opacity: 0, xPercent: -80 });
       gsap.set(flareRef.current, { opacity: 0, scale: 0.5 });
 
-      // 2. CINEMATIC INTRO TIMELINE
-
       const intro = gsap.timeline({
         defaults: { ease: 'power3.out' },
-        onComplete: () => {
-          ScrollTrigger.refresh();
-
-        },
-
+        onComplete: () => ScrollTrigger.refresh(),
       });
 
       intro
         .to(titleWrapperRef.current, { opacity: 1, scale: 1, duration: 1.6 })
-        .to(
+        .to(subtitleRef.current, { y: 0, opacity: 1, duration: 1.3 }, '-=1')
+        .to(streakRef.current, { opacity: 0.75, xPercent: 0, duration: 1.5, ease: 'power3.inOut' }, '-=1.1')
+        .to(flareRef.current, { opacity: 1, scale: 1, duration: 1.1 }, '-=1');
 
+      if (letters.length) {
+        intro.to(
           letters,
-
           {
-
             y: 0,
             opacity: 1,
             filter: 'blur(0px)',
@@ -275,46 +304,30 @@ export const AboutSection = () => {
             duration: 1.6,
             stagger: { each: 0.08, from: 'center' },
             ease: 'power4.out',
-
           },
-
-          '-=1.2'
-
-        )
-
-        .to(subtitleRef.current, { y: 0, opacity: 1, letterSpacing: '0.05em', duration: 1.3 }, '-=1')
-        .to(streakRef.current, { opacity: 0.75, xPercent: 0, duration: 1.5, ease: 'power3.inOut' }, '-=1.1')
-        .to(flareRef.current, { opacity: 1, scale: 1, duration: 1.1 }, '-=1');
-
-      // 3. AMBIENT IDLE ANIMATIONS
-
-      if (streakRef.current) {
-        gsap.to(streakRef.current, {
-          opacity: 0.42,
-          scale: 1.01,
-          duration: 3.8,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-
-        });
-
+          0.3
+        );
       }
 
-      if (flareRef.current) {
-        gsap.to(flareRef.current, {
-          scale: 1.12,
-          opacity: 0.72,
-          duration: 3.5,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
+      gsap.to(streakRef.current, {
+        opacity: 0.42,
+        scale: 1.01,
+        duration: 3.8,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: 4,
+      });
 
-        });
-
-      }
-
-      // 4. پیمایش TIMELINE (SECTION 1)
+      gsap.to(flareRef.current, {
+        scale: 1.12,
+        opacity: 0.72,
+        duration: 3.5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: 4,
+      });
 
       const scrollTl = gsap.timeline({
         scrollTrigger: {
@@ -325,9 +338,7 @@ export const AboutSection = () => {
           pinSpacing: true,
           scrub: 0.5,
           invalidateOnRefresh: true,
-
         },
-
       });
 
       scrollTl
@@ -335,711 +346,595 @@ export const AboutSection = () => {
         .fromTo(streakRef.current, { opacity: 0.75, xPercent: 0, rotation: 0 }, { opacity: 0, xPercent: 60, rotation: -12, ease: 'power1.inOut' }, 0)
         .fromTo(flareRef.current, { opacity: 1, scale: 1, x: 0, y: 0 }, { opacity: 0, scale: 1.3, x: 80, y: -40, ease: 'power1.inOut' }, 0)
         .fromTo(glowRef.current, { opacity: 0.1, scale: 1 }, { opacity: 0.8, scale: 1.8, ease: 'none' }, 0);
-
-      // 5. SECTION 2: HORIZONTAL پیمایش
-
-      if (horizontalSectionRef.current && horizontalTrackRef.current) {
-        const track = horizontalTrackRef.current;
-        const getScrollAmount = () => -(track.scrollWidth - window.innerWidth + 120);
-        gsap.to(track, {
-          x: getScrollAmount,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: horizontalSectionRef.current,
-            start: 'top top',
-            end: () => `+=${track.scrollWidth}`,
-            pin: true,
-            scrub: 1,
-            invalidateOnRefresh: true,
-
-          },
-
-        });
-
-        const cardImages = track.querySelectorAll('.gallery-img');
-        cardImages.forEach((img) => {
-          gsap.fromTo(
-            img,
-
-            { scale: 1.2 },
-
-            {
-
-              scale: 1,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: horizontalSectionRef.current,
-                start: 'top top',
-                end: () => `+=${track.scrollWidth}`,
-                scrub: true,
-
-              },
-
-            }
-
-          );
-
-        });
-
-      }
-
     },
-
     { scope: containerRef, dependencies: [mounted] }
-
   );
 
   if (!mounted) {
-    return <div className="w-full min-h-screen bg-[#060605]" />;
-
+    return <div className="min-h-screen w-full bg-[#f6e9dc]" />;
   }
 
   const activeCraft = craftData[activeIndex];
 
   return (
+    <div
+      ref={containerRef}
+      dir="rtl"
+      lang="fa"
+      className="relative w-full select-none overflow-x-hidden bg-[#f6e9dc] text-[#2a170e]"
+    >
+      {/* Scroll progress */}
+      <motion.div
+        style={{ scaleX: progress, transformOrigin: 'right' }}
+        className="fixed inset-x-0 top-0 z-50 h-[2px] bg-gradient-to-l from-[#D8C2A8] via-[#7a4a2c] to-transparent"
+      />
 
-    <div ref={containerRef} dir="rtl" lang="fa" className="w-full bg-[#060605] text-[#F7F5F0] select-none overflow-x-hidden">
-
-      {/* HEADER */}
-
-      {/* FIXED META */}
-
-      <div className="fixed right-8 top-1/2 z-40 -translate-y-1/2 font-sans text-[10px] font-light tracking-normal text-[#7A756D] sm:right-14">
-        <span>01</span>
-        <span className="mt-1 block text-[9px] text-[#4A4742]">درباره ما</span>
-
+      {/* Fixed meta */}
+      <div className="fixed right-8 top-1/2 z-40 hidden -translate-y-1/2 font-sans text-[10px] font-light text-[#7a5a48] sm:block sm:right-14">
+        <span>۰۱</span>
+        <span className="mt-1 block text-[9px] text-[#a67a5c]">درباره ما</span>
       </div>
 
-      <div className="fixed left-8 top-1/2 z-40 flex -translate-y-1/2 flex-col items-center gap-6 font-sans text-[9px] font-light tracking-normal text-[#7A756D] sm:left-14">
-
-        <span className="rotate-90 uppercase">پیمایش</span>
-
-        <div className="relative h-12 w-px bg-white/10">
-
-          <div className="absolute left-0 top-0 h-3 w-px bg-[#D8C2A8] animate-bounce" />
-
+      <div className="fixed left-8 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-center gap-6 font-sans text-[9px] font-light text-[#7a5a48] sm:flex sm:left-14">
+        <span className="rotate-90">پیمایش</span>
+        <div className="relative h-12 w-px bg-[#a67a5c]/30">
+          <div className="absolute left-0 top-0 h-3 w-px animate-bounce bg-[#3a2418]" />
         </div>
-
-        <div className="h-1.5 w-1.5 rounded-full border border-white/30" />
-
+        <div className="h-1.5 w-1.5 rounded-full border border-[#a67a5c]/50" />
       </div>
 
-      {/* SECTION 1: HERO */}
-
+      {/* ───────── SECTION 1: HERO ───────── */}
       <section ref={heroPinnedRef} className="relative h-screen w-full overflow-hidden">
-
         <div
-
           ref={glowRef}
-
-          className="pointer-events-none absolute left-1/2 top-1/2 h-[38vw] w-[38vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#D8C2A8]/[0.07] blur-[140px]"
-
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[38vw] w-[38vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#e8b88f]/45 blur-[140px]"
         />
+        {/* soft grain lines */}
+        <div className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,#7a4a2c_1px,transparent_1px)] [background-size:12.5vw_100%]" />
 
         <div className="flex h-full items-center justify-center">
-
           <div ref={titleWrapperRef} className="relative cursor-default text-center will-change-transform">
-
-            <h1 className="relative z-10 flex items-center justify-center whitespace-nowrap font-sans text-[22vw] font-extralight uppercase leading-none tracking-normal text-transparent bg-clip-text bg-gradient-to-b from-[#F3EEE5] via-[#D1BD9F] to-[#4F463B] drop-shadow-[0_30px_60px_rgba(0,0,0,0.9)] sm:text-[19vw]">
-
-             <span className="inline-block whitespace-nowrap tracking-normal">
-              پرتو
-            </span>
-
+            <h1 className="relative z-10 flex items-center justify-center whitespace-nowrap bg-gradient-to-b from-[#7a4a2c] via-[#b9825a] to-[#3a2418] bg-clip-text font-sans text-[22vw] font-extralight leading-none text-transparent drop-shadow-[0_24px_40px_rgba(110,72,46,0.28)] sm:text-[19vw]">
+              <span className="inline-block whitespace-nowrap">پرتو</span>
             </h1>
 
             <div ref={streakRef} className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center will-change-transform">
-
-              <div className="h-[2px] w-[125%] -rotate-[16deg] bg-gradient-to-r from-transparent via-[#FFF8EE] to-transparent shadow-[0_0_25px_#FFE0B2] mix-blend-screen" />
-
-              <div className="absolute h-[18px] w-[115%] -rotate-[16deg] bg-gradient-to-r from-transparent via-[#E8D1B5]/25 to-transparent blur-lg mix-blend-screen" />
-
+              <div className="h-[2px] w-[125%] -rotate-[16deg] bg-gradient-to-r from-transparent via-[#c9946e] to-transparent shadow-[0_0_25px_#e8b88f]" />
+              <div className="absolute h-[18px] w-[115%] -rotate-[16deg] bg-gradient-to-r from-transparent via-[#d9a77f]/40 to-transparent blur-lg" />
             </div>
 
-            <div ref={flareRef} className="pointer-events-none absolute left-[15%] top-[14%] z-30 flex items-center justify-center mix-blend-screen will-change-transform sm:left-[17%]">
-
-              <div className="h-3.5 w-3.5 rounded-full bg-white shadow-[0_0_30px_10px_#FFF3E0]" />
-
-              <div className="absolute h-28 w-[2px] bg-gradient-to-b from-transparent via-white to-transparent opacity-90" />
-
-              <div className="absolute h-[2px] w-28 bg-gradient-to-r from-transparent via-white to-transparent opacity-90" />
-
-              <div className="absolute h-24 w-24 rounded-full bg-[#EAD0B3]/20 blur-2xl" />
-
+            <div ref={flareRef} className="pointer-events-none absolute left-[15%] top-[14%] z-30 flex items-center justify-center will-change-transform sm:left-[17%]">
+              <div className="h-3.5 w-3.5 rounded-full bg-[#fff8ee] shadow-[0_0_30px_10px_#e8b88f]" />
+              <div className="absolute h-28 w-[2px] bg-gradient-to-b from-transparent via-[#b9825a] to-transparent opacity-90" />
+              <div className="absolute h-[2px] w-28 bg-gradient-to-r from-transparent via-[#b9825a] to-transparent opacity-90" />
+              <div className="absolute h-24 w-24 rounded-full bg-[#e8b88f]/40 blur-2xl" />
             </div>
 
-            <p ref={subtitleRef} className="mt-8 font-sans text-[10px] font-light uppercase tracking-normal text-[#B8A793] sm:text-xs">
-
+            <p ref={subtitleRef} className="mt-8 font-sans text-sm font-light text-[#8a5a3a] sm:text-base">
               اشیایی از نور
-
             </p>
-
           </div>
-
         </div>
-
       </section>
 
-      {/* SECTION 2: HORIZONTAL GALLERY */}
-
-      <section ref={horizontalSectionRef} className="relative h-screen w-full bg-[#080807] overflow-hidden">
-
-        <div
-          dir="rtl"
-          className="absolute top-12 right-12 z-30 font-sans text-[10px] uppercase tracking-normal text-[#D8C2A8]"
+      {/* ───────── MARQUEE ───────── */}
+      <div className="relative z-10 overflow-hidden border-y border-[#a67a5c]/30 bg-[#efdcc8] py-5" dir="ltr">
+        <motion.div
+          className="flex w-max items-center gap-12 whitespace-nowrap"
+          animate={{ x: ['0%', '-50%'] }}
+          transition={{ duration: 40, ease: 'linear', repeat: Infinity }}
         >
-          ۰۲ — گالری تصویری
-        </div>
-
-        <div
-          ref={horizontalTrackRef}
-          dir="ltr"
-          className="flex h-full flex-row items-center gap-12 sm:gap-16 px-16 sm:px-24 lg:px-32 will-change-transform"
-        >
-
-          <div
-            dir="rtl"
-            className="relative flex-none w-[75vw] sm:w-[45vw] lg:w-[30vw] flex flex-col justify-center pr-8 text-right"
-          >
-
-            <span className="font-sans text-[9px] uppercase tracking-normal text-[#D8C2A8] mb-4">
-
-              نمایش مجموعه
-
+          {[...marqueeWords, ...marqueeWords, ...marqueeWords, ...marqueeWords].map((w, i) => (
+            <span key={i} className="flex items-center gap-12 font-sans text-sm font-extralight text-[#7a5a48]" dir="rtl">
+              {w}
+              <span className="text-[#8a5a3a]">✦</span>
             </span>
-
-            <h2 className="font-sans text-4xl sm:text-6xl font-extralight leading-tight text-[#F7F5F0]">
-
-              تراش‌خورده <br />
-
-              <span className="italic font-normal text-[#D8C2A8]">در نور.</span>
-
-            </h2>
-
-            <p className="mt-6 font-sans text-xs sm:text-sm font-light text-[#8A857D] leading-relaxed">
-
-              با مجسمه‌های نورانی مینیمال ما آشنا شوید؛ آثاری که با دقت برای ایجاد تعادل معماری طراحی شده‌اند.
-
-            </p>
-
-          </div>
-
-          <div className="relative flex-none w-[80vw] sm:w-[50vw] lg:w-[32vw] h-[68vh] bg-[#121210] border border-white/10 rounded-sm overflow-hidden group cursor-pointer">
-
-            <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#060605] via-transparent to-black/30 opacity-80" />
-
-            <img src="/images/about/about 1.jpg" alt="مجسمه نوری ۱" className="gallery-img absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-
-            <div className="absolute inset-0 z-20 p-8 flex flex-col justify-between">
-
-              <div className="flex justify-between items-center">
-
-                <span className="font-sans text-[9px] uppercase tracking-normal text-[#D8C2A8] bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">نور ۱</span>
-
-                <span className="font-sans text-xl font-light text-[#F7F5F0]">01</span>
-
-              </div>
-
-              <div>
-
-                <h3 className="font-sans text-2xl sm:text-3xl font-light text-[#F7F5F0] group-hover:text-[#D8C2A8] transition-colors">چراغ آویز معماری</h3>
-
-                <p className="font-sans text-xs font-light text-[#B8B4AC] mt-2 line-clamp-2">بدنه برنجی با پرداخت دستی و هسته LED گرم ۲۲۰۰ کلوین.</p>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          <div className="relative flex-none w-[80vw] sm:w-[50vw] lg:w-[32vw] h-[68vh] bg-[#121210] border border-white/10 rounded-sm overflow-hidden group cursor-pointer">
-
-            <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#060605] via-transparent to-black/30 opacity-80" />
-
-            <img src="/images/about/about2.png" alt="مجسمه نوری ۲" className="gallery-img absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-
-            <div className="absolute inset-0 z-20 p-8 flex flex-col justify-between">
-
-              <div className="flex justify-between items-center">
-
-                <span className="font-sans text-[9px] uppercase tracking-normal text-[#D8C2A8] bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">نور ۲</span>
-
-                <span className="font-sans text-xl font-light text-[#F7F5F0]">02</span>
-
-              </div>
-
-              <div>
-
-                <h3 className="font-sans text-2xl sm:text-3xl font-light text-[#F7F5F0] group-hover:text-[#D8C2A8] transition-colors">چراغ دیواری اپتیکی</h3>
-
-                <p className="font-sans text-xs font-light text-[#B8B4AC] mt-2 line-clamp-2">پخش نور با شیشه اپتیکی دقیق برای ایجاد رگه‌های گسترده نور در فضا.</p>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          <div className="relative flex-none w-[80vw] sm:w-[50vw] lg:w-[32vw] h-[68vh] bg-[#121210] border border-white/10 rounded-sm overflow-hidden group cursor-pointer">
-
-            <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#060605] via-transparent to-black/30 opacity-80" />
-
-            <img src="/images/about/about3.png" alt="مجسمه نوری ۳" className="gallery-img absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-
-            <div className="absolute inset-0 z-20 p-8 flex flex-col justify-between">
-
-              <div className="flex justify-between items-center">
-
-                <span className="font-sans text-[9px] uppercase tracking-normal text-[#D8C2A8] bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">نور ۳</span>
-
-                <span className="font-sans text-xl font-light text-[#F7F5F0]">03</span>
-
-              </div>
-
-              <div>
-
-                <h3 className="font-sans text-2xl sm:text-3xl font-light text-[#F7F5F0] group-hover:text-[#D8C2A8] transition-colors">چراغ ایستاده مینیمال</h3>
-
-                <p className="font-sans text-xs font-light text-[#B8B4AC] mt-2 line-clamp-2">قاب آلومینیومی تیره و یکپارچه برای ایجاد نقطه کانونی نوری.</p>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* NEW FEATURE 1: INTERACTIVE SPOTLIGHT SHOWCASE */}
-
-      {/* NEW FEATURE 2: EDITORIAL MAGAZINE GRID */}
-
-      <section className="relative w-full bg-[#060605] py-28 px-6 sm:px-16 lg:px-24 border-t border-white/10">
-
-        <div className="mb-16">
-
-          <div className="flex items-center gap-3 font-sans text-[10px] uppercase tracking-normal text-[#D8C2A8] mb-3">
-
-            <span className="h-2 w-2 rounded-full bg-[#D8C2A8]" />
-
-            <span>مجموعه‌ای گزیده از آثار</span>
-
-          </div>
-
-          <h2 className="font-sans text-4xl sm:text-6xl font-extralight text-[#F7F5F0]">
-
-            روایت <span className="italic text-[#D8C2A8]">آرشیو.</span>
-
-          </h2>
-
-        </div>
-
-        {/* Asymmetrical High-Contrast روایت Grid */}
-
-        <div className="grid grid-cols-12 gap-8">
-
-          {magazineItems.map((item) => (
-
-            <div
-
-              key={item.id}
-
-              className={`group relative rounded-2xl overflow-hidden border border-white/10 bg-[#0C0C0B] hover:border-[#D8C2A8]/50 transition-all duration-700 ${item.aspect}`}
-
-            >
-
-              <img
-
-                src={item.image}
-
-                alt={item.title}
-
-                className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
-
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-8 flex flex-col justify-between">
-
-                <span className="font-sans text-[9px] uppercase tracking-normal text-[#D8C2A8] bg-black/50 backdrop-blur-md w-fit px-3 py-1 rounded-full border border-white/10">
-
-                  {item.category}
-
-                </span>
-
-                <div>
-
-                  <h3 className="font-sans text-3xl sm:text-4xl font-extralight text-[#F7F5F0] mb-2 group-hover:text-[#D8C2A8] transition-colors">
-
-                    {item.title}
-
-                  </h3>
-
-                  <p className="font-sans text-xs font-light text-[#A8A39A] max-w-md line-clamp-2">
-
-                    {item.description}
-
-                  </p>
-
-                </div>
-
-              </div>
-
-            </div>
-
           ))}
+        </motion.div>
+      </div>
 
-        </div>
-
-      </section>
-
-      {/* SECTION 03: CRAFT و CRITIQUE */}
-
-      <section className="relative w-full bg-[#060605] text-[#F7F5F0] py-28 px-6 sm:px-16 lg:px-24 border-t border-white/10 overflow-hidden">
-
-        {/* Geometric Background Lines */}
-
-        <div className="pointer-events-none absolute inset-0 opacity-20">
-
-          <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#D8C2A8]/30 to-transparent" />
-
-          <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-white/10 to-transparent" />
-
-          <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-white/10 to-transparent" />
-
-        </div>
-
-        {/* Header */}
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-
-          <div>
-
-            <div className="flex items-center gap-3 font-sans text-[10px] uppercase tracking-normal text-[#D8C2A8] mb-3">
-
-              <span className="h-2 w-2 rounded-full bg-[#D8C2A8] animate-ping" />
-
-              <span>۰۳ — آتلیه و معماری جواهر</span>
-
-            </div>
-
-            <h2 className="font-sans text-4xl sm:text-6xl font-extralight tracking-tight text-[#F7F5F0]">
-
-              تراش‌خورده همچون <span className="italic text-[#D8C2A8] font-normal">جواهر فاخر.</span>
-
-            </h2>
-
-          </div>
-
-          <p className="font-sans text-xs font-light text-[#8A857D] max-w-sm leading-relaxed">
-
-            جایی که دقت جواهرسازی فاخر با مهندسی نورپردازی معماری پیوند می‌خورد.
-
+      {/* ───────── SECTION 2: ANIMATED BENTO ───────── */}
+      <section className="relative w-full bg-[#f6e9dc] px-6 py-28 sm:px-16 lg:px-24">
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="mb-16"
+        >
+          <SectionTag>۰۲ — جهان پرتو</SectionTag>
+          <h2 className="font-sans text-4xl font-extralight leading-tight text-[#2a170e] sm:text-6xl">
+            تراش‌خورده <span className="font-normal italic text-[#8a5a3a]">در نور.</span>
+          </h2>
+          <p className="mt-5 max-w-lg font-sans text-sm font-light leading-loose text-[#7a5a48]">
+            مجسمه‌های نورانی مینیمال؛ آثاری که با دقت برای ایجاد تعادل معماری طراحی شده‌اند. با باکس‌ها بازی کنید.
           </p>
+        </motion.div>
 
-        </div>
-
-        {/* Interactive Grid Canvas */}
-
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
-
-          {/* Card 1 */}
-
-          <div className="group relative md:col-span-7 bg-[#0B0B0A] border border-white/10 rounded-xl p-8 sm:p-12 overflow-hidden transition-all duration-700 hover:border-[#D8C2A8]/50 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(216,194,168,0.08)] flex flex-col justify-between min-h-[380px]">
-
-            <div className="absolute -right-12 -top-12 w-60 h-60 rounded-full border border-white/5 group-hover:border-[#D8C2A8]/20 transition-colors duration-700 pointer-events-none" />
-
-            <div className="absolute right-8 top-8 font-mono text-[10px] tracking-normal text-[#4A4742] group-hover:text-[#D8C2A8] transition-colors">
-
-              [ تراش هنرمندانه ]
-
-            </div>
-
-            <div>
-
-              <span className="inline-block px-3 py-1 rounded-full border border-[#D8C2A8]/30 font-sans text-[9px] uppercase tracking-normal text-[#D8C2A8] mb-6">
-
-                ۰۱. تراش دقیق
-
-              </span>
-
-              <h3 className="font-sans text-3xl sm:text-4xl font-light text-[#F7F5F0] leading-tight mb-4">
-
-                در حد تراش الماس <br />
-
-                <span className="italic font-normal text-[#D8C2A8]">لبه‌پردازی و پرداخت</span>
-
-              </h3>
-
-              <p className="font-sans text-xs font-light text-[#8A857D] max-w-md leading-relaxed">
-
-                هر بدنه برنجی و قطعه کریستال اپتیکی با دقتی در حد گوهرشناسی تراش می‌خورد تا بازتاب‌هایی هم‌تراز با استانداردهای جواهرسازی فاخر ایجاد شود.
-
-              </p>
-
-            </div>
-
-            <div className="pt-8 border-t border-white/10 flex items-center justify-between">
-
-              <span className="font-sans text-[10px] uppercase tracking-normal text-[#A8A39A]">
-
-                شاخص‌های مهارت ساخت
-
-              </span>
-
-              <span className="font-sans text-lg italic text-[#D8C2A8] group-hover:translate-x-2 transition-transform duration-500">
-
-                مشاهده جزئیات ←
-
-              </span>
-
-            </div>
-
-          </div>
-
-          {/* Card 2 */}
-
-          <div className="group relative md:col-span-5 bg-[#0B0B0A] border border-white/10 rounded-xl p-8 sm:p-12 overflow-hidden transition-all duration-700 hover:border-[#D8C2A8]/50 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(216,194,168,0.08)] flex flex-col justify-between min-h-[380px]">
-
-            <div className="absolute -left-10 -bottom-10 w-48 h-48 rounded-full border border-white/5 group-hover:scale-125 transition-transform duration-700 pointer-events-none" />
-
-            <div className="flex justify-between items-center mb-6">
-
-              <span className="inline-block px-3 py-1 rounded-full border border-white/10 font-sans text-[9px] uppercase tracking-normal text-[#8A857D]">
-
-                ۰۲. متریال
-
-              </span>
-
-              <span className="font-mono text-[10px] text-[#4A4742]">24K/C360</span>
-
-            </div>
-
-            <div className="my-auto">
-
-              <h3 className="font-sans text-2xl sm:text-3xl font-light text-[#F7F5F0] mb-3">
-
-                طلای یکپارچه <span className="italic text-[#D8C2A8]">و</span> برنج پرداخت‌شده
-
-              </h3>
-
-              <p className="font-sans text-xs font-light text-[#8A857D] leading-relaxed">
-
-                سطوح با پوشش‌های نانویی مقاوم در برابر اکسیدشدن محافظت می‌شوند تا درخشش گرم آن‌ها برای سال‌ها حفظ شود.
-
-              </p>
-
-            </div>
-
-            <div className="pt-6 border-t border-white/10 flex items-center justify-between font-sans text-[10px] uppercase tracking-normal text-[#D8C2A8]">
-
-              <span>پرداخت سطح</span>
-
-              <span>پوشش نانویی ساتن</span>
-
-            </div>
-
-          </div>
-
-          {/* Card 3 */}
-
-          <div className="group relative md:col-span-12 bg-gradient-to-r from-[#0D0D0C] via-[#121210] to-[#0D0D0C] border border-white/10 rounded-xl p-8 sm:p-10 overflow-hidden transition-all duration-700 hover:border-[#D8C2A8]/50 hover:-translate-y-1 flex flex-col md:flex-row items-center justify-between gap-8">
-
-            <div className="flex items-center gap-6">
-
-              <div className="h-16 w-16 rounded-full border border-[#D8C2A8]/30 flex items-center justify-center font-sans text-2xl text-[#D8C2A8] group-hover:rotate-45 transition-transform duration-700">
-
-                ❖
-
-              </div>
-
-              <div>
-
-                <span className="font-sans text-[9px] uppercase tracking-normal text-[#D8C2A8]">
-
-                  ۰۳. سفارش‌های اختصاصی فاخر
-
-                </span>
-
-                <h4 className="font-sans text-xl sm:text-2xl font-light text-[#F7F5F0] mt-1">
-
-                  سازه‌های معماری سفارشی برای کلکسیونرهای خصوصی
-
-                </h4>
-
-              </div>
-
-            </div>
-
-            <button className="whitespace-nowrap px-8 py-4 rounded-full bg-[#D8C2A8] text-[#060605] font-sans text-[10px] uppercase tracking-normal font-medium hover:bg-white transition-colors duration-500 shadow-[0_0_20px_rgba(216,194,168,0.2)]">
-
-              سفارش قطعه اختصاصی
-
-            </button>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* SECTION 04: MATERIALITY و CRITIQUE (با استفاده از craftData) */}
-
-      <section className="relative w-full bg-[#080807] text-[#F7F5F0] py-28 px-6 sm:px-16 lg:px-24 border-t border-white/10 overflow-hidden">
-
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-
-          <div>
-
-            <div className="flex items-center gap-3 font-sans text-[10px] uppercase tracking-normal text-[#D8C2A8] mb-3">
-
-              <span className="h-2 w-2 rounded-full bg-[#D8C2A8]" />
-
-              <span>۰۴ — مشخصات متریال و دیدگاه‌های معماری</span>
-
-            </div>
-
-            <h2 className="font-sans text-4xl sm:text-6xl font-extralight tracking-tight text-[#F7F5F0]">
-
-              لمس‌پذیری <span className="italic text-[#D8C2A8] font-normal">در اوج کمال.</span>
-
-            </h2>
-
-          </div>
-
-          {/* Tab Selection */}
-
-          <div className="flex items-center gap-2 border border-white/10 p-1 rounded-full bg-[#0D0D0C]">
-
-            {craftData.map((item, index) => (
-
-              <button
-
-                key={item.id}
-
-                onClick={() => setActiveIndex(index)}
-
-                className={`px-5 py-2 rounded-full font-sans text-[10px] uppercase tracking-normal transition-all duration-500 ${activeIndex === index
-
-                    ? 'bg-[#D8C2A8] text-[#060605] font-medium'
-
-                    : 'text-[#8A857D] hover:text-[#F7F5F0]'
-
-                  }`}
-
-              >
-
-                {item.number}
-
-              </button>
-
-            ))}
-
-          </div>
-
-        </div>
-
-        {/* Dynamic Material Showcase Card */}
-
-        <AnimatePresence mode="wait">
-
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-6 lg:auto-rows-[200px]">
+          {/* Box A — spotlight */}
           <motion.div
-
-            key={activeCraft.id}
-
-            initial={{ opacity: 0, y: 20 }}
-
-            animate={{ opacity: 1, y: 0 }}
-
-            exit={{ opacity: 0, y: -20 }}
-
-            transition={{ duration: 0.5 }}
-
-            className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#0D0D0C] border border-white/10 rounded-2xl p-8 sm:p-12 overflow-hidden"
-
+            ref={spotlightRef}
+            custom={0}
+            variants={reveal}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            onMouseMove={handleSpotlightMouseMove}
+            className="group relative min-h-[320px] overflow-hidden rounded-3xl border border-[#a67a5c]/30 bg-white/55 shadow-[0_10px_28px_rgba(110,72,46,0.12)] p-8 md:col-span-4 lg:row-span-2"
           >
-
-            <div className={`absolute inset-0 bg-gradient-to-br ${activeCraft.accentGlow} pointer-events-none`} />
-
-            {/* Left Content */}
-
-            <div className="lg:col-span-7 z-10 flex flex-col justify-between">
-
+            <div
+              className="pointer-events-none absolute inset-0 opacity-70 transition-opacity duration-500 group-hover:opacity-100"
+              style={{
+                background: `radial-gradient(420px circle at ${mousePos.x}% ${mousePos.y}%, rgba(201,148,110,0.38), transparent 60%)`,
+              }}
+            />
+            <div
+              className="pointer-events-none absolute inset-0 opacity-30 [background-image:radial-gradient(rgba(122,74,44,0.55)_1px,transparent_1px)] [background-size:26px_26px]"
+              style={{
+                WebkitMaskImage: `radial-gradient(260px circle at ${mousePos.x}% ${mousePos.y}%, #000, transparent)`,
+                maskImage: `radial-gradient(260px circle at ${mousePos.x}% ${mousePos.y}%, #000, transparent)`,
+              }}
+            />
+            <div className="relative z-10 flex h-full flex-col justify-between">
+              <span className="w-fit rounded-full border border-[#a67a5c]/50 px-3 py-1 font-sans text-[10px] text-[#8a5a3a]">
+                نورافکن تعاملی
+              </span>
               <div>
-
-                <div className="flex items-center justify-between mb-6">
-
-                  <span className="font-mono text-xs tracking-normal text-[#D8C2A8]">{activeCraft.materialCode}</span>
-
-                  <span className="font-sans text-[10px] uppercase tracking-normal text-[#8A857D]">{activeCraft.title}</span>
-
-                </div>
-
-                <h3 className="font-sans text-3xl sm:text-5xl font-light text-[#F7F5F0] mb-4">
-
-                  {activeCraft.materialName}
-
+                <h3 className="font-sans text-3xl font-extralight leading-snug sm:text-5xl">
+                  نور را با <span className="italic text-[#8a5a3a]">دست‌تان</span> دنبال کنید
                 </h3>
-
-                <p className="font-sans text-xs sm:text-sm font-light text-[#A8A39A] leading-relaxed mb-8">
-
-                  {activeCraft.materialDesc}
-
+                <p className="mt-4 max-w-sm font-sans text-xs font-light leading-loose text-[#7a5a48]">
+                  هر سطح در پرتو، با زاویه نگاه شما زنده می‌شود؛ درست مثل برنج پرداخت‌شده زیر نور گرم.
                 </p>
-
               </div>
-
-              {/* Quote Block */}
-
-              <div className="pt-8 border-t border-white/10">
-
-                <p className="font-sans italic text-base sm:text-lg text-[#D8C2A8] leading-relaxed mb-4">
-
-                  وquot;{activeCraft.quote}وquot;
-
-                </p>
-
-                <div className="flex items-center gap-3">
-
-                  <span className="font-sans text-xs text-[#F7F5F0] font-medium">{activeCraft.author}</span>
-
-                  <span className="text-[#4A4742]">•</span>
-
-                  <span className="font-sans text-xs text-[#8A857D]">{activeCraft.role}, {activeCraft.location}</span>
-
-                </div>
-
-              </div>
-
             </div>
-
-            {/* Right Image */}
-
-            <div className="lg:col-span-5 z-10 h-[320px] sm:h-[400px] rounded-xl overflow-hidden border border-white/10 relative">
-
-              <img
-
-                src={activeCraft.image}
-
-                alt={activeCraft.materialName}
-
-                className="w-full h-full object-cover"
-
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0C] via-transparent to-transparent opacity-60" />
-
-            </div>
-
           </motion.div>
 
-        </AnimatePresence>
+          {/* Box B — counter */}
+          <motion.div
+            custom={1}
+            variants={reveal}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            className="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-[#a67a5c]/30 bg-white/55 shadow-[0_10px_28px_rgba(110,72,46,0.12)] p-7 md:col-span-2"
+          >
+            <span className="font-sans text-[10px] text-[#7a5a48]">پروژه معماری فاخر</span>
+            <div className="font-sans text-6xl font-extralight text-[#8a5a3a]">
+              <Counter to={240} suffix="+" />
+            </div>
+            <div className="h-px w-full bg-gradient-to-l from-[#D8C2A8]/60 to-transparent" />
+          </motion.div>
 
+          {/* Box C — rotating rings */}
+          <motion.div
+            custom={2}
+            variants={reveal}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            className="relative flex min-h-[200px] items-center justify-center overflow-hidden rounded-3xl border border-[#a67a5c]/30 bg-white/55 shadow-[0_10px_28px_rgba(110,72,46,0.12)] md:col-span-2"
+          >
+            <motion.div
+              className="absolute h-40 w-40 rounded-full border border-dashed border-[#D8C2A8]/40"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 24, ease: 'linear', repeat: Infinity }}
+            />
+            <motion.div
+              className="absolute h-28 w-28 rounded-full border border-[#a67a5c]/40"
+              animate={{ rotate: -360 }}
+              transition={{ duration: 16, ease: 'linear', repeat: Infinity }}
+            >
+              <span className="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-[#3a2418] shadow-[0_0_14px_#D8C2A8]" />
+            </motion.div>
+            <div className="relative text-center">
+              <div className="font-sans text-3xl font-extralight text-[#2a170e]">
+                <Counter to={24} />
+                <span className="text-[#8a5a3a]">K</span>
+              </div>
+              <div className="mt-1 font-sans text-[9px] text-[#7a5a48]">پوشش طلا</div>
+            </div>
+          </motion.div>
+
+          {/* Box D — color temperature */}
+          <motion.div
+            custom={3}
+            variants={reveal}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            className="relative min-h-[240px] overflow-hidden rounded-3xl border border-[#a67a5c]/30 bg-white/55 shadow-[0_10px_28px_rgba(110,72,46,0.12)] p-7 md:col-span-3 lg:col-span-3"
+          >
+            <div
+              className="pointer-events-none absolute -left-10 top-1/2 h-56 w-56 -translate-y-1/2 rounded-full blur-3xl transition-colors duration-300"
+              style={{ background: lampColor, opacity: 0.35 }}
+            />
+            <div className="relative z-10 flex h-full flex-col justify-between">
+              <div className="flex items-center justify-between">
+                <span className="font-sans text-[10px] text-[#7a5a48]">دمای رنگ نور</span>
+                <span className="font-mono text-sm text-[#8a5a3a]">{fa(kelvin)} K</span>
+              </div>
+              <div
+                className="mx-auto my-4 h-16 w-16 rounded-full transition-all duration-300"
+                style={{
+                  background: lampColor,
+                  boxShadow: `0 0 ${30 + warmth * 30}px ${10 + warmth * 8}px ${lampColor}66`,
+                }}
+              />
+              <input
+                type="range"
+                min={1800}
+                max={4000}
+                step={100}
+                value={kelvin}
+                onChange={(e) => setKelvin(Number(e.target.value))}
+                aria-label="دمای رنگ نور"
+                className="w-full cursor-pointer accent-[#7a4a2c]"
+              />
+              <div className="mt-2 flex justify-between font-sans text-[9px] text-[#a67a5c]">
+                <span>گرم</span>
+                <span>سرد</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Box E — flip card */}
+          <motion.div
+            custom={4}
+            variants={reveal}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            className="group min-h-[240px] [perspective:1000px] md:col-span-3 lg:col-span-3"
+          >
+            <div className="relative h-full w-full transition-transform duration-[900ms] [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+              <div className="absolute inset-0 flex flex-col justify-between rounded-3xl border border-[#a67a5c]/30 bg-gradient-to-br from-white/80 to-[#f1dcc6] p-7 [backface-visibility:hidden]">
+                <span className="font-sans text-[10px] text-[#8a5a3a]">متریال</span>
+                <h3 className="font-sans text-2xl font-extralight leading-snug sm:text-3xl">
+                  برنج، کریستال <br /> و <span className="italic text-[#8a5a3a]">سکوت</span>
+                </h3>
+                <span className="font-sans text-[10px] text-[#a67a5c]">برای دیدن جزئیات، نشانگر را بیاورید ↻</span>
+              </div>
+              <div className="absolute inset-0 flex flex-col justify-center gap-3 rounded-3xl border border-[#D8C2A8]/40 bg-[#3a2418] p-7 text-[#f6e9dc] [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                <span className="font-mono text-[10px]">BR-2200K · GL-OPTIC-X · AL-BLK-90</span>
+                <p className="font-sans text-sm font-medium leading-loose">
+                  هر قطعه با دست پرداخت می‌شود و با پوشش نانویی در برابر اکسیدشدن محافظت می‌گردد؛ تا سال‌ها همان درخشش اول را داشته باشد.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
+      {/* ───────── SECTION 3: EDITORIAL GRID ───────── */}
+      <section className="relative w-full border-t border-[#a67a5c]/30 bg-[#f6e9dc] px-6 py-28 sm:px-16 lg:px-24">
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="mb-16"
+        >
+          <SectionTag>۰۳ — مجموعه‌ای گزیده از آثار</SectionTag>
+          <h2 className="font-sans text-4xl font-extralight text-[#2a170e] sm:text-6xl">
+            روایت <span className="italic text-[#8a5a3a]">آرشیو.</span>
+          </h2>
+        </motion.div>
+
+        <div className="grid grid-cols-12 gap-6 lg:gap-8">
+          {magazineItems.map((item, i) => (
+            <motion.div
+              key={item.id}
+              custom={i}
+              variants={reveal}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: '-60px' }}
+              className={`group relative overflow-hidden rounded-2xl border border-[#a67a5c]/30 bg-white/55 transition-all duration-700 hover:border-[#7a4a2c]/50 ${item.aspect}`}
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-full w-full object-cover grayscale contrast-125 transition-all duration-[1400ms] group-hover:scale-105 group-hover:grayscale-0"
+              />
+              <div className="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-[#2a170e]/85 via-[#2a170e]/25 to-transparent p-7 sm:p-8">
+                <span className="w-fit rounded-full border border-[#a67a5c]/50 bg-black/45 px-3 py-1 font-sans text-[10px] text-white backdrop-blur-md">
+                  {item.category}
+                </span>
+                <div className="translate-y-3 transition-transform duration-700 group-hover:translate-y-0">
+                  <h3 className="mb-2 font-sans text-3xl font-extralight text-white transition-colors group-hover:text-[#f0cfae] sm:text-4xl">
+                    {item.title}
+                  </h3>
+                  <p className="line-clamp-2 max-w-md font-sans text-xs font-light leading-loose text-white/85 opacity-80 transition-opacity duration-700 group-hover:opacity-100">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ───────── SECTION 4: CRAFT CARDS ───────── */}
+      <section className="relative w-full overflow-hidden border-t border-[#a67a5c]/30 bg-[#efdcc8] px-6 py-28 sm:px-16 lg:px-24">
+        <div className="pointer-events-none absolute inset-0 opacity-20">
+          <div className="absolute left-0 top-1/2 h-px w-full bg-gradient-to-r from-transparent via-[#D8C2A8]/30 to-transparent" />
+          <div className="absolute left-1/3 top-0 h-full w-px bg-gradient-to-b from-transparent via-[#a67a5c]/25 to-transparent" />
+          <div className="absolute right-1/3 top-0 h-full w-px bg-gradient-to-b from-transparent via-[#a67a5c]/25 to-transparent" />
+        </div>
+
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="relative z-10 mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end"
+        >
+          <div>
+            <SectionTag ping>۰۴ — آتلیه و معماری جواهر</SectionTag>
+            <h2 className="font-sans text-4xl font-extralight tracking-tight sm:text-6xl">
+              تراش‌خورده همچون <span className="font-normal italic text-[#8a5a3a]">جواهر فاخر.</span>
+            </h2>
+          </div>
+          <p className="max-w-sm font-sans text-xs font-light leading-loose text-[#7a5a48]">
+            جایی که دقت جواهرسازی فاخر با مهندسی نورپردازی معماری پیوند می‌خورد.
+          </p>
+        </motion.div>
+
+        <div className="relative z-10 grid grid-cols-1 items-stretch gap-6 md:grid-cols-12">
+          <motion.div
+            custom={0}
+            variants={reveal}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            className="group relative flex min-h-[380px] flex-col justify-between overflow-hidden rounded-2xl border border-[#a67a5c]/30 bg-white/55 shadow-[0_10px_28px_rgba(110,72,46,0.12)] p-8 transition-all duration-700 hover:-translate-y-2 hover:border-[#7a4a2c]/50 hover:shadow-[0_20px_50px_rgba(110,72,46,0.2)] sm:p-12 md:col-span-7"
+          >
+            <div className="pointer-events-none absolute -left-12 -top-12 h-60 w-60 rounded-full border border-[#a67a5c]/20 transition-colors duration-700 group-hover:border-[#a67a5c]/40" />
+            <div>
+              <span className="mb-6 inline-block rounded-full border border-[#a67a5c]/50 px-3 py-1 font-sans text-[10px] text-[#8a5a3a]">
+                ۰۱. تراش دقیق
+              </span>
+              <h3 className="mb-4 font-sans text-3xl font-light leading-tight sm:text-4xl">
+                در حد تراش الماس <br />
+                <span className="font-normal italic text-[#8a5a3a]">لبه‌پردازی و پرداخت</span>
+              </h3>
+              <p className="max-w-md font-sans text-xs font-light leading-loose text-[#7a5a48]">
+                هر بدنه برنجی و قطعه کریستال اپتیکی با دقتی در حد گوهرشناسی تراش می‌خورد تا بازتاب‌هایی هم‌تراز با استانداردهای جواهرسازی فاخر ایجاد شود.
+              </p>
+            </div>
+            <div className="flex items-center justify-between border-t border-[#a67a5c]/30 pt-8">
+              <span className="font-sans text-[11px] text-[#6b4a38]">شاخص‌های مهارت ساخت</span>
+              <span className="font-sans text-base italic text-[#8a5a3a] transition-transform duration-500 group-hover:-translate-x-2">
+                ← مشاهده جزئیات
+              </span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            custom={1}
+            variants={reveal}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            className="group relative flex min-h-[380px] flex-col justify-between overflow-hidden rounded-2xl border border-[#a67a5c]/30 bg-white/55 shadow-[0_10px_28px_rgba(110,72,46,0.12)] p-8 transition-all duration-700 hover:-translate-y-2 hover:border-[#7a4a2c]/50 hover:shadow-[0_20px_50px_rgba(110,72,46,0.2)] sm:p-12 md:col-span-5"
+          >
+            <div className="pointer-events-none absolute -bottom-10 -right-10 h-48 w-48 rounded-full border border-[#a67a5c]/20 transition-transform duration-700 group-hover:scale-125" />
+            <div className="mb-6 flex items-center justify-between">
+              <span className="inline-block rounded-full border border-[#a67a5c]/30 px-3 py-1 font-sans text-[10px] text-[#7a5a48]">
+                ۰۲. متریال
+              </span>
+              <span className="font-mono text-[10px] text-[#a67a5c]">24K/C360</span>
+            </div>
+            <div className="my-auto">
+              <h3 className="mb-3 font-sans text-2xl font-light sm:text-3xl">
+                طلای یکپارچه <span className="italic text-[#8a5a3a]">و</span> برنج پرداخت‌شده
+              </h3>
+              <p className="font-sans text-xs font-light leading-loose text-[#7a5a48]">
+                سطوح با پوشش‌های نانویی مقاوم در برابر اکسیدشدن محافظت می‌شوند تا درخشش گرم آن‌ها برای سال‌ها حفظ شود.
+              </p>
+            </div>
+            <div className="flex items-center justify-between border-t border-[#a67a5c]/30 pt-6 font-sans text-[11px] text-[#8a5a3a]">
+              <span>پرداخت سطح</span>
+              <span>پوشش نانویی ساتن</span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            custom={2}
+            variants={reveal}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            className="group relative flex flex-col items-center justify-between gap-8 overflow-hidden rounded-2xl border border-[#a67a5c]/30 bg-gradient-to-r from-white/60 via-[#fcf3e9] to-white/60 p-8 transition-all duration-700 hover:-translate-y-1 hover:border-[#7a4a2c]/50 sm:p-10 md:col-span-12 md:flex-row"
+          >
+            <div className="flex items-center gap-6">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-[#a67a5c]/50 font-sans text-2xl text-[#8a5a3a] transition-transform duration-700 group-hover:rotate-45">
+                ❖
+              </div>
+              <div>
+                <span className="font-sans text-[10px] text-[#8a5a3a]">۰۳. سفارش‌های اختصاصی فاخر</span>
+                <h4 className="mt-1 font-sans text-xl font-light sm:text-2xl">
+                  سازه‌های معماری سفارشی برای کلکسیونرهای خصوصی
+                </h4>
+              </div>
+            </div>
+            <button className="whitespace-nowrap rounded-full bg-[#3a2418] px-8 py-4 font-sans text-xs font-medium text-[#f6e9dc] shadow-[0_0_20px_rgba(216,194,168,0.2)] transition-colors duration-500 hover:bg-[#7a4a2c]">
+              سفارش قطعه اختصاصی
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ───────── SECTION 5: MATERIALITY ───────── */}
+      <section className="relative w-full overflow-hidden border-t border-[#a67a5c]/30 bg-[#f6e9dc] px-6 py-28 sm:px-16 lg:px-24">
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end"
+        >
+          <div>
+            <SectionTag>۰۵ — مشخصات متریال و دیدگاه‌های معماری</SectionTag>
+            <h2 className="font-sans text-4xl font-extralight tracking-tight sm:text-6xl">
+              لمس‌پذیری <span className="font-normal italic text-[#8a5a3a]">در اوج کمال.</span>
+            </h2>
+          </div>
+
+          <div className="flex w-fit items-center gap-1 rounded-full border border-[#a67a5c]/30 bg-white/55 shadow-[0_10px_28px_rgba(110,72,46,0.12)] p-1">
+            {craftData.map((item, index) => (
+              <button
+                key={item.id}
+                onClick={() => setActiveIndex(index)}
+                className="relative rounded-full px-5 py-2 font-sans text-xs transition-colors duration-500"
+              >
+                {activeIndex === index && (
+                  <motion.span
+                    layoutId="craft-pill"
+                    className="absolute inset-0 rounded-full bg-[#3a2418]"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  />
+                )}
+                <span
+                  className={`relative z-10 ${
+                    activeIndex === index ? 'font-medium text-[#f6e9dc]' : 'text-[#7a5a48] hover:text-[#2a170e]'
+                  }`}
+                >
+                  {item.number}
+                </span>
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCraft.id}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -24 }}
+            transition={{ duration: 0.5 }}
+            className="relative grid grid-cols-1 items-center gap-8 overflow-hidden rounded-3xl border border-[#a67a5c]/30 bg-white/55 shadow-[0_10px_28px_rgba(110,72,46,0.12)] p-8 sm:p-12 lg:grid-cols-12"
+          >
+            <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${activeCraft.accentGlow}`} />
+
+            <div className="z-10 flex flex-col justify-between lg:col-span-7">
+              <div>
+                <div className="mb-6 flex items-center justify-between">
+                  <span className="font-mono text-xs text-[#8a5a3a]">{activeCraft.materialCode}</span>
+                  <span className="font-sans text-[11px] text-[#7a5a48]">{activeCraft.title}</span>
+                </div>
+                <h3 className="mb-4 font-sans text-3xl font-light sm:text-5xl">{activeCraft.materialName}</h3>
+                <p className="mb-8 font-sans text-xs font-light leading-loose text-[#6b4a38] sm:text-sm">
+                  {activeCraft.materialDesc}
+                </p>
+              </div>
+
+              <div className="border-t border-[#a67a5c]/30 pt-8">
+                <p className="mb-4 font-sans text-base italic leading-loose text-[#8a5a3a] sm:text-lg">
+                  «{activeCraft.quote}»
+                </p>
+                <div className="flex items-center gap-3">
+                  <span className="font-sans text-xs font-medium">{activeCraft.author}</span>
+                  <span className="text-[#a67a5c]">•</span>
+                  <span className="font-sans text-xs text-[#7a5a48]">
+                    {activeCraft.role}، {activeCraft.location}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative z-10 h-[320px] overflow-hidden rounded-2xl border border-[#a67a5c]/30 sm:h-[400px] lg:col-span-5">
+              <motion.img
+                key={activeCraft.image}
+                initial={{ scale: 1.15 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+                src={activeCraft.image}
+                alt={activeCraft.materialName}
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#efdcc8]/60 via-transparent to-transparent opacity-60" />
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </section>
+
+      {/* ───────── SECTION 6: ACCORDION ───────── */}
+      <section className="relative w-full border-t border-[#a67a5c]/30 bg-[#efdcc8] px-6 py-28 sm:px-16 lg:px-24">
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="mb-16"
+        >
+          <SectionTag>۰۶ — شروع گفتگو</SectionTag>
+          <h2 className="font-sans text-4xl font-extralight sm:text-6xl">
+            نور شما، <span className="font-normal italic text-[#8a5a3a]">روایت ما.</span>
+          </h2>
+        </motion.div>
+
+        <div className="flex flex-col gap-4 lg:h-[460px] lg:flex-row">
+          {panelsData.map((p, i) => {
+            const active = activePanel === i;
+            return (
+              <motion.div
+                key={p.id}
+                custom={i}
+                variants={reveal}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: '-60px' }}
+                onMouseEnter={() => setActivePanel(i)}
+                onClick={() => setActivePanel(i)}
+                style={{ flexGrow: active ? 4 : 1 }}
+                className={`relative cursor-pointer overflow-hidden rounded-3xl border p-8 transition-[flex-grow,border-color,background-color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] lg:basis-0 ${
+                  active
+                    ? 'border-[#7a4a2c]/50 bg-gradient-to-br from-white/85 to-[#f1dcc6]'
+                    : 'border-[#a67a5c]/30 bg-white/55 shadow-[0_10px_28px_rgba(110,72,46,0.12)] hover:border-[#a67a5c]/40'
+                }`}
+              >
+                <div
+                  className={`pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-[#e8b88f]/40 blur-3xl transition-opacity duration-700 ${
+                    active ? 'opacity-100' : 'opacity-0'
+                  }`}
+                />
+                <div className="relative z-10 flex h-full min-h-[200px] flex-col justify-between">
+                  <div className="flex items-center justify-between">
+                    <span className="font-sans text-3xl font-extralight text-[#8a5a3a]">{p.number}</span>
+                    <span className="rounded-full border border-[#a67a5c]/30 px-3 py-1 font-sans text-[10px] text-[#7a5a48]">
+                      {p.tag}
+                    </span>
+                  </div>
+
+                  <div>
+                    <span className="mb-2 block font-sans text-[11px] text-[#7a5a48]">{p.subtitle}</span>
+                    <h3 className="font-sans text-2xl font-light leading-snug sm:text-3xl">{p.title}</h3>
+
+                    <div
+                      className={`grid transition-all duration-700 ${
+                        active ? 'grid-rows-[1fr] opacity-100' : 'lg:grid-rows-[0fr] lg:opacity-0'
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <p className="mt-4 max-w-md font-sans text-xs font-light leading-loose text-[#6b4a38]">
+                          {p.description}
+                        </p>
+                        <button className="mt-6 rounded-full bg-[#3a2418] px-6 py-3 font-sans text-xs font-medium text-[#f6e9dc] transition-colors duration-500 hover:bg-[#7a4a2c]">
+                          {p.ctaText}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
     </div>
-
   );
-
 };

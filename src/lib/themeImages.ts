@@ -1,7 +1,7 @@
 /* تصاویر تم صفحات داخلی (پوشه public/images) */
 export const IMG = {
-  silk: '/images/theme/silk.jpg',
-  ringHero: '/images/theme/ring-hero.png',
+  silk: '/images/collection/newsletter-bg.png',
+  ringHero: '/images/theme/ring-hero.jpg',
   ringLogin: '/images/theme/ring-login.jpg',
   ringFlowers: '/images/theme/ring-flowers.jpg',
   ringBox: '/images/theme/ring-box.jpg',
