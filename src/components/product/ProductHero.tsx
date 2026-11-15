@@ -11,7 +11,7 @@ export const ProductHero = () => {
         className="absolute inset-0"
         style={{
           backgroundImage:
-            'url("/images/product-hero/product-hero-model.jpg"), radial-gradient(60% 90% at 25% 45%, #d9b595 0%, #946648 40%, #3b2419 78%, #1c110c 100%)',
+            'url("/images/product-hero/product-hero.png"), radial-gradient(60% 90% at 25% 45%, #d9b595 0%, #946648 40%, #3b2419 78%, #1c110c 100%)',
           backgroundSize: 'cover',
           backgroundPosition: 'left center',
         }}

@@ -118,8 +118,13 @@ export function Footer({ className = "" }: { className?: string }) {
                 <span className="absolute left-[14px] top-0 h-8 w-8 rounded-full bg-[#f79e1b]/95 mix-blend-screen" />
               </span>
               <span className="grid h-[28px] w-[48px] place-items-center rounded-[5px] bg-[#2a5fb0] text-[9px] font-bold text-white" aria-label="شاپرک">سامان</span>
-              <span className="grid h-[34px] w-[34px] place-items-center rounded-full border-2 border-[#3a6fd0] font-serif text-[18px] font-bold italic text-[#3a6fd0]" aria-label="نماد اعتماد">e</span>
-            </div>
+                  <img
+                    src="/images/enamad.png"
+                    alt="نماد اعتماد الکترونیکی"
+                    className="h-[90px] w-[90px] object-contain"
+                    loading="lazy"
+                  />
+                </div>
             <p>© کلیه حقوق مادی و معنوی متعلق به پرتو محفوظ است. ۱۴۰۴</p>
           </div>
         </div>

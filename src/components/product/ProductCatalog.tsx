@@ -14,17 +14,17 @@ import {
 
 const MIN_PRICE = 1_000_000;
 const MAX_PRICE = 50_000_000;
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 9;
 
 const fa = (n: number) => n.toLocaleString('fa-IR');
 const faPrice = (n: number) => `${n.toLocaleString('fa-IR').replace(/٬/g, ',')} تومان`;
 
 const kinds: { value: RingKind | 'ALL'; label: string; img: string }[] = [
-  { value: 'ALL', label: 'همه محصولات', img: '/images/products/lumiere-ring/rose-gold-1.jpg' },
-  { value: 'gold', label: 'انگشتر طلا', img: '/images/products/lumiere-ring/yellow-gold-1.jpg' },
-  { value: 'diamond', label: 'انگشتر الماس', img: '/images/products/lumiere-ring/white-gold-1.jpg' },
-  { value: 'stone', label: 'انگشتر نگین‌دار', img: '/images/products/lumiere-ring/rose-gold-2.jpg' },
-  { value: 'minimal', label: 'انگشتر مینیمال', img: '/images/products/lumiere-ring/white-gold-2.jpg' },
+  { value: 'ALL', label: 'همه محصولات', img: '/images/products/lumiere-ring/rose-gold-1.png' },
+  { value: 'gold', label: 'انگشتر طلا', img: '/images/products/lumiere-ring/yellow-gold-1.png' },
+  { value: 'diamond', label: 'انگشتر الماس', img: '/images/products/lumiere-ring/white-gold-1.png' },
+  { value: 'stone', label: 'انگشتر نگین‌دار', img: '/images/products/lumiere-ring/rose-gold-2.png' },
+  { value: 'minimal', label: 'انگشتر مینیمال', img: '/images/products/lumiere-ring/white-gold-2.png' },
 ];
 
 const goldTypes: { value: GoldType; label: string; swatch: string }[] = [
@@ -150,189 +150,395 @@ export const ProductCatalog = () => {
           })}
         </div>
 
-        {/* سایدبار + محصولات */}
-        <div className="mt-10 flex items-start gap-6">
-          {/* محصولات (راست) */}
-          <div className="min-w-0 flex-1">
-            <div className="mb-5 flex items-center gap-4">
-              <h2 className="text-[24px] font-bold text-[#2a1a12]">محصولات انگشتر</h2>
-              <span className="h-5 w-px bg-[#c8a07c]/50" />
-              <span className="text-[12px] text-[#7a5a46]">{fa(items.length)} محصول</span>
+    
+{/* سایدبار + محصولات */}
 
-              <div className="mr-auto flex items-center gap-3">
-                <label className="relative">
-                  <span className="sr-only">مرتب‌سازی</span>
-                  <select
-                    value={sort}
-                    onChange={(e) => { setSort(e.target.value as Sort); setPage(1); }}
-                    className="glass-cream h-9 cursor-pointer appearance-none rounded-full py-0 pl-8 pr-4 text-[12px] text-[#3a2418] outline-none"
-                  >
-                    {(Object.keys(sortLabels) as Sort[]).map((s) => (
-                      <option key={s} value={s}>مرتب‌سازی: {sortLabels[s]}</option>
-                    ))}
-                  </select>
-                  <Chevron dir="left" className="pointer-events-none absolute left-3 top-1/2 h-3 w-3 -translate-y-1/2 -rotate-90 text-[#7a5a46]" />
-                </label>
-                <div className="glass-cream flex h-9 items-center gap-1 rounded-full p-1">
-                  {(['list', 'grid'] as const).map((v) => (
-                    <button
-                      key={v}
-                      type="button"
-                      aria-label={v === 'grid' ? 'نمایش شبکه‌ای' : 'نمایش لیستی'}
-                      aria-pressed={view === v}
-                      onClick={() => setView(v)}
-                      className={`grid h-7 w-7 place-items-center rounded-full transition ${view === v ? 'bg-[#3a2418] text-[#f3dcc4]' : 'text-[#7a5a46]'}`}
-                    >
-                      {v === 'grid' ? (
-                        <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="4" y="4" width="6" height="6" rx="1" /><rect x="14" y="4" width="6" height="6" rx="1" /><rect x="4" y="14" width="6" height="6" rx="1" /><rect x="14" y="14" width="6" height="6" rx="1" /></svg>
-                      ) : (
-                        <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" /></svg>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
+<div className="mt-10 flex items-start gap-6">
 
-            <div className={view === 'grid' ? 'grid grid-cols-3 gap-6' : 'flex flex-col gap-6'}>
-              {visible.map((r: RingItem) => (
-                <ProductCardView
-                  key={r.id}
-                  name={r.name}
-                  subTitle={r.subTitle}
-                  href={r.slug ? `/product/${r.slug}` : '/product'}
-                  images={r.images ?? [r.image]}
-                  price={fa(r.rawPrice).replace(/٬/g, ',')}
-                  oldPrice={r.oldPrice ? fa(r.oldPrice).replace(/٬/g, ',') : null}
-                  discount={r.oldPrice ? `${fa(Math.round((1 - r.rawPrice / r.oldPrice) * 100))}٪` : null}
-                  rating={r.rating}
-                  reviewsCount={r.reviewsCount}
-                  badge={r.badge ?? null}
-                  added={added.has(r.id)}
-                  onAddToCart={(e) => addToCart(e, r.id)}
-                  className={view === 'list' ? 'max-w-[420px]' : ''}
-                />
-              ))}
-            </div>
+  {/* محصولات (راست) */}
+  <div className="min-w-0 flex-1">
 
-            {visible.length === 0 && (
-              <div className="glass-cream mt-4 rounded-[28px] py-20 text-center">
-                <p className="text-[18px] font-bold text-[#2a1a12]">موردی یافت نشد</p>
-                <p className="mt-2 text-[12px] text-[#7a5a46]">فیلترها را تغییر دهید و دوباره امتحان کنید.</p>
-              </div>
-            )}
+    <div className="mb-5 flex items-center gap-4">
+
+      <h2 className="text-[27px] font-bold text-[#2a1a12]">
+        محصولات انگشتر
+      </h2>
+
+      <span className="h-6 w-px bg-[#c8a07c]/50" />
+
+      <span className="text-[14px] font-medium text-[#7a5a46]">
+        {fa(items.length)} محصول
+      </span>
+
+      <div className="mr-auto flex items-center gap-3">
+
+        <label className="relative">
+          <span className="sr-only">مرتب‌سازی</span>
+
+          <select
+            value={sort}
+            onChange={(e) => {
+              setSort(e.target.value as Sort);
+              setPage(1);
+            }}
+            className="glass-cream h-11 cursor-pointer appearance-none rounded-full py-0 pl-9 pr-4 text-[14px] font-medium text-[#3a2418] outline-none"
+          >
+            {(Object.keys(sortLabels) as Sort[]).map((s) => (
+              <option key={s} value={s}>
+                مرتب‌سازی: {sortLabels[s]}
+              </option>
+            ))}
+          </select>
+
+          <Chevron
+            dir="left"
+            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 -rotate-90 text-[#7a5a46]"
+          />
+        </label>
+
+        <div className="glass-cream flex h-11 items-center gap-1 rounded-full p-1">
+          {(['list', 'grid'] as const).map((v) => (
+            <button
+              key={v}
+              type="button"
+              aria-label={v === 'grid' ? 'نمایش شبکه‌ای' : 'نمایش لیستی'}
+              aria-pressed={view === v}
+              onClick={() => setView(v)}
+              className={`grid h-9 w-9 place-items-center rounded-full transition ${
+                view === v
+                  ? 'bg-[#3a2418] text-[#f3dcc4]'
+                  : 'text-[#7a5a46]'
+              }`}
+            >
+              {v === 'grid' ? (
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                >
+                  <rect x="4" y="4" width="6" height="6" rx="1" />
+                  <rect x="14" y="4" width="6" height="6" rx="1" />
+                  <rect x="4" y="14" width="6" height="6" rx="1" />
+                  <rect x="14" y="14" width="6" height="6" rx="1" />
+                </svg>
+              ) : (
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                >
+                  <path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" />
+                </svg>
+              )}
+            </button>
+          ))}
+        </div>
+
+      </div>
+    </div>
+
+    <div
+      className={
+        view === 'grid'
+          ? 'grid grid-cols-3 gap-6'
+          : 'flex flex-col gap-6'
+      }
+    >
+      {visible.map((r: RingItem) => (
+        <ProductCardView
+          key={r.id}
+          name={r.name}
+          subTitle={r.subTitle}
+          href={r.slug ? `/product/${r.slug}` : '/product'}
+          images={r.images ?? [r.image]}
+          price={fa(r.rawPrice).replace(/٬/g, ',')}
+          oldPrice={
+            r.oldPrice
+              ? fa(r.oldPrice).replace(/٬/g, ',')
+              : null
+          }
+          discount={
+            r.oldPrice
+              ? `${fa(
+                  Math.round((1 - r.rawPrice / r.oldPrice) * 100)
+                )}٪`
+              : null
+          }
+          rating={r.rating}
+          reviewsCount={r.reviewsCount}
+          badge={r.badge ?? null}
+          added={added.has(r.id)}
+          onAddToCart={(e) => addToCart(e, r.id)}
+          className={view === 'list' ? 'max-w-[420px]' : ''}
+        />
+      ))}
+    </div>
+
+    {visible.length === 0 && (
+      <div className="glass-cream mt-4 rounded-[28px] py-20 text-center">
+        <p className="text-[20px] font-bold text-[#2a1a12]">
+          موردی یافت نشد
+        </p>
+
+        <p className="mt-3 text-[14px] text-[#7a5a46]">
+          فیلترها را تغییر دهید و دوباره امتحان کنید.
+        </p>
+      </div>
+    )}
+
+  </div>
+
+  {/* سایدبار فیلتر (چپ) */}
+  <aside className="glass-cream sticky top-24 w-[270px] shrink-0 rounded-[26px] p-5 text-right">
+
+    <div className="flex items-center justify-between border-b border-[#c8a07c]/25 pb-4">
+
+      <h3 className="text-[17px] font-bold text-[#2a1a12]">
+        فیلتر محصولات
+      </h3>
+
+      <span className="grid h-9 w-9 place-items-center rounded-full bg-white/70 text-[#3a2418]">
+        <FilterIcon />
+      </span>
+
+    </div>
+
+    {/* قیمت */}
+    <div className="border-b border-[#c8a07c]/20 py-4">
+
+      <SectionTitle
+        open={open.price}
+        onClick={() =>
+          setOpen((o) => ({ ...o, price: !o.price }))
+        }
+      >
+        محدوده قیمت
+      </SectionTitle>
+
+      {open.price && (
+        <div className="mt-4">
+
+          <div className="relative h-5">
+
+            <div className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full bg-[#d8bfa8]" />
+
+            <div
+              className="absolute right-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full bg-[#2a1a12]"
+              style={{ width: `${pct}%` }}
+            />
+
+            <input
+              type="range"
+              dir="rtl"
+              min={MIN_PRICE}
+              max={MAX_PRICE}
+              step={500000}
+              value={draft.maxPrice}
+              onChange={(e) =>
+                setDraft((d) => ({
+                  ...d,
+                  maxPrice: Number(e.target.value),
+                }))
+              }
+              aria-label="حداکثر قیمت"
+              className="absolute inset-0 h-5 w-full cursor-pointer opacity-0"
+            />
+
+            <span className="pointer-events-none absolute right-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full bg-[#2a1a12]" />
+
+            <span
+              className="pointer-events-none absolute top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full bg-[#2a1a12]"
+              style={{ right: `calc(${pct}% - 7px)` }}
+            />
+
           </div>
 
-          {/* سایدبار فیلتر (چپ) */}
-          <aside className="glass-cream sticky top-24 w-[270px] shrink-0 rounded-[26px] p-5 text-right">
-            <div className="flex items-center justify-between border-b border-[#c8a07c]/25 pb-4">
-              <h3 className="text-[15px] font-bold text-[#2a1a12]">فیلتر محصولات</h3>
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-white/70 text-[#3a2418]"><FilterIcon /></span>
-            </div>
+          <p className="mt-3 text-center text-[13px] font-medium text-[#5a3a28]">
+            {fa(MIN_PRICE)} — {fa(draft.maxPrice)} تومان
+          </p>
 
-            {/* قیمت */}
-            <div className="border-b border-[#c8a07c]/20 py-4">
-              <SectionTitle open={open.price} onClick={() => setOpen((o) => ({ ...o, price: !o.price }))}>محدوده قیمت</SectionTitle>
-              {open.price && (
-                <div className="mt-4">
-                  <div className="relative h-5">
-                    <div className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full bg-[#d8bfa8]" />
-                    <div className="absolute right-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full bg-[#2a1a12]" style={{ width: `${pct}%` }} />
-                    <input
-                      type="range"
-                      dir="rtl"
-                      min={MIN_PRICE}
-                      max={MAX_PRICE}
-                      step={500000}
-                      value={draft.maxPrice}
-                      onChange={(e) => setDraft((d) => ({ ...d, maxPrice: Number(e.target.value) }))}
-                      aria-label="حداکثر قیمت"
-                      className="absolute inset-0 h-5 w-full cursor-pointer opacity-0"
-                    />
-                    <span className="pointer-events-none absolute right-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full bg-[#2a1a12]" />
-                    <span className="pointer-events-none absolute top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full bg-[#2a1a12]" style={{ right: `calc(${pct}% - 7px)` }} />
-                  </div>
-                  <p className="mt-3 text-center text-[11px] text-[#5a3a28]">
-                    {fa(MIN_PRICE)} — {fa(draft.maxPrice)} تومان
-                  </p>
-                </div>
-              )}
-            </div>
-
-            {/* نوع طلا */}
-            <div className="border-b border-[#c8a07c]/20 py-4">
-              <SectionTitle open={open.gold} onClick={() => setOpen((o) => ({ ...o, gold: !o.gold }))}>نوع طلا</SectionTitle>
-              {open.gold && (
-                <div className="mt-3 space-y-2.5">
-                  {goldTypes.map((g) => (
-                    <Check key={g.value} label={g.label} checked={draft.gold.includes(g.value)} onChange={() => setDraft((d) => ({ ...d, gold: toggle(d.gold, g.value) }))} />
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* رنگ طلا */}
-            <div className="border-b border-[#c8a07c]/20 py-4">
-              <SectionTitle open={open.color} onClick={() => setOpen((o) => ({ ...o, color: !o.color }))}>رنگ طلا</SectionTitle>
-              {open.color && (
-                <div className="mt-3 flex gap-3">
-                  {goldTypes.map((g) => (
-                    <button
-                      key={g.value}
-                      type="button"
-                      aria-label={g.label}
-                      aria-pressed={draft.color === g.value}
-                      onClick={() => setDraft((d) => ({ ...d, color: d.color === g.value ? null : g.value }))}
-                      className={`h-6 w-6 rounded-full shadow-inner ring-offset-2 ring-offset-[#f6e9de] transition ${draft.color === g.value ? 'ring-2 ring-[#3a2418]' : 'ring-1 ring-white/70'}`}
-                      style={{ background: g.swatch }}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* سنگ */}
-            <div className="border-b border-[#c8a07c]/20 py-4">
-              <SectionTitle open={open.stone} onClick={() => setOpen((o) => ({ ...o, stone: !o.stone }))}>نوع سنگ و نگین</SectionTitle>
-              {open.stone && (
-                <div className="mt-3 space-y-2.5">
-                  {stones.map((s) => (
-                    <Check key={s.value} label={s.label} checked={draft.stone.includes(s.value)} onChange={() => setDraft((d) => ({ ...d, stone: toggle(d.stone, s.value) }))} />
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* برند */}
-            <div className="py-4">
-              <SectionTitle open={open.brand} onClick={() => setOpen((o) => ({ ...o, brand: !o.brand }))}>برند</SectionTitle>
-              {open.brand && (
-                <div className="mt-3">
-                  <Check label="پرتو" checked={draft.brand} onChange={() => setDraft((d) => ({ ...d, brand: !d.brand }))} />
-                </div>
-              )}
-            </div>
-
-            <button
-              type="button"
-              onClick={() => { setApplied(draft); setPage(1); }}
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-l from-[#1c110c] to-[#3d261a] text-[13px] font-semibold text-[#f3dcc4] shadow-[0_8px_20px_rgba(28,17,12,0.35)] transition hover:brightness-125"
-            >
-              <FilterIcon className="h-4 w-4" />
-              اعمال فیلترها
-            </button>
-            {(applied.gold.length > 0 || applied.stone.length > 0 || applied.color || applied.brand || applied.maxPrice !== MAX_PRICE) && (
-              <button type="button" onClick={() => { setDraft(emptyFilters); setApplied(emptyFilters); setPage(1); }} className="mt-3 w-full text-center text-[11px] text-[#7a5a46] underline underline-offset-4">
-                حذف همه فیلترها
-              </button>
-            )}
-          </aside>
         </div>
+      )}
+    </div>
+
+    {/* نوع طلا */}
+    <div className="border-b border-[#c8a07c]/20 py-4">
+
+      <SectionTitle
+        open={open.gold}
+        onClick={() =>
+          setOpen((o) => ({ ...o, gold: !o.gold }))
+        }
+      >
+        نوع طلا
+      </SectionTitle>
+
+      {open.gold && (
+        <div className="mt-3 space-y-2.5">
+          {goldTypes.map((g) => (
+            <Check
+              key={g.value}
+              label={g.label}
+              checked={draft.gold.includes(g.value)}
+              onChange={() =>
+                setDraft((d) => ({
+                  ...d,
+                  gold: toggle(d.gold, g.value),
+                }))
+              }
+            />
+          ))}
+        </div>
+      )}
+
+    </div>
+
+    {/* رنگ طلا */}
+    <div className="border-b border-[#c8a07c]/20 py-4">
+
+      <SectionTitle
+        open={open.color}
+        onClick={() =>
+          setOpen((o) => ({ ...o, color: !o.color }))
+        }
+      >
+        رنگ طلا
+      </SectionTitle>
+
+      {open.color && (
+        <div className="mt-3 flex gap-3">
+          {goldTypes.map((g) => (
+            <button
+              key={g.value}
+              type="button"
+              aria-label={g.label}
+              aria-pressed={draft.color === g.value}
+              onClick={() =>
+                setDraft((d) => ({
+                  ...d,
+                  color: d.color === g.value ? null : g.value,
+                }))
+              }
+              className={`h-6 w-6 rounded-full shadow-inner ring-offset-2 ring-offset-[#f6e9de] transition ${
+                draft.color === g.value
+                  ? 'ring-2 ring-[#3a2418]'
+                  : 'ring-1 ring-white/70'
+              }`}
+              style={{ background: g.swatch }}
+            />
+          ))}
+        </div>
+      )}
+
+    </div>
+
+    {/* سنگ */}
+    <div className="border-b border-[#c8a07c]/20 py-4">
+
+      <SectionTitle
+        open={open.stone}
+        onClick={() =>
+          setOpen((o) => ({ ...o, stone: !o.stone }))
+        }
+      >
+        نوع سنگ و نگین
+      </SectionTitle>
+
+      {open.stone && (
+        <div className="mt-3 space-y-2.5">
+          {stones.map((s) => (
+            <Check
+              key={s.value}
+              label={s.label}
+              checked={draft.stone.includes(s.value)}
+              onChange={() =>
+                setDraft((d) => ({
+                  ...d,
+                  stone: toggle(d.stone, s.value),
+                }))
+              }
+            />
+          ))}
+        </div>
+      )}
+
+    </div>
+
+    {/* برند */}
+    <div className="py-4">
+
+      <SectionTitle
+        open={open.brand}
+        onClick={() =>
+          setOpen((o) => ({ ...o, brand: !o.brand }))
+        }
+      >
+        برند
+      </SectionTitle>
+
+      {open.brand && (
+        <div className="mt-3">
+          <Check
+            label="پرتو"
+            checked={draft.brand}
+            onChange={() =>
+              setDraft((d) => ({
+                ...d,
+                brand: !d.brand,
+              }))
+            }
+          />
+        </div>
+      )}
+
+    </div>
+
+    {/* اعمال فیلترها */}
+    <button
+      type="button"
+      onClick={() => {
+        setApplied(draft);
+        setPage(1);
+      }}
+      className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-l from-[#1c110c] to-[#3d261a] text-[15px] font-semibold text-[#f3dcc4] shadow-[0_8px_20px_rgba(28,17,12,0.35)] transition hover:brightness-125"
+    >
+      <FilterIcon className="h-4 w-4" />
+      اعمال فیلترها
+    </button>
+
+    {/* حذف فیلترها */}
+    {(applied.gold.length > 0 ||
+      applied.stone.length > 0 ||
+      applied.color ||
+      applied.brand ||
+      applied.maxPrice !== MAX_PRICE) && (
+      <button
+        type="button"
+        onClick={() => {
+          setDraft(emptyFilters);
+          setApplied(emptyFilters);
+          setPage(1);
+        }}
+        className="mt-3 w-full text-center text-[13px] font-medium text-[#7a5a46] underline underline-offset-4"
+      >
+        حذف همه فیلترها
+      </button>
+    )}
+
+  </aside>
+
+</div>
+
 
         {/* بنر کالکشن ویژه */}
         <div className="relative mt-10 flex h-[215px] items-center overflow-hidden rounded-[28px] shadow-[0_18px_40px_rgba(60,36,24,0.3)]">
           <Photo
-            src="/images/product-hero/product-hero-model.jpg"
+            src="/images/product-hero/product-baner.png"
             gradient="radial-gradient(60% 100% at 18% 50%,#a87a58,#3a2418 65%,#1c110c)"
             className="absolute inset-0"
             style={{ backgroundPosition: 'left center' }}

@@ -77,7 +77,7 @@ export default function CustomerServicesPage() {
       <Header />
       <PageHero title="خدمات مشتریان" subtitle="همیشه در کنار شما هستیم" crumb="خدمات مشتریان" />
 
-      <div className="mx-auto w-full max-w-[1200px] px-5 pb-12 lg:px-11 -mt-3 space-y-5">
+      <div className="relative z-20 mx-auto w-full max-w-[1200px] space-y-5 px-5 pb-10 lg:px-11 -mt-3">
         <FeatureStrip items={features} />
 
         {/* سوالات متداول + بنر */}
@@ -87,11 +87,22 @@ export default function CustomerServicesPage() {
           <section className="relative min-h-[300px] overflow-hidden rounded-[24px] border border-white/70 shadow-[0_14px_34px_rgba(110,72,46,0.22)] lg:min-h-[333px]" aria-label="پشتیبانی پرتو">
             <Bg src={IMG.giftBox} className="absolute inset-0" />
             <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#2a170e]/70 via-transparent to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 px-8 pb-7 text-right text-[#fbeee2]">
-              <p className="text-[22px] font-bold">هر سوالی دارید؟</p>
-              <p className="mt-1 text-[17px]">ما اینجاییم تا کمکتون کنیم...</p>
-              <Ornament className="mt-4 w-[220px] !text-[#f0dccb]" />
-            </div>
+            <div
+            dir="rtl"
+            className="absolute bottom-0 left-0 w-full px-8 pb-7 text-left text-[#fbeee2]"
+          >
+            <p className="text-[22px] font-bold">
+              هر سوالی دارید؟
+            </p>
+
+            <p className="mt-1 text-[17px]">
+              ما اینجاییم تا کمکتون کنیم...
+            </p>
+
+            <div dir="ltr" className="mt-4 flex w-full justify-start">
+            <Ornament className="w-[220px] !text-[#f0dccb] !ml-0 !mr-auto" />
+          </div>
+          </div>
           </section>
         </div>
 

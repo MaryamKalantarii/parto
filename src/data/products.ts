@@ -99,10 +99,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
-            '/images/products/lumiere-ring/white-gold-1.jpg',
-            '/images/products/lumiere-ring/white-gold-2.jpg',
+            '/images/products/lumiere-ring/white-gold-1.png',
+            '/images/products/lumiere-ring/white-gold-2.png',
             '/images/products/lumiere-ring/white-gold-3.png',
-            '/images/products/lumiere-ring/white-gold-4.jpg',
+            '/images/products/lumiere-ring/white-gold-4.png',
           ],
         },
 
@@ -112,10 +112,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
-            '/images/products/lumiere-ring/yellow-gold-1.jpg',
-            '/images/products/lumiere-ring/yellow-gold-2.jpg',
-            '/images/products/lumiere-ring/yellow-gold-3.jpg',
-            '/images/products/lumiere-ring/yellow-gold-4.jpg',
+            '/images/products/lumiere-ring/yellow-gold-1.png',
+            '/images/products/lumiere-ring/yellow-gold-2.png',
+            '/images/products/lumiere-ring/yellow-gold-3.png',
+            '/images/products/lumiere-ring/yellow-gold-4.png',
           ],
         },
 
@@ -125,43 +125,43 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
-            '/images/products/lumiere-ring/rose-gold-1.jpg',
-            '/images/products/lumiere-ring/rose-gold-2.jpg',
-            '/images/products/lumiere-ring/rose-gold-3.jpg',
-            '/images/products/lumiere-ring/rose-gold-4.jpg',
+            '/images/products/lumiere-ring/rose-gold-1.png',
+            '/images/products/lumiere-ring/rose-gold-2.png',
+            '/images/products/lumiere-ring/rose-gold-3.png',
+            '/images/products/lumiere-ring/rose-gold-4.png',
           ],
         },
       ],
 
       detailImages: [
-        '/images/products/lumiere-ring/detail-1.jpg',
-        '/images/products/lumiere-ring/detail-2.jpg',
+        '/images/products/lumiere-ring/detail-1.png',
+        '/images/products/lumiere-ring/detail-2.png',
       ],
 
       showcase: [
         {
           title: 'نمای روبرو',
           image:
-            '/images/products/lumiere-ring/front.jpg',
+            '/images/products/lumiere-ring/front.png',
         },
         {
           title: 'نمای جانبی',
           image:
-            '/images/products/lumiere-ring/side.jpg',
+            '/images/products/lumiere-ring/side.png',
         },
         {
           title: 'در دست',
           image:
-            '/images/products/lumiere-ring/on-hand.jpg',
+            '/images/products/lumiere-ring/on-hand.png',
         },
       ],
 
       // داستان برند
       BrandStory: {
         leftImage:
-          '/images/products/lumiere-ring/brand-story-1.jpg',
+          '/images/products/lumiere-ring/brand-story-1.png',
         rightImage:
-          '/images/products/lumiere-ring/brand-story-2.jpg',
+          '/images/products/lumiere-ring/brand-story-2.png',
       },
     }),
 
@@ -212,10 +212,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
-            '/images/products/celesta-bracelet/white-gold-1.jpg',
-            '/images/products/celesta-bracelet/white-gold-2.jpg',
-            '/images/products/celesta-bracelet/white-gold-3.jpg',
-            '/images/products/celesta-bracelet/white-gold-4.jpg',
+            '/images/products/celesta-bracelet/white-gold-1.png',
+            '/images/products/celesta-bracelet/white-gold-2.png',
+            '/images/products/celesta-bracelet/white-gold-3.png',
+            '/images/products/celesta-bracelet/white-gold-4.png',
           ],
         },
 
@@ -225,10 +225,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
-            '/images/products/celesta-bracelet/yellow-gold-1.jpg',
-            '/images/products/celesta-bracelet/yellow-gold-2.jpg',
-            '/images/products/celesta-bracelet/yellow-gold-3.jpg',
-            '/images/products/celesta-bracelet/yellow-gold-4.jpg',
+            '/images/products/celesta-bracelet/yellow-gold-1.png',
+            '/images/products/celesta-bracelet/yellow-gold-2.png',
+            '/images/products/celesta-bracelet/yellow-gold-3.png',
+            '/images/products/celesta-bracelet/yellow-gold-4.png',
           ],
         },
 
@@ -238,34 +238,34 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
-            '/images/products/celesta-bracelet/rose-gold-1.jpg',
-            '/images/products/celesta-bracelet/rose-gold-2.jpg',
-            '/images/products/celesta-bracelet/rose-gold-3.jpg',
-            '/images/products/celesta-bracelet/rose-gold-4.jpg',
+            '/images/products/celesta-bracelet/rose-gold-1.png',
+            '/images/products/celesta-bracelet/rose-gold-2.png',
+            '/images/products/celesta-bracelet/rose-gold-3.png',
+            '/images/products/celesta-bracelet/rose-gold-4.png',
           ],
         },
       ],
 
       detailImages: [
-        '/images/products/celesta-bracelet/detail-1.jpg',
-        '/images/products/celesta-bracelet/detail-2.jpg',
+        '/images/products/celesta-bracelet/detail-1.png',
+        '/images/products/celesta-bracelet/detail-2.png',
       ],
 
       showcase: [
         {
           title: 'نمای روبرو',
           image:
-            '/images/products/celesta-bracelet/front.jpg',
+            '/images/products/celesta-bracelet/front.png',
         },
         {
           title: 'نمای جانبی',
           image:
-            '/images/products/celesta-bracelet/side.jpg',
+            '/images/products/celesta-bracelet/side.png',
         },
         {
           title: 'روی مچ',
           image:
-            '/images/products/celesta-bracelet/on-wrist.jpg',
+            '/images/products/celesta-bracelet/on-wrist.png',
         },
       ],
     }),
@@ -316,10 +316,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
-            '/images/products/solstice-necklace/white-gold-1.jpg',
-            '/images/products/solstice-necklace/white-gold-2.jpg',
-            '/images/products/solstice-necklace/white-gold-3.jpg',
-            '/images/products/solstice-necklace/white-gold-4.jpg',
+            '/images/products/solstice-necklace/white-gold-1.png',
+            '/images/products/solstice-necklace/white-gold-2.png',
+            '/images/products/solstice-necklace/white-gold-3.png',
+            '/images/products/solstice-necklace/white-gold-4.png',
           ],
         },
 
@@ -329,10 +329,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
-            '/images/products/solstice-necklace/yellow-gold-1.jpg',
-            '/images/products/solstice-necklace/yellow-gold-2.jpg',
-            '/images/products/solstice-necklace/yellow-gold-3.jpg',
-            '/images/products/solstice-necklace/yellow-gold-4.jpg',
+            '/images/products/solstice-necklace/yellow-gold-1.png',
+            '/images/products/solstice-necklace/yellow-gold-2.png',
+            '/images/products/solstice-necklace/yellow-gold-3.png',
+            '/images/products/solstice-necklace/yellow-gold-4.png',
           ],
         },
 
@@ -342,34 +342,34 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
-            '/images/products/solstice-necklace/rose-gold-1.jpg',
-            '/images/products/solstice-necklace/rose-gold-2.jpg',
-            '/images/products/solstice-necklace/rose-gold-3.jpg',
-            '/images/products/solstice-necklace/rose-gold-4.jpg',
+            '/images/products/solstice-necklace/rose-gold-1.png',
+            '/images/products/solstice-necklace/rose-gold-2.png',
+            '/images/products/solstice-necklace/rose-gold-3.png',
+            '/images/products/solstice-necklace/rose-gold-4.png',
           ],
         },
       ],
 
       detailImages: [
-        '/images/products/solstice-necklace/detail-1.jpg',
-        '/images/products/solstice-necklace/detail-2.jpg',
+        '/images/products/solstice-necklace/detail-1.png',
+        '/images/products/solstice-necklace/detail-2.png',
       ],
 
       showcase: [
         {
           title: 'نمای روبرو',
           image:
-            '/images/products/solstice-necklace/front.jpg',
+            '/images/products/solstice-necklace/front.png',
         },
         {
           title: 'نمای جانبی',
           image:
-            '/images/products/solstice-necklace/side.jpg',
+            '/images/products/solstice-necklace/side.png',
         },
         {
           title: 'روی بدن',
           image:
-            '/images/products/solstice-necklace/on-body.jpg',
+            '/images/products/solstice-necklace/on-body.png',
         },
       ],
     }),
@@ -420,10 +420,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
-            '/images/products/verite-earrings/white-gold-1.jpg',
-            '/images/products/verite-earrings/white-gold-2.jpg',
-            '/images/products/verite-earrings/white-gold-3.jpg',
-            '/images/products/verite-earrings/white-gold-4.jpg',
+            '/images/products/verite-earrings/white-gold-1.png',
+            '/images/products/verite-earrings/white-gold-2.png',
+            '/images/products/verite-earrings/white-gold-3.png',
+            '/images/products/verite-earrings/white-gold-4.png',
           ],
         },
 
@@ -433,10 +433,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
-            '/images/products/verite-earrings/yellow-gold-1.jpg',
-            '/images/products/verite-earrings/yellow-gold-2.jpg',
-            '/images/products/verite-earrings/yellow-gold-3.jpg',
-            '/images/products/verite-earrings/yellow-gold-4.jpg',
+            '/images/products/verite-earrings/yellow-gold-1.png',
+            '/images/products/verite-earrings/yellow-gold-2.png',
+            '/images/products/verite-earrings/yellow-gold-3.png',
+            '/images/products/verite-earrings/yellow-gold-4.png',
           ],
         },
 
@@ -446,34 +446,34 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
-            '/images/products/verite-earrings/rose-gold-1.jpg',
-            '/images/products/verite-earrings/rose-gold-2.jpg',
-            '/images/products/verite-earrings/rose-gold-3.jpg',
-            '/images/products/verite-earrings/rose-gold-4.jpg',
+            '/images/products/verite-earrings/rose-gold-1.png',
+            '/images/products/verite-earrings/rose-gold-2.png',
+            '/images/products/verite-earrings/rose-gold-3.png',
+            '/images/products/verite-earrings/rose-gold-4.png',
           ],
         },
       ],
 
       detailImages: [
-        '/images/products/verite-earrings/detail-1.jpg',
-        '/images/products/verite-earrings/detail-2.jpg',
+        '/images/products/verite-earrings/detail-1.png',
+        '/images/products/verite-earrings/detail-2.png',
       ],
 
       showcase: [
         {
           title: 'نمای روبرو',
           image:
-            '/images/products/verite-earrings/front.jpg',
+            '/images/products/verite-earrings/front.png',
         },
         {
           title: 'نمای جانبی',
           image:
-            '/images/products/verite-earrings/side.jpg',
+            '/images/products/verite-earrings/side.png',
         },
         {
           title: 'روی گوش',
           image:
-            '/images/products/verite-earrings/on-ear.jpg',
+            '/images/products/verite-earrings/on-ear.png',
         },
       ],
     }),
@@ -524,10 +524,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
-            '/images/products/imperial-ring/white-gold-1.jpg',
-            '/images/products/imperial-ring/white-gold-2.jpg',
-            '/images/products/imperial-ring/white-gold-3.jpg',
-            '/images/products/imperial-ring/white-gold-4.jpg',
+            '/images/products/imperial-ring/white-gold-1.png',
+            '/images/products/imperial-ring/white-gold-2.png',
+            '/images/products/imperial-ring/white-gold-3.png',
+            '/images/products/imperial-ring/white-gold-4.png',
           ],
         },
 
@@ -537,10 +537,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
-            '/images/products/imperial-ring/yellow-gold-1.jpg',
-            '/images/products/imperial-ring/yellow-gold-2.jpg',
-            '/images/products/imperial-ring/yellow-gold-3.jpg',
-            '/images/products/imperial-ring/yellow-gold-4.jpg',
+            '/images/products/imperial-ring/yellow-gold-1.png',
+            '/images/products/imperial-ring/yellow-gold-2.png',
+            '/images/products/imperial-ring/yellow-gold-3.png',
+            '/images/products/imperial-ring/yellow-gold-4.png',
           ],
         },
 
@@ -550,34 +550,34 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
-            '/images/products/imperial-ring/rose-gold-1.jpg',
-            '/images/products/imperial-ring/rose-gold-2.jpg',
-            '/images/products/imperial-ring/rose-gold-3.jpg',
-            '/images/products/imperial-ring/rose-gold-4.jpg',
+            '/images/products/imperial-ring/rose-gold-1.png',
+            '/images/products/imperial-ring/rose-gold-2.png',
+            '/images/products/imperial-ring/rose-gold-3.png',
+            '/images/products/imperial-ring/rose-gold-4.png',
           ],
         },
       ],
 
       detailImages: [
-        '/images/products/imperial-ring/detail-1.jpg',
-        '/images/products/imperial-ring/detail-2.jpg',
+        '/images/products/imperial-ring/detail-1.png',
+        '/images/products/imperial-ring/detail-2.png',
       ],
 
       showcase: [
         {
           title: 'نمای روبرو',
           image:
-            '/images/products/imperial-ring/front.jpg',
+            '/images/products/imperial-ring/front.png',
         },
         {
           title: 'نمای جانبی',
           image:
-            '/images/products/imperial-ring/side.jpg',
+            '/images/products/imperial-ring/side.png',
         },
         {
           title: 'در دست',
           image:
-            '/images/products/imperial-ring/on-hand.jpg',
+            '/images/products/imperial-ring/on-hand.png',
         },
       ],
     }),
@@ -629,10 +629,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
-            '/images/products/harmony-bracelet-06/white-gold-1.jpg',
-            '/images/products/harmony-bracelet-06/white-gold-2.jpg',
-            '/images/products/harmony-bracelet-06/white-gold-3.jpg',
-            '/images/products/harmony-bracelet-06/white-gold-4.jpg',
+            '/images/products/harmony-bracelet-06/white-gold-1.png',
+            '/images/products/harmony-bracelet-06/white-gold-2.png',
+            '/images/products/harmony-bracelet-06/white-gold-3.png',
+            '/images/products/harmony-bracelet-06/white-gold-4.png',
           ],
         },
 
@@ -642,10 +642,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
-            '/images/products/harmony-bracelet-06/yellow-gold-1.jpg',
-            '/images/products/harmony-bracelet-06/yellow-gold-2.jpg',
-            '/images/products/harmony-bracelet-06/yellow-gold-3.jpg',
-            '/images/products/harmony-bracelet-06/yellow-gold-4.jpg',
+            '/images/products/harmony-bracelet-06/yellow-gold-1.png',
+            '/images/products/harmony-bracelet-06/yellow-gold-2.png',
+            '/images/products/harmony-bracelet-06/yellow-gold-3.png',
+            '/images/products/harmony-bracelet-06/yellow-gold-4.png',
           ],
         },
 
@@ -655,34 +655,34 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
-            '/images/products/harmony-bracelet-06/rose-gold-1.jpg',
-            '/images/products/harmony-bracelet-06/rose-gold-2.jpg',
-            '/images/products/harmony-bracelet-06/rose-gold-3.jpg',
-            '/images/products/harmony-bracelet-06/rose-gold-4.jpg',
+            '/images/products/harmony-bracelet-06/rose-gold-1.png',
+            '/images/products/harmony-bracelet-06/rose-gold-2.png',
+            '/images/products/harmony-bracelet-06/rose-gold-3.png',
+            '/images/products/harmony-bracelet-06/rose-gold-4.png',
           ],
         },
       ],
 
       detailImages: [
-        '/images/products/harmony-bracelet-06/detail-1.jpg',
-        '/images/products/harmony-bracelet-06/detail-2.jpg',
+        '/images/products/harmony-bracelet-06/detail-1.png',
+        '/images/products/harmony-bracelet-06/detail-2.png',
       ],
 
       showcase: [
         {
           title: 'نمای روبرو',
           image:
-            '/images/products/harmony-bracelet-06/front.jpg',
+            '/images/products/harmony-bracelet-06/front.png',
         },
         {
           title: 'نمای جانبی',
           image:
-            '/images/products/harmony-bracelet-06/side.jpg',
+            '/images/products/harmony-bracelet-06/side.png',
         },
         {
           title: 'روی مچ',
           image:
-            '/images/products/harmony-bracelet-06/on-wrist.jpg',
+            '/images/products/harmony-bracelet-06/on-wrist.png',
         },
       ],
     }),
@@ -733,10 +733,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
-            '/images/products/harmony-earing-08/white-gold-1.jpg',
-            '/images/products/harmony-earing-08/white-gold-2.jpg',
-            '/images/products/harmony-earing-08/white-gold-3.jpg',
-            '/images/products/harmony-earing-08/white-gold-4.jpg',
+            '/images/products/harmony-earing-08/white-gold-1.png',
+            '/images/products/harmony-earing-08/white-gold-2.png',
+            '/images/products/harmony-earing-08/white-gold-3.png',
+            '/images/products/harmony-earing-08/white-gold-4.png',
           ],
         },
 
@@ -746,10 +746,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
-            '/images/products/harmony-bracelet-08/yellow-gold-1.jpg',
-            '/images/products/harmony-bracelet-08/yellow-gold-2.jpg',
-            '/images/products/harmony-bracelet-08/yellow-gold-3.jpg',
-            '/images/products/harmony-bracelet-08/yellow-gold-4.jpg',
+            '/images/products/harmony-bracelet-08/yellow-gold-1.png',
+            '/images/products/harmony-bracelet-08/yellow-gold-2.png',
+            '/images/products/harmony-bracelet-08/yellow-gold-3.png',
+            '/images/products/harmony-bracelet-08/yellow-gold-4.png',
           ],
         },
 
@@ -759,34 +759,34 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
-            '/images/products/harmony-bracelet-08/rose-gold-1.jpg',
-            '/images/products/harmony-bracelet-08/rose-gold-2.jpg',
-            '/images/products/harmony-bracelet-08/rose-gold-3.jpg',
-            '/images/products/harmony-bracelet-08/rose-gold-4.jpg',
+            '/images/products/harmony-bracelet-08/rose-gold-1.png',
+            '/images/products/harmony-bracelet-08/rose-gold-2.png',
+            '/images/products/harmony-bracelet-08/rose-gold-3.png',
+            '/images/products/harmony-bracelet-08/rose-gold-4.png',
           ],
         },
       ],
 
       detailImages: [
-        '/images/products/harmony-bracelet-08/detail-1.jpg',
-        '/images/products/harmony-bracelet-08/detail-2.jpg',
+        '/images/products/harmony-bracelet-08/detail-1.png',
+        '/images/products/harmony-bracelet-08/detail-2.png',
       ],
 
       showcase: [
         {
           title: 'نمای روبرو',
           image:
-            '/images/products/harmony-bracelet-08/front.jpg',
+            '/images/products/harmony-bracelet-08/front.png',
         },
         {
           title: 'نمای جانبی',
           image:
-            '/images/products/harmony-bracelet-08/side.jpg',
+            '/images/products/harmony-bracelet-08/side.png',
         },
         {
           title: 'روی مچ',
           image:
-            '/images/products/harmony-bracelet-08/on-wrist.jpg',
+            '/images/products/harmony-bracelet-08/on-wrist.png',
         },
       ],
     }),
@@ -837,10 +837,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
-            '/images/products/cUalte-EARRINGS/white-gold-1.jpg',
-            '/images/products/cUalte-EARRINGS/white-gold-2.jpg',
-            '/images/products/cUalte-EARRINGS/white-gold-3.jpg',
-            '/images/products/cUalte-EARRINGS/white-gold-4.jpg',
+            '/images/products/cUalte-EARRINGS/white-gold-1.png',
+            '/images/products/cUalte-EARRINGS/white-gold-2.png',
+            '/images/products/cUalte-EARRINGS/white-gold-3.png',
+            '/images/products/cUalte-EARRINGS/white-gold-4.png',
           ],
         },
 
@@ -850,10 +850,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
-            '/images/products/harmony-bracelet-09/yellow-gold-1.jpg',
-            '/images/products/harmony-bracelet-09/yellow-gold-2.jpg',
-            '/images/products/harmony-bracelet-09/yellow-gold-3.jpg',
-            '/images/products/harmony-bracelet-09/yellow-gold-4.jpg',
+            '/images/products/harmony-bracelet-09/yellow-gold-1.png',
+            '/images/products/harmony-bracelet-09/yellow-gold-2.png',
+            '/images/products/harmony-bracelet-09/yellow-gold-3.png',
+            '/images/products/harmony-bracelet-09/yellow-gold-4.png',
           ],
         },
 
@@ -863,34 +863,34 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
-            '/images/products/harmony-bracelet-09/rose-gold-1.jpg',
-            '/images/products/harmony-bracelet-09/rose-gold-2.jpg',
-            '/images/products/harmony-bracelet-09/rose-gold-3.jpg',
-            '/images/products/harmony-bracelet-09/rose-gold-4.jpg',
+            '/images/products/harmony-bracelet-09/rose-gold-1.png',
+            '/images/products/harmony-bracelet-09/rose-gold-2.png',
+            '/images/products/harmony-bracelet-09/rose-gold-3.png',
+            '/images/products/harmony-bracelet-09/rose-gold-4.png',
           ],
         },
       ],
 
       detailImages: [
-        '/images/products/harmony-bracelet-09/detail-1.jpg',
-        '/images/products/harmony-bracelet-09/detail-2.jpg',
+        '/images/products/harmony-bracelet-09/detail-1.png',
+        '/images/products/harmony-bracelet-09/detail-2.png',
       ],
 
       showcase: [
         {
           title: 'نمای روبرو',
           image:
-            '/images/products/harmony-bracelet-09/front.jpg',
+            '/images/products/harmony-bracelet-09/front.png',
         },
         {
           title: 'نمای جانبی',
           image:
-            '/images/products/harmony-bracelet-09/side.jpg',
+            '/images/products/harmony-bracelet-09/side.png',
         },
         {
           title: 'روی مچ',
           image:
-            '/images/products/harmony-bracelet-09/on-wrist.jpg',
+            '/images/products/harmony-bracelet-09/on-wrist.png',
         },
       ],
     }),
@@ -941,10 +941,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
-            '/images/products/NECKLACES-DIAMOND/white-gold-1.jpg',
-            '/images/products/NECKLACES-DIAMOND/white-gold-2.jpg',
-            '/images/products/NECKLACES-DIAMOND/white-gold-3.jpg',
-            '/images/products/NECKLACES-DIAMOND/white-gold-4.jpg',
+            '/images/products/NECKLACES-DIAMOND/white-gold-1.png',
+            '/images/products/NECKLACES-DIAMOND/white-gold-2.png',
+            '/images/products/NECKLACES-DIAMOND/white-gold-3.png',
+            '/images/products/NECKLACES-DIAMOND/white-gold-4.png',
           ],
         },
 
@@ -954,10 +954,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
-            '/images/products/harmony-bracelet-10/yellow-gold-1.jpg',
-            '/images/products/harmony-bracelet-10/yellow-gold-2.jpg',
-            '/images/products/harmony-bracelet-10/yellow-gold-3.jpg',
-            '/images/products/harmony-bracelet-10/yellow-gold-4.jpg',
+            '/images/products/harmony-bracelet-10/yellow-gold-1.png',
+            '/images/products/harmony-bracelet-10/yellow-gold-2.png',
+            '/images/products/harmony-bracelet-10/yellow-gold-3.png',
+            '/images/products/harmony-bracelet-10/yellow-gold-4.png',
           ],
         },
 
@@ -967,34 +967,34 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
-            '/images/products/harmony-bracelet-10/rose-gold-1.jpg',
-            '/images/products/harmony-bracelet-10/rose-gold-2.jpg',
-            '/images/products/harmony-bracelet-10/rose-gold-3.jpg',
-            '/images/products/harmony-bracelet-10/rose-gold-4.jpg',
+            '/images/products/harmony-bracelet-10/rose-gold-1.png',
+            '/images/products/harmony-bracelet-10/rose-gold-2.png',
+            '/images/products/harmony-bracelet-10/rose-gold-3.png',
+            '/images/products/harmony-bracelet-10/rose-gold-4.png',
           ],
         },
       ],
 
       detailImages: [
-        '/images/products/harmony-bracelet-10/detail-1.jpg',
-        '/images/products/harmony-bracelet-10/detail-2.jpg',
+        '/images/products/harmony-bracelet-10/detail-1.png',
+        '/images/products/harmony-bracelet-10/detail-2.png',
       ],
 
       showcase: [
         {
           title: 'نمای روبرو',
           image:
-            '/images/products/harmony-bracelet-10/front.jpg',
+            '/images/products/harmony-bracelet-10/front.png',
         },
         {
           title: 'نمای جانبی',
           image:
-            '/images/products/harmony-bracelet-10/side.jpg',
+            '/images/products/harmony-bracelet-10/side.png',
         },
         {
           title: 'روی مچ',
           image:
-            '/images/products/harmony-bracelet-10/on-wrist.jpg',
+            '/images/products/harmony-bracelet-10/on-wrist.png',
         },
       ],
     }),
@@ -1045,10 +1045,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-zinc-300 via-[#e4e4e7] to-zinc-500',
           images: [
-            '/images/products/harmony-NECKLACES-11/white-gold-1.jpg',
-            '/images/products/harmony-NECKLACES-11/white-gold-2.jpg',
-            '/images/products/harmony-NECKLACES-11/white-gold-3.jpg',
-            '/images/products/harmony-NECKLACES-11/white-gold-4.jpg',
+            '/images/products/harmony-NECKLACES-11/white-gold-1.png',
+            '/images/products/harmony-NECKLACES-11/white-gold-2.png',
+            '/images/products/harmony-NECKLACES-11/white-gold-3.png',
+            '/images/products/harmony-NECKLACES-11/white-gold-4.png',
           ],
         },
 
@@ -1058,10 +1058,10 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#ffd700] via-[#d4af37] to-[#996515]',
           images: [
-            '/images/products/harmony-bracelet-11/yellow-gold-1.jpg',
-            '/images/products/harmony-bracelet-11/yellow-gold-2.jpg',
-            '/images/products/harmony-bracelet-11/yellow-gold-3.jpg',
-            '/images/products/harmony-bracelet-11/yellow-gold-4.jpg',
+            '/images/products/harmony-bracelet-11/yellow-gold-1.png',
+            '/images/products/harmony-bracelet-11/yellow-gold-2.png',
+            '/images/products/harmony-bracelet-11/yellow-gold-3.png',
+            '/images/products/harmony-bracelet-11/yellow-gold-4.png',
           ],
         },
 
@@ -1071,34 +1071,34 @@ export const allProducts: Product[] = [
           gradient:
             'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
           images: [
-            '/images/products/harmony-bracelet-11/rose-gold-1.jpg',
-            '/images/products/harmony-bracelet-11/rose-gold-2.jpg',
-            '/images/products/harmony-bracelet-11/rose-gold-3.jpg',
-            '/images/products/harmony-bracelet-11/rose-gold-4.jpg',
+            '/images/products/harmony-bracelet-11/rose-gold-1.png',
+            '/images/products/harmony-bracelet-11/rose-gold-2.png',
+            '/images/products/harmony-bracelet-11/rose-gold-3.png',
+            '/images/products/harmony-bracelet-11/rose-gold-4.png',
           ],
         },
       ],
 
       detailImages: [
-        '/images/products/harmony-bracelet-11/detail-1.jpg',
-        '/images/products/harmony-bracelet-11/detail-2.jpg',
+        '/images/products/harmony-bracelet-11/detail-1.png',
+        '/images/products/harmony-bracelet-11/detail-2.png',
       ],
 
       showcase: [
         {
           title: 'نمای روبرو',
           image:
-            '/images/products/harmony-bracelet-11/front.jpg',
+            '/images/products/harmony-bracelet-11/front.png',
         },
         {
           title: 'نمای جانبی',
           image:
-            '/images/products/harmony-bracelet-11/side.jpg',
+            '/images/products/harmony-bracelet-11/side.png',
         },
         {
           title: 'روی مچ',
           image:
-            '/images/products/harmony-bracelet-11/on-wrist.jpg',
+            '/images/products/harmony-bracelet-11/on-wrist.png',
         },
       ],
     }),
