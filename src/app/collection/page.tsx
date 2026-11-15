@@ -12,10 +12,10 @@ const wave = (h: number, d: string) =>
 const maskStyle = (img: string): React.CSSProperties => ({ WebkitMaskImage: img, maskImage: img, WebkitMaskSize: '100% 100%', maskSize: '100% 100%' });
 
 const collections = [
-  { slug: 'minimal', title: 'کالکشن مینیمال', sub: 'سادگی، زیباترین انتخاب', image: '/images/collection/minimal.jpg' },
-  { slug: 'love', title: 'کالکشن عشق', sub: 'احساسی به قدمت یک عمر', image: '/images/collection/love.jpg' },
-  { slug: 'classic', title: 'کالکشن کلاسیک', sub: 'زیبایی فراتر از زمان', image: '/images/collection/classic.jpg' },
-  { slug: 'pearl', title: 'کالکشن مروارید', sub: 'ظرافتی اصیل و ماندگار', image: '/images/collection/pearl.jpg' },
+  { slug: 'minimal', title: 'کالکشن مینیمال', sub: 'سادگی، زیباترین انتخاب', image: '/images/collection/editorial-story.png' },
+  { slug: 'love', title: 'کالکشن عشق', sub: 'احساسی به قدمت یک عمر', image: '/images/collection/love.png' },
+  { slug: 'classic', title: 'کالکشن کلاسیک', sub: 'زیبایی فراتر از زمان', image: '/images/collection/clasik.png' },
+  { slug: 'pearl', title: 'کالکشن مروارید', sub: 'ظرافتی اصیل و ماندگار', image: '/images/collection/morvarid.png' },
 ];
 
 const why = [

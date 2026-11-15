@@ -1,177 +1,213 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React, { useMemo, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Photo } from '@/components/home/primitives';
+import { AccountCard, Badge, EmptyState, Icon, btnGhost, btnPrimary, inputCls } from './ui';
+import { toEn, toFa, toman } from './validators';
+import { mockOrders, statusMeta, type Order } from './accountData';
+import { OrderStepper } from './RecentOrders';
 
-export interface OrderItem {
-  id: string;
-  orderNumber: string;
-  date: string;
-  status: 'DELIVERED' | 'IN TRANSIT' | 'PROCESSING' | 'CANCELLED';
-  price: string;
-  itemCount: number;
-  image: string;
-  itemsSummary: string;
-}
+export type { OrderItem } from './accountData';
 
-const allOrders: OrderItem[] = [
-  {
-    id: '1',
-    orderNumber: '#AU-10024',
-    date: '۲۳ فروردین ۱۴۰۵',
-    status: 'DELIVERED',
-    price: '۴,۸۵۰,۰۰۰ تومان',
-    itemCount: 1,
-    image: '/images/account/recentorder.jpg',
-    itemsSummary: 'آویز معماری لومن',
-  },
-  {
-    id: '2',
-    orderNumber: '#AU-10023',
-    date: '۸ فروردین ۱۴۰۵',
-    status: 'DELIVERED',
-    price: '۳,۲۰۰,۰۰۰ تومان',
-    itemCount: 1,
-    image: '/images/account/recentorder2.jpg',
-    itemsSummary: 'چراغ دیواری شکست نور اپتیکال',
-  },
-  {
-    id: '3',
-    orderNumber: '#AU-10021',
-    date: '۲۵ بهمن ۱۴۰۴',
-    status: 'IN TRANSIT',
-    price: '۵,۷۶۰,۰۰۰ تومان',
-    itemCount: 2,
-    image: '/images/account/recentorder3.jpg',
-    itemsSummary: 'ستون زمینی یکپارچه (۲ عدد)',
-  },
-  {
-    id: '4',
-    orderNumber: '#AU-10018',
-    date: '۱۵ دی ۱۴۰۴',
-    status: 'DELIVERED',
-    price: '۲,۱۰۰,۰۰۰ تومان',
-    itemCount: 1,
-    image: '/images/account/recentorder.jpg',
-    itemsSummary: 'دیمر حلقه برنجی پرتو',
-  },
+type Filter = 'ALL' | 'ACTIVE' | 'DELIVERED' | 'CANCELLED';
+
+const filters: { id: Filter; label: string; test: (o: Order) => boolean }[] = [
+  { id: 'ALL', label: 'همه', test: () => true },
+  { id: 'ACTIVE', label: 'در جریان', test: (o) => o.status === 'PROCESSING' || o.status === 'IN_TRANSIT' },
+  { id: 'DELIVERED', label: 'تحویل‌شده', test: (o) => o.status === 'DELIVERED' },
+  { id: 'CANCELLED', label: 'لغو شده', test: (o) => o.status === 'CANCELLED' },
 ];
 
-export const OrdersList: React.FC = () => {
-  const [filter, setFilter] = useState<'ALL' | 'DELIVERED' | 'IN TRANSIT'>('ALL');
+interface Props {
+  orders?: Order[];
+  onReorder?: (o: Order) => void;
+  onSupport?: (o: Order) => void;
+  onDownload?: (kind: 'invoice' | 'certificate', o: Order) => void;
+}
 
-  const filteredOrders = allOrders.filter((order) => {
-    if (filter === 'ALL') return true;
-    return order.status === filter;
-  });
+export const OrdersList: React.FC<Props> = ({ orders = mockOrders, onReorder, onSupport, onDownload }) => {
+  const [filter, setFilter] = useState<Filter>('ALL');
+  const [q, setQ] = useState('');
+  const [open, setOpen] = useState<string | null>(orders.find((o) => o.status === 'IN_TRANSIT')?.id ?? null);
+  const [copied, setCopied] = useState<string | null>(null);
 
-  const getStatusLabel = (status: OrderItem['status']) => {
-    switch (status) {
-      case 'DELIVERED':
-        return 'تحویل‌شده';
-      case 'IN TRANSIT':
-        return 'در حال ارسال';
-      case 'PROCESSING':
-        return 'در حال پردازش';
-      case 'CANCELLED':
-        return 'لغو شده';
-    }
-  };
+  const list = useMemo(() => {
+    const f = filters.find((x) => x.id === filter)!;
+    const term = toEn(q).trim().toLowerCase();
+    return orders.filter((o) => f.test(o) && (!term || o.number.toLowerCase().includes(term) || o.lines.some((l) => l.title.includes(q.trim()))));
+  }, [orders, filter, q]);
 
-  const getFilterLabel = (status: 'ALL' | 'DELIVERED' | 'IN TRANSIT') => {
-    switch (status) {
-      case 'ALL':
-        return 'همه';
-      case 'DELIVERED':
-        return 'تحویل‌شده';
-      case 'IN TRANSIT':
-        return 'در حال ارسال';
+  const copy = async (code: string) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(code);
+      setTimeout(() => setCopied(null), 1800);
+    } catch {
+      /* کلیپ‌بورد در دسترس نبود */
     }
   };
 
   return (
-    <div className="space-y-6 text-right" dir="rtl">
-      {/* HEADER & FILTERS */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#d9bfa6]/60">
-        <div>
-          <h2 className="font-serif text-xl font-light tracking-wide text-[#2a1a12]">
-            تاریخچه سفارش‌ها
-          </h2>
-          <p className="font-sans text-xs text-[#7a6252] mt-1">
-            مشاهده و پیگیری خریدهای قبلی.
-          </p>
+    <AccountCard title="تاریخچه سفارش‌ها" subtitle="خریدهای قبلی خود را ببینید و سفارش‌های در جریان را پیگیری کنید." icon="bag">
+      <div className="space-y-5 p-5 sm:p-7" dir="rtl">
+        {/* فیلتر و جستجو */}
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div role="tablist" aria-label="فیلتر سفارش‌ها" className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1">
+            {filters.map((f) => {
+              const on = f.id === filter;
+              const n = orders.filter(f.test).length;
+              return (
+                <button
+                  key={f.id}
+                  role="tab"
+                  aria-selected={on}
+                  onClick={() => setFilter(f.id)}
+                  className={`flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-[13.5px] font-medium transition ${
+                    on ? 'border-transparent bg-gradient-to-br from-[#4a2c1c] to-[#2a170e] text-[#f3dcc4] shadow-[0_8px_18px_rgba(42,23,14,0.28)]' : 'border-[#c8a07c]/45 bg-white/50 text-[#5a3a28] hover:bg-white'
+                  }`}
+                >
+                  {f.label}
+                  <span className={`grid h-5 min-w-5 place-items-center rounded-full px-1 text-[11.5px] ${on ? 'bg-white/20' : 'bg-[#2a1a12]/[0.08]'}`}>{toFa(n)}</span>
+                </button>
+              );
+            })}
+          </div>
+          <input
+            type="search"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="جستجوی شماره سفارش یا نام محصول…"
+            aria-label="جستجو در سفارش‌ها"
+            className={`${inputCls} !h-11 lg:!w-[300px]`}
+          />
         </div>
 
-        {/* Filter Buttons */}
-        <div className="flex items-center gap-2 bg-white/50 p-1 rounded-lg border border-[#d9bfa6]/60">
-          {(['ALL', 'DELIVERED', 'IN TRANSIT'] as const).map((status) => (
-            <button
-              key={status}
-              onClick={() => setFilter(status)}
-              className={`px-3 py-1.5 rounded-md font-sans text-xs tracking-wider transition-all ${
-                filter === status
-                  ? 'bg-white/50 text-[#9a6b47]'
-                  : 'text-[#7a6252] hover:text-[#2a1a12]'
-              }`}
-            >
-              {getFilterLabel(status)}
-            </button>
-          ))}
-        </div>
+        {list.length === 0 && <EmptyState title="سفارشی پیدا نشد" text="فیلتر یا عبارت جستجو را تغییر دهید." />}
+
+        <ul className="space-y-4">
+          {list.map((o, idx) => {
+            const isOpen = open === o.id;
+            const st = statusMeta[o.status];
+            return (
+              <motion.li
+                key={o.id}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: Math.min(idx, 5) * 0.06, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className={`overflow-hidden rounded-[22px] border bg-white/50 transition duration-300 ${isOpen ? 'border-[#c8a07c] shadow-[0_14px_34px_rgba(110,72,46,0.14)]' : 'border-[#d9bfa6]/70 hover:border-[#c8a07c]'}`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : o.id)}
+                  aria-expanded={isOpen}
+                  className="flex w-full flex-wrap items-center gap-4 p-4 text-right sm:p-5"
+                >
+                  <div className="flex -space-x-3 space-x-reverse">
+                    {o.lines.slice(0, 3).map((l, i) => (
+                      <Photo key={i} src={l.image} gradient="linear-gradient(135deg,#f3e1cf,#d9b595)" className="h-14 w-14 rounded-2xl border-2 border-[#fbf1e6] shadow-[0_4px_12px_rgba(110,72,46,0.2)]" />
+                    ))}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span dir="ltr" className="text-[15px] font-bold text-[#2a1a12]">{o.number}</span>
+                      <Badge tone={st.tone}>{st.label}</Badge>
+                    </div>
+                    <p className="mt-1.5 truncate text-[13.5px] text-[#6b4f3e]">
+                      {o.lines.map((l) => l.title).join('، ')} · {o.date}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="text-[15px] font-bold text-[#2a1a12]">{toman(o.total)}</span>
+                    <Icon name="chevron" className={`h-5 w-5 text-[#8a6a54] transition duration-300 ${isOpen ? '-rotate-90' : ''}`} />
+                  </div>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="space-y-6 border-t border-[#d9bfa6]/60 p-4 sm:p-6">
+                        {/* مراحل */}
+                        <div className="rounded-[18px] bg-white/45 px-3 py-5 sm:px-6">
+                          <OrderStepper status={o.status} />
+                        </div>
+
+                        {/* اقلام */}
+                        <ul className="divide-y divide-[#d9bfa6]/50">
+                          {o.lines.map((l, i) => (
+                            <li key={i} className="flex items-center gap-4 py-3">
+                              <Photo src={l.image} gradient="linear-gradient(135deg,#f3e1cf,#d9b595)" className="h-16 w-16 flex-none rounded-2xl border border-white/70" />
+                              <div className="min-w-0 flex-1">
+                                <p className="text-[15px] font-bold text-[#2a1a12]">{l.title}</p>
+                                <p className="mt-0.5 text-[13px] text-[#7a5a46]">{l.variant}</p>
+                              </div>
+                              <div className="text-left">
+                                <p className="text-[14px] font-medium text-[#2a1a12]">{toman(l.price)}</p>
+                                <p className="text-[12.5px] text-[#8a7261]">تعداد: {toFa(l.qty)}</p>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+
+                        {/* جزئیات */}
+                        <dl className="grid gap-4 text-[14px] sm:grid-cols-2">
+                          <div className="rounded-2xl bg-white/45 p-4">
+                            <dt className="flex items-center gap-2 text-[13px] text-[#7a5a46]"><Icon name="pin" className="h-4 w-4" /> آدرس تحویل</dt>
+                            <dd className="mt-1.5 leading-7 text-[#2a1a12]">{o.address}</dd>
+                          </div>
+                          <div className="rounded-2xl bg-white/45 p-4">
+                            <dt className="flex items-center gap-2 text-[13px] text-[#7a5a46]"><Icon name="card" className="h-4 w-4" /> روش پرداخت</dt>
+                            <dd className="mt-1.5 text-[#2a1a12]">{o.payment}</dd>
+                          </div>
+                          {o.trackingCode && (
+                            <div className="rounded-2xl bg-white/45 p-4 sm:col-span-2">
+                              <dt className="flex items-center gap-2 text-[13px] text-[#7a5a46]"><Icon name="truck" className="h-4 w-4" /> کد رهگیری پست</dt>
+                              <dd className="mt-1.5 flex flex-wrap items-center gap-3">
+                                <span dir="ltr" className="font-bold tracking-wide text-[#2a1a12]">{o.trackingCode}</span>
+                                <button type="button" onClick={() => copy(o.trackingCode!)} className="inline-flex items-center gap-1.5 rounded-full border border-[#c8a07c]/60 px-3 py-1 text-[12.5px] text-[#5a3a28] transition hover:bg-[#f3dcc4]">
+                                  <Icon name={copied === o.trackingCode ? 'check' : 'copy'} className="h-3.5 w-3.5" />
+                                  {copied === o.trackingCode ? 'کپی شد' : 'کپی'}
+                                </button>
+                              </dd>
+                            </div>
+                          )}
+                        </dl>
+
+                        {/* اقدام‌ها */}
+                        <div className="flex flex-wrap items-center gap-3">
+                          <button type="button" onClick={() => onDownload?.('invoice', o)} className={btnGhost}>
+                            <Icon name="receipt" className="h-[18px] w-[18px]" /> دانلود فاکتور
+                          </button>
+                          {o.hasCertificate && (
+                            <button type="button" onClick={() => onDownload?.('certificate', o)} className={btnGhost}>
+                              <Icon name="award" className="h-[18px] w-[18px]" /> گواهی اصالت
+                            </button>
+                          )}
+                          <button type="button" onClick={() => onSupport?.(o)} className={btnGhost}>
+                            <Icon name="headset" className="h-[18px] w-[18px]" /> پشتیبانی این سفارش
+                          </button>
+                          {o.status !== 'PROCESSING' && (
+                            <button type="button" onClick={() => onReorder?.(o)} className={`${btnPrimary} sm:mr-auto`}>
+                              خرید مجدد
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.li>
+            );
+          })}
+        </ul>
       </div>
-
-      {/* ORDERS CARDS */}
-      <div className="space-y-4">
-        {filteredOrders.map((order) => (
-          <Link
-            key={order.id}
-            href={`/account/orders/${order.id}`}
-            className="group bg-white/50 border border-[#d9bfa6]/60 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-[#c8a07c]/50 transition-all duration-300 block"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-lg overflow-hidden border border-[#d9bfa6]/60 bg-white/40 flex-none">
-                <img
-                  src={order.image}
-                  alt={order.orderNumber}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div>
-                <div className="flex items-center gap-3">
-                  <span className="font-mono text-sm text-[#2a1a12] group-hover:text-[#b3865f] transition-colors" dir="ltr">
-                    {order.orderNumber}
-                  </span>
-                  <span
-                    className={`text-[10px] font-sans px-2.5 py-0.5 rounded-full border ${
-                      order.status === 'DELIVERED'
-                        ? 'border-[#bcd3b0] text-[#3f6b3a] bg-[#dfead7]'
-                        : 'border-[#e6cc95] text-[#8a5a14] bg-[#f6e6c6]'
-                    }`}
-                  >
-                    {getStatusLabel(order.status)}
-                  </span>
-                </div>
-                <p className="font-serif text-xs text-[#6b4f3e] mt-1">{order.itemsSummary}</p>
-                <p className="font-sans text-[11px] text-[#8a7261] mt-0.5">{order.date}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between sm:justify-end gap-6 pt-3 sm:pt-0 border-t sm:border-t-0 border-[#d9bfa6]/40">
-              <div className="text-right">
-                <div className="font-serif text-base text-[#2a1a12]">{order.price}</div>
-                <div className="font-sans text-[11px] text-[#8a7261]">
-                  {order.itemCount} {order.itemCount > 1 ? 'محصول' : 'محصول'}
-                </div>
-              </div>
-
-              <span className="text-[#7a6252] group-hover:-translate-x-1 group-hover:text-[#b3865f] transition-all">
-                ←
-              </span>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
+    </AccountCard>
   );
 };
 

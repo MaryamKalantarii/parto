@@ -29,14 +29,14 @@ const golds = [
 ];
 
 const categories = [
-  { cat: 'RINGS', label: 'انگشترها', image: '/images/collection/cat-rings.jpg' },
-  { cat: 'NECKLACES', label: 'گردنبندها', image: '/images/collection/cat-necklaces.jpg' },
-  { cat: 'EARRINGS', label: 'گوشواره‌ها', image: '/images/collection/cat-earrings.jpg' },
+  { cat: 'RINGS', label: 'انگشترها', image: '/images/craft/ring.jpg' },
+  { cat: 'NECKLACES', label: 'گردنبندها', image: '/images/craft/necklace.jpg' },
+  { cat: 'EARRINGS', label: 'گوشواره‌ها', image: '/images/craft/earrings.jpg' },
 ];
 
 const suggested = [
-  { title: 'کالکشن عشق', sub: 'زیبایی در لوح احساس', image: '/images/collection/love.jpg' },
-  { title: 'کالکشن مروارید', sub: 'ظرافتی اصیل و ماندگار', image: '/images/collection/pearl.jpg' },
+  { title: 'کالکشن عشق', sub: 'زیبایی در لوح احساس', image: '/images/collection/newsletter-bg.png' },
+  { title: 'کالکشن مروارید', sub: 'ظرافتی اصیل و ماندگار', image: '/images/collection/morvarid.png' },
 ];
 
 /* کارت محصول — دقیقاً همان کارت کاتالوگ محصولات */
@@ -157,7 +157,7 @@ export default function ClassicCollectionPage() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: 'url("/images/collection/classic-hero.jpg"), radial-gradient(60% 90% at 25% 45%, #d9b595 0%, #946648 40%, #3b2419 78%, #1c110c 100%)',
+            backgroundImage: 'url("/images/contact-background.jpg"), radial-gradient(60% 90% at 25% 45%, #d9b595 0%, #946648 40%, #3b2419 78%, #1c110c 100%)',
             backgroundSize: 'cover',
             backgroundPosition: 'left center',
           }}
@@ -184,7 +184,7 @@ export default function ClassicCollectionPage() {
       <div className="mx-auto w-full max-w-[1360px] space-y-9 px-6 pb-14 pt-2 lg:px-10">
         {/* داستان کالکشن */}
         <section className="relative flex min-h-[220px] items-center overflow-hidden rounded-[28px] border border-white/60 shadow-[0_14px_36px_rgba(110,72,46,0.18)]">
-          <Photo src="/images/collection/story-necklace.jpg" gradient="linear-gradient(120deg,#d9b595,#f1d9c3)" className="absolute inset-0" />
+          <Photo src="/images/colection/ring.jpg" gradient="linear-gradient(120deg,#d9b595,#f1d9c3)" className="absolute inset-0" />
           <div className="absolute inset-0 bg-gradient-to-l from-[#f8ece0]/95 via-[#f8ece0]/70 to-transparent" />
           <DiamondIcon className="absolute left-6 top-1/2 hidden h-32 w-36 -translate-y-1/2 text-[#c8a07c]/40 lg:block" />
           <div className="relative mr-0 w-full px-8 py-8 text-right lg:w-[48%]">
@@ -257,7 +257,7 @@ export default function ClassicCollectionPage() {
 
         {/* بنر */}
         <section className="relative flex h-[190px] items-center overflow-hidden rounded-[28px] bg-[#1c110c] shadow-[0_18px_44px_rgba(36,20,13,0.35)]">
-          <div className="absolute inset-0" style={{ backgroundImage: 'url("/images/collection/banner-bracelet.jpg"), radial-gradient(50% 120% at 30% 50%, #7a523a 0%, #3b2419 55%, #1c110c 100%)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+          <div className="absolute inset-0" style={{ backgroundImage: 'url("/images/collection/ring.jpg"), radial-gradient(50% 120% at 30% 50%, #7a523a 0%, #3b2419 55%, #1c110c 100%)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
           <div className="absolute inset-0 bg-gradient-to-l from-[#1c110c]/75 via-transparent to-transparent" />
           <div className="relative w-full px-10 text-right lg:w-[46%]">
             <h2 className="text-[24px] font-bold text-[#fbf1e6]">هر قطعه، روایتی از زیبایی بی‌زمان</h2>

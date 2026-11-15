@@ -53,7 +53,7 @@ export default function AccountPage() {
           className="absolute inset-0"
           style={{
             backgroundImage:
-              'url("/images/product-hero/product-hero-model.jpg"), radial-gradient(60% 90% at 25% 45%, #d9b595 0%, #946648 40%, #3b2419 78%, #1c110c 100%)',
+              'url("/images/account/hero.png"), radial-gradient(60% 90% at 25% 45%, #d9b595 0%, #946648 40%, #3b2419 78%, #1c110c 100%)',
             backgroundSize: 'cover',
             backgroundPosition: 'left center',
           }}
@@ -64,7 +64,7 @@ export default function AccountPage() {
         <div className="relative mx-auto flex h-full max-w-[1360px] items-center justify-start px-10 pt-14">
           <div className="text-right">
             <h1 className="text-[36px] font-bold leading-[1.4] text-[#fbf1e6]">حساب کاربری</h1>
-            <p className="mt-1 text-[14px] text-[#eadccd]">به دنیای درخشان پارتو خوش آمدید</p>
+            <p className="mt-1 text-[14px] text-[#eadccd]">به دنیای درخشان پرتو خوش آمدید</p>
           </div>
         </div>
 
