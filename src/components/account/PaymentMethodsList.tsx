@@ -1,285 +1,181 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+/**
+ * کیف پول و کارت‌های بانکی  →  components/account/PaymentMethodsList.tsx
+ * (به‌جای فرم قبلی که کارت Visa/Amex و CVV می‌گرفت؛ در ایران پرداخت از درگاه بانکی انجام می‌شود
+ *  و CVV2 هیچ‌وقت نباید در سایت دریافت یا ذخیره شود.)
+ * کارت‌ها فقط برای «بازگشت وجه» نگه داشته می‌شوند و به‌صورت ماسک‌شده نمایش داده می‌شوند.
+ */
 
-export interface PaymentCard {
+import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { AccountCard, ConfirmModal, EmptyState, Field, Icon, Modal, btnGhost, btnPrimary, inputCls } from './ui';
+import { bankFromCard, formatCardNumber, isValidCard, onlyDigits, toFa, toman } from './validators';
+import { mockWallet, type WalletTx } from './accountData';
+
+export interface BankCard {
   id: string;
   isDefault: boolean;
-  cardHolder: string;
-  cardNumber: string; // e.g. "•••• •••• •••• 4242"
-  expiryDate: string; // e.g. "08/28"
-  cardType: 'VISA' | 'MASTERCARD' | 'AMEX';
+  holder: string;
+  bank: string;
+  /** فقط ۶ رقم اول و ۴ رقم آخر */
+  masked: string;
 }
 
-const mockPaymentCards: PaymentCard[] = [
-  {
-    id: 'p1',
-    isDefault: true,
-    cardHolder: 'الکس مورگان',
-    cardNumber: '•••• •••• •••• ۴۲۴۲',
-    expiryDate: '۰۸/۲۸',
-    cardType: 'AMEX',
-  },
-  {
-    id: 'p2',
-    isDefault: false,
-    cardHolder: 'الکس مورگان',
-    cardNumber: '•••• •••• •••• ۸۸۱۹',
-    expiryDate: '۱۱/۲۷',
-    cardType: 'VISA',
-  },
-];
+const mockCards: BankCard[] = [{ id: 'c1', isDefault: true, holder: 'مینا رضایی', bank: 'بانک ملت', masked: '610433******1234' }];
 
-export const PaymentMethodsList: React.FC = () => {
-  const [cards, setCards] = useState<PaymentCard[]>(mockPaymentCards);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const mask = (digits: string) => `${digits.slice(0, 6)}******${digits.slice(12)}`;
+const showMasked = (m: string) => toFa(`${m.slice(0, 4)} ${m.slice(4, 6)}•• •••• ${m.slice(12)}`);
 
-  // New Card Form State
-  const [formData, setFormData] = useState({
-    cardHolder: 'الکس مورگان',
-    cardNumber: '',
-    expiryDate: '',
-    cvv: '',
-    cardType: 'VISA' as 'VISA' | 'MASTERCARD' | 'AMEX',
-  });
+interface Props {
+  balance?: number;
+  txs?: WalletTx[];
+  cards?: BankCard[];
+  onTopUp?: () => void;
+}
 
-  const handleSetDefault = (id: string) => {
-    setCards((prev) =>
-      prev.map((card) => ({
-        ...card,
-        isDefault: card.id === id,
-      }))
-    );
-  };
+export const PaymentMethodsList: React.FC<Props> = ({ balance = mockWallet.balance, txs = mockWallet.txs, cards: initial = mockCards, onTopUp }) => {
+  const [cards, setCards] = useState<BankCard[]>(initial);
+  const [open, setOpen] = useState(false);
+  const [toDelete, setToDelete] = useState<BankCard | null>(null);
+  const [num, setNum] = useState('');
+  const [holder, setHolder] = useState('');
+  const [errors, setErrors] = useState<{ num?: string; holder?: string }>({});
 
-  const handleDelete = (id: string) => {
-    setCards((prev) => prev.filter((card) => card.id !== id));
-  };
+  const bank = bankFromCard(num);
 
-  const handleAddCard = (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    const last4 = formData.cardNumber.slice(-4) || '۱۲۳۴';
-    const newCard: PaymentCard = {
-      id: Date.now().toString(),
-      isDefault: cards.length === 0,
-      cardHolder: formData.cardHolder,
-      cardNumber: `•••• •••• •••• ${last4}`,
-      expiryDate: formData.expiryDate || '۱۲/۲۸',
-      cardType: formData.cardType,
-    };
-
-    setCards((prev) => [...prev, newCard]);
-    setIsModalOpen(false);
-    setFormData({
-      cardHolder: 'الکس مورگان',
-      cardNumber: '',
-      expiryDate: '',
-      cvv: '',
-      cardType: 'VISA',
-    });
+    const er: typeof errors = {};
+    if (!isValidCard(num)) er.num = 'شماره کارت معتبر نیست؛ ۱۶ رقم را بررسی کنید.';
+    if (!holder.trim()) er.holder = 'نام دارنده‌ی کارت را وارد کنید.';
+    setErrors(er);
+    if (Object.keys(er).length) return;
+    const d = onlyDigits(num);
+    setCards((p) => [...p, { id: String(Date.now()), isDefault: p.length === 0, holder: holder.trim(), bank: bank ?? 'کارت بانکی', masked: mask(d) }]);
+    setNum('');
+    setHolder('');
+    setOpen(false);
   };
 
   return (
-    <div className="space-y-6 text-right" dir="rtl">
-      {/* HEADER */}
-      <div className="flex justify-between items-center pb-4 border-b border-[#d9bfa6]/60">
-        <div>
-          <h2 className="font-serif text-xl font-light tracking-wide text-[#2a1a12]">
-            روش‌های پرداخت
-          </h2>
-          <p className="font-sans text-xs text-[#7a6252] mt-1">
-            کارت‌های بانکی ذخیره‌شده و ترجیحات صورتحساب خود را مدیریت کنید.
-          </p>
+    <div className="space-y-6" dir="rtl">
+      {/* کیف پول */}
+      <section
+        className="relative overflow-hidden rounded-[26px] px-6 py-7 text-[#fbf1e6] shadow-[0_18px_44px_rgba(60,36,24,0.3)] sm:px-9 sm:py-9"
+        style={{ background: 'radial-gradient(80% 140% at 90% 0%, rgba(200,160,124,0.5), transparent 60%), linear-gradient(160deg,#1c110c,#3a2418)' }}
+      >
+        <span aria-hidden className="pointer-events-none absolute inset-3 rounded-[20px] border border-[#e8c9aa]/20" />
+        <div className="relative flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <p className="flex items-center gap-2 text-[14px] text-[#e6d2bf]">
+              <Icon name="wallet" className="h-5 w-5" /> اعتبار کیف پول
+            </p>
+            <p className="mt-3 flex items-baseline gap-2">
+              <b className="text-[34px] font-bold leading-none tabular-nums sm:text-[42px]">{balance.toLocaleString('fa-IR')}</b>
+              <span className="text-[14px] text-[#e6d2bf]">تومان</span>
+            </p>
+            <p className="mt-2 text-[13px] text-[#e6d2bf]/80">از اعتبار می‌توانید هنگام پرداخت سفارش بعدی استفاده کنید.</p>
+          </div>
+          <button type="button" onClick={onTopUp} className={btnPrimary}>
+            <Icon name="plus" className="h-4 w-4" /> افزایش اعتبار
+          </button>
         </div>
+      </section>
 
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="px-4 py-2 rounded-full border border-[#c8a07c]/40 bg-[#e8c9aa]/10 font-sans text-xs tracking-wider text-[#9a6b47] hover:bg-[#e8c9aa] hover:text-[#2a1a12] transition-all duration-300"
-        >
-          + افزودن کارت جدید
-        </button>
-      </div>
+      {/* کارت‌های بانکی */}
+      <AccountCard
+        title="کارت‌های بانکی"
+        subtitle="برای واریز سریع بازگشت وجه به همین کارت‌ها استفاده می‌شود."
+        icon="card"
+        action={
+          <button type="button" onClick={() => setOpen(true)} className={`${btnPrimary} !h-10 !px-5 !text-[13px]`}>
+            <Icon name="plus" className="h-4 w-4" /> افزودن کارت
+          </button>
+        }
+      >
+        <div className="p-5 sm:p-7">
+          {cards.length === 0 ? (
+            <EmptyState title="کارتی ثبت نشده است" text="با ثبت کارت، بازگشت وجه سفارش‌های لغوشده سریع‌تر انجام می‌شود." action={<button onClick={() => setOpen(true)} className={btnPrimary}>افزودن کارت</button>} />
+          ) : (
+            <ul className="grid gap-5 md:grid-cols-2">
+              <AnimatePresence>
+                {cards.map((c) => (
+                  <motion.li key={c.id} layout initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.94 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}>
+                    <div
+                      className="relative overflow-hidden rounded-[22px] p-5 text-[#fbf1e6] shadow-[0_14px_30px_rgba(60,36,24,0.28)]"
+                      style={{ background: 'radial-gradient(90% 120% at 100% 0%, rgba(200,160,124,0.45), transparent 60%), linear-gradient(150deg,#33201a,#5a3a28)' }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-[15px] font-bold">{c.bank}</span>
+                        {c.isDefault && <span className="rounded-full bg-[#e2bf9f]/20 px-3 py-0.5 text-[12px] text-[#f0d8c0] ring-1 ring-[#e2bf9f]/40">پیش‌فرض</span>}
+                      </div>
+                      <p dir="ltr" className="mt-7 text-center text-[19px] font-medium tracking-[0.12em] tabular-nums">{showMasked(c.masked)}</p>
+                      <div className="mt-6 flex items-center justify-between text-[13.5px] text-[#e6d2bf]">
+                        <span>{c.holder}</span>
+                        <div className="flex items-center gap-3">
+                          {!c.isDefault && (
+                            <button type="button" onClick={() => setCards((p) => p.map((x) => ({ ...x, isDefault: x.id === c.id })))} className="underline-offset-4 hover:underline">
+                              پیش‌فرض شود
+                            </button>
+                          )}
+                          <button type="button" onClick={() => setToDelete(c)} aria-label="حذف کارت" className="grid h-8 w-8 place-items-center rounded-full bg-white/10 transition hover:bg-white/20">
+                            <Icon name="trash" className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.li>
+                ))}
+              </AnimatePresence>
+            </ul>
+          )}
+        </div>
+      </AccountCard>
 
-      {/* CARDS LIST */}
-      <div className="space-y-4">
-        {cards.map((card) => (
-          <div
-            key={card.id}
-            className={`bg-white/50 border rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 ${
-              card.isDefault
-                ? 'border-[#c8a07c]/60 shadow-[0_0_15px_rgba(216,194,168,0.05)]'
-                : 'border-[#d9bfa6]/60 hover:border-[#c8a07c]'
-            }`}
-          >
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-xs tracking-wider font-medium text-[#9a6b47] bg-white/40 px-2.5 py-1 rounded border border-[#d9bfa6]/60" dir="ltr">
-                  {card.cardType}
-                </span>
-                {card.isDefault && (
-                  <span className="font-sans text-[10px] tracking-wider px-2 py-0.5 rounded-full border border-[#c8a07c]/40 text-[#9a6b47] bg-[#e8c9aa]/10">
-                    پیش‌فرض
-                  </span>
-                )}
+      {/* تراکنش‌ها */}
+      <AccountCard title="تراکنش‌های کیف پول" icon="receipt">
+        <ul className="divide-y divide-[#d9bfa6]/50">
+          {txs.map((t) => (
+            <li key={t.id} className="flex items-center gap-4 px-5 py-4 sm:px-7">
+              <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${t.amount > 0 ? 'bg-[#dfead7] text-[#3f6b3a]' : 'bg-[#f1e0d0] text-[#6b4f3e]'}`}>
+                <Icon name={t.amount > 0 ? 'download' : 'bag'} className="h-5 w-5" />
+              </span>
+              <div className="min-w-0 flex-1 text-right">
+                <p className="text-[14.5px] font-medium text-[#2a1a12]">{t.title}</p>
+                <p className="mt-0.5 text-[12.5px] text-[#7a5a46]">{t.date}</p>
               </div>
+              <span className={`text-[14.5px] font-bold ${t.amount > 0 ? 'text-[#3f6b3a]' : 'text-[#2a1a12]'}`}>
+                {t.amount > 0 ? '+' : '−'} {toman(Math.abs(t.amount))}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </AccountCard>
 
-              <button
-                onClick={() => handleDelete(card.id)}
-                className="font-sans text-xs tracking-wider text-[#7a6252] hover:text-[#b4472f] transition-colors"
-              >
-                حذف
-              </button>
-            </div>
-
-            <div className="space-y-1">
-              <div className="font-mono text-base text-[#2a1a12] tracking-widest" dir="ltr">
-                {card.cardNumber}
-              </div>
-              <div className="flex justify-between items-center text-xs text-[#7a6252] font-sans pt-2">
-                <span>{card.cardHolder}</span>
-                <span className="font-mono text-[11px]" dir="ltr">انقضا: {card.expiryDate}</span>
-              </div>
-            </div>
-
-            {!card.isDefault && (
-              <div className="pt-4 mt-4 border-t border-[#d9bfa6]/40">
-                <button
-                  onClick={() => handleSetDefault(card.id)}
-                  className="font-sans text-xs tracking-wider text-[#7a6252] hover:text-[#b3865f] transition-colors"
-                >
-                  تنظیم به‌عنوان روش پرداخت پیش‌فرض
-                </button>
-              </div>
-            )}
+      <Modal open={open} onClose={() => setOpen(false)} eyebrow="بازگشت وجه" title="افزودن کارت بانکی" maxWidth="max-w-md">
+        <form onSubmit={submit} className="space-y-4" noValidate>
+          <Field label="شماره کارت" error={errors.num} hint={bank ? `✓ ${bank}` : undefined}>
+            <input className={`${inputCls} text-left tracking-[0.1em]`} dir="ltr" inputMode="numeric" placeholder="6037 9912 3456 7890" value={formatCardNumber(num)} onChange={(e) => { setNum(e.target.value); setErrors((x) => ({ ...x, num: undefined })); }} aria-invalid={!!errors.num} autoComplete="off" />
+          </Field>
+          <Field label="نام دارنده‌ی کارت" error={errors.holder}>
+            <input className={inputCls} value={holder} onChange={(e) => { setHolder(e.target.value); setErrors((x) => ({ ...x, holder: undefined })); }} aria-invalid={!!errors.holder} />
+          </Field>
+          <p className="flex items-start gap-2 rounded-2xl bg-white/50 p-4 text-[13px] leading-7 text-[#5a3a28]">
+            <Icon name="lock" className="mt-1 h-4 w-4 shrink-0 text-[#84563a]" />
+            فقط ۶ رقم اول و ۴ رقم آخر کارت ذخیره می‌شود. CVV2، رمز دوم و تاریخ انقضا هرگز دریافت نمی‌شود.
+          </p>
+          <div className="flex flex-wrap items-center justify-end gap-3 border-t border-[#d9bfa6]/60 pt-5">
+            <button type="button" onClick={() => setOpen(false)} className={btnGhost}>انصراف</button>
+            <button type="submit" className={btnPrimary}>ذخیره کارت</button>
           </div>
-        ))}
+        </form>
+      </Modal>
 
-        {cards.length === 0 && (
-          <div className="text-center py-12 border border-dashed border-[#d9bfa6]/60 rounded-2xl">
-            <p className="font-sans text-xs text-[#7a6252]">هیچ روش پرداختی ذخیره نشده است.</p>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="mt-3 font-sans text-xs tracking-wider text-[#9a6b47] underline"
-            >
-              افزودن کارت اعتباری یا بانکی جدید
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* ADD CARD MODAL */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4" dir="rtl">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-[#1c110c]/70 backdrop-blur-md"
-            />
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative z-10 w-full max-w-lg bg-[#f8efe6] border border-[#d9bfa6]/60 rounded-2xl p-8 shadow-[0_25px_60px_rgba(0,0,0,0.8)] text-right"
-            >
-              <div className="flex justify-between items-center pb-4 border-b border-[#d9bfa6]/60 mb-6">
-                <h3 className="font-serif text-xl font-light text-[#2a1a12]">افزودن کارت پرداخت</h3>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="text-[#7a6252] hover:text-[#2a1a12]"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <form onSubmit={handleAddCard} className="space-y-4">
-                <div>
-                  <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-1">
-                    نام دارنده کارت
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.cardHolder}
-                    onChange={(e) => setFormData({ ...formData, cardHolder: e.target.value })}
-                    className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-2.5 font-sans text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f]"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-1">
-                    شماره کارت
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="۴۵۳۲ •••• •••• ۸۸۱۹"
-                    value={formData.cardNumber}
-                    onChange={(e) => setFormData({ ...formData, cardNumber: e.target.value })}
-                    className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-2.5 font-mono text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f]"
-                    dir="ltr"
-                    maxLength={19}
-                    required
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-1">
-                      تاریخ انقضا (ماه/سال)
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="MM/YY"
-                      value={formData.expiryDate}
-                      onChange={(e) => setFormData({ ...formData, expiryDate: e.target.value })}
-                      className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-2.5 font-mono text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f]"
-                      dir="ltr"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-1">
-                      کد امنیتی (CVV)
-                    </label>
-                    <input
-                      type="password"
-                      placeholder="•••"
-                      value={formData.cvv}
-                      onChange={(e) => setFormData({ ...formData, cvv: e.target.value })}
-                      className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-2.5 font-mono text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f]"
-                      dir="ltr"
-                      maxLength={4}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="pt-4 flex items-center justify-end gap-4 border-t border-[#d9bfa6]/60 mt-6">
-                  <button
-                    type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="px-5 py-2.5 font-sans text-xs tracking-wider text-[#7a6252]"
-                  >
-                    انصراف
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-6 py-2.5 rounded-full bg-[#e8c9aa] text-[#2a1a12] font-sans text-xs tracking-wider font-medium"
-                  >
-                    ذخیره کارت
-                  </button>
-                </div>
-              </form>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      <ConfirmModal open={!!toDelete} onClose={() => setToDelete(null)} onConfirm={() => toDelete && setCards((p) => { const r = p.filter((c) => c.id !== toDelete.id); return r.length && !r.some((c) => c.isDefault) ? r.map((c, i) => ({ ...c, isDefault: i === 0 })) : r; })} title="حذف کارت" text="این کارت از حساب شما حذف شود؟" />
     </div>
   );
 };
 
+export const WalletCards = PaymentMethodsList;
 export default PaymentMethodsList;

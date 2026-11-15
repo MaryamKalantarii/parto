@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { Modal, Field, inputCls, btnPrimary, btnGhost } from './ui';
+import { isValidMobile, isValidNationalCode, onlyDigits } from './validators';
 
 export interface UserProfileData {
   firstName: string;
@@ -10,6 +11,8 @@ export interface UserProfileData {
   phone: string;
   address?: string;
   avatarUrl?: string;
+  /** کد ملی؛ برای صدور فاکتور رسمی لازم است */
+  nationalCode?: string;
 }
 
 interface EditProfileModalProps {
@@ -19,195 +22,113 @@ interface EditProfileModalProps {
   onSave: (newData: UserProfileData) => void;
 }
 
-export const EditProfileModal: React.FC<EditProfileModalProps> = ({
-  isOpen,
-  onClose,
-  userData,
-  onSave,
-}) => {
-  const [formData, setFormData] = useState<UserProfileData>(userData);
-  const [previewImage, setPreviewImage] = useState<string | undefined>(userData.avatarUrl);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+type Errors = Partial<Record<keyof UserProfileData | 'avatar', string>>;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+export const EditProfileModal: React.FC<EditProfileModalProps> = ({ isOpen, onClose, userData, onSave }) => {
+  const [form, setForm] = useState<UserProfileData>(userData);
+  const [errors, setErrors] = useState<Errors>({});
+  const fileRef = useRef<HTMLInputElement>(null);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        setPreviewImage(result);
-        setFormData((prev) => ({ ...prev, avatarUrl: result }));
-      };
-      reader.readAsDataURL(file);
+  // هر بار که مودال باز می‌شود، فرم از داده‌ی فعلی پر شود
+  useEffect(() => {
+    if (isOpen) {
+      setForm(userData);
+      setErrors({});
     }
+    // فقط هنگام باز/بسته‌شدن؛ تا اگر والد دوباره رندر شد، چیزی که کاربر تایپ کرده پاک نشود
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
+  const set = (k: keyof UserProfileData, v: string) => {
+    setForm((f) => ({ ...f, [k]: v }));
+    setErrors((e) => ({ ...e, [k]: undefined }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return setErrors((x) => ({ ...x, avatar: 'فقط فایل JPG، PNG یا WEBP قابل قبول است.' }));
+    if (file.size > 5 * 1024 * 1024) return setErrors((x) => ({ ...x, avatar: 'حجم تصویر باید کمتر از ۵ مگابایت باشد.' }));
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setForm((f) => ({ ...f, avatarUrl: reader.result as string }));
+      setErrors((x) => ({ ...x, avatar: undefined }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData);
+    const er: Errors = {};
+    if (!form.firstName.trim()) er.firstName = 'نام را وارد کنید.';
+    if (!form.lastName.trim()) er.lastName = 'نام خانوادگی را وارد کنید.';
+    if (!isValidMobile(form.phone)) er.phone = 'شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود.';
+    if (!/^\S+@\S+\.\S+$/.test(form.email)) er.email = 'ایمیل معتبر وارد کنید.';
+    if (form.nationalCode && !isValidNationalCode(form.nationalCode)) er.nationalCode = 'کد ملی معتبر نیست.';
+    setErrors(er);
+    if (Object.keys(er).length) return;
+    onSave({ ...form, phone: onlyDigits(form.phone), nationalCode: form.nationalCode ? onlyDigits(form.nationalCode) : '' });
     onClose();
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" dir="rtl">
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="absolute inset-0 bg-[#1c110c]/70 backdrop-blur-md"
-          />
-
-          {/* Modal Container */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 w-full max-w-lg bg-[#f8efe6] border border-[#d9bfa6]/60 rounded-2xl p-8 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.8)] text-right"
-          >
-            {/* Header */}
-            <div className="flex justify-between items-center pb-6 border-b border-[#d9bfa6]/60 mb-6">
-              <div>
-                <span className="font-sans text-[10px] tracking-wider text-[#9a6b47]">
-                  تنظیمات پروفایل
-                </span>
-                <h3 className="font-serif text-2xl font-light text-[#2a1a12] mt-1">
-                  ویرایش اطلاعات شخصی
-                </h3>
-              </div>
-              <button
-                type="button"
-                onClick={onClose}
-                className="w-8 h-8 rounded-full border border-[#d9bfa6]/60 flex items-center justify-center text-[#7a6252] hover:text-[#2a1a12] hover:border-[#c8a07c] transition-all"
-              >
-                ✕
+    <Modal open={isOpen} onClose={onClose} eyebrow="تنظیمات پروفایل" title="ویرایش اطلاعات شخصی">
+      <form onSubmit={submit} className="space-y-5" noValidate>
+        {/* تصویر */}
+        <div className="flex items-center gap-5 border-b border-[#d9bfa6]/60 pb-5">
+          <div className="relative grid h-20 w-20 flex-none place-items-center overflow-hidden rounded-full bg-gradient-to-br from-[#c8a07c] to-[#8d6243] text-[30px] font-bold text-white ring-2 ring-[#c8a07c]/60 ring-offset-2 ring-offset-[#f8efe6]">
+            {form.avatarUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={form.avatarUrl} alt="پیش‌نمایش تصویر" className="h-full w-full object-cover" />
+            ) : (
+              form.firstName?.trim()[0] || 'پ'
+            )}
+          </div>
+          <div>
+            <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" onChange={onFile} className="hidden" />
+            <div className="flex flex-wrap gap-2">
+              <button type="button" onClick={() => fileRef.current?.click()} className={`${btnGhost} !h-10 !px-5 !text-[13px]`}>
+                بارگذاری تصویر
               </button>
+              {form.avatarUrl && (
+                <button type="button" onClick={() => setForm((f) => ({ ...f, avatarUrl: undefined }))} className="px-3 text-[13px] text-[#9a3a26] hover:underline">
+                  حذف
+                </button>
+              )}
             </div>
-
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* AVATAR UPLOAD SECTION */}
-              <div className="flex items-center gap-6 pb-6 border-b border-[#d9bfa6]/60">
-                <div className="relative w-20 h-20 rounded-full border border-[#c8a07c]/50 bg-white/40 overflow-hidden flex items-center justify-center font-serif text-3xl text-[#9a6b47] flex-none">
-                  {previewImage ? (
-                    <img src={previewImage} alt="پیش‌نمایش پروفایل" className="w-full h-full object-cover" />
-                  ) : (
-                    formData.firstName?.charAt(0) || 'پ'
-                  )}
-                </div>
-
-                <div>
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleImageChange}
-                    accept="image/*"
-                    className="hidden"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="px-4 py-2 rounded-full border border-[#c8a07c]/50 bg-white/40 font-sans text-xs tracking-wider text-[#2a1a12] hover:bg-[#e8c9aa] hover:text-[#2a1a12] hover:border-[#c8a07c] transition-all duration-300"
-                  >
-                    بارگذاری تصویر جدید
-                  </button>
-                  <p className="font-sans text-[11px] text-[#8a7261] mt-2">
-                    فرمت‌های JPEG، PNG یا WEBP (حداکثر ۵ مگابایت)
-                  </p>
-                </div>
-              </div>
-
-              {/* INPUT FIELDS */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-2">
-                    نام
-                  </label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-3 font-sans text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f] transition-colors"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-2">
-                    نام خانوادگی
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-3 font-sans text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f] transition-colors"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-2">
-                  آدرس ایمیل
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-3 font-sans text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f] transition-colors"
-                  dir="ltr"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-2">
-                  شماره همراه
-                </label>
-                <input
-                  type="text"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-3 font-mono text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f] transition-colors"
-                  dir="ltr"
-                  required
-                />
-              </div>
-
-              {/* Action Buttons */}
-              <div className="pt-6 border-t border-[#d9bfa6]/60 flex items-center justify-end gap-4">
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="px-6 py-3 font-sans text-xs tracking-wider text-[#7a6252] hover:text-[#2a1a12] transition-colors"
-                >
-                  انصراف
-                </button>
-                <button
-                  type="submit"
-                  className="px-8 py-3 rounded-full bg-[#e8c9aa] text-[#2a1a12] font-sans text-xs tracking-wider font-medium hover:bg-[#f3dcc4] transition-colors shadow-[0_0_20px_rgba(216,194,168,0.2)]"
-                >
-                  ذخیره تغییرات
-                </button>
-              </div>
-            </form>
-          </motion.div>
+            <p className={`mt-2 text-[12.5px] ${errors.avatar ? 'text-[#b4472f]' : 'text-[#8a7261]'}`} role={errors.avatar ? 'alert' : undefined}>
+              {errors.avatar ?? 'JPG، PNG یا WEBP؛ حداکثر ۵ مگابایت'}
+            </p>
+          </div>
         </div>
-      )}
-    </AnimatePresence>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="نام" error={errors.firstName}>
+            <input className={inputCls} value={form.firstName} onChange={(e) => set('firstName', e.target.value)} aria-invalid={!!errors.firstName} autoComplete="given-name" />
+          </Field>
+          <Field label="نام خانوادگی" error={errors.lastName}>
+            <input className={inputCls} value={form.lastName} onChange={(e) => set('lastName', e.target.value)} aria-invalid={!!errors.lastName} autoComplete="family-name" />
+          </Field>
+        </div>
+
+        <Field label="شماره همراه" error={errors.phone}>
+          <input className={`${inputCls} text-left`} dir="ltr" inputMode="numeric" placeholder="09123456789" value={form.phone} onChange={(e) => set('phone', e.target.value)} aria-invalid={!!errors.phone} autoComplete="tel" />
+        </Field>
+
+        <Field label="ایمیل" error={errors.email}>
+          <input className={`${inputCls} text-left`} dir="ltr" type="email" value={form.email} onChange={(e) => set('email', e.target.value)} aria-invalid={!!errors.email} autoComplete="email" />
+        </Field>
+
+        <Field label="کد ملی (اختیاری)" error={errors.nationalCode} hint="برای صدور فاکتور رسمی لازم است و فقط برای همین کار استفاده می‌شود.">
+          <input className={`${inputCls} text-left`} dir="ltr" inputMode="numeric" maxLength={10} value={form.nationalCode ?? ''} onChange={(e) => set('nationalCode', e.target.value)} aria-invalid={!!errors.nationalCode} />
+        </Field>
+
+        <div className="flex flex-wrap items-center justify-end gap-3 border-t border-[#d9bfa6]/60 pt-5">
+          <button type="button" onClick={onClose} className={btnGhost}>انصراف</button>
+          <button type="submit" className={btnPrimary}>ذخیره تغییرات</button>
+        </div>
+      </form>
+    </Modal>
   );
 };
 

@@ -2,141 +2,115 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Photo } from '@/components/home/primitives';
+import { AccountCard, EmptyState, Icon, btnGhost, btnPrimary } from './ui';
+import { toFa, toman } from './validators';
+import { mockWishlist, type WishItem } from './accountData';
 
-export interface WishlistItem {
-  id: string;
-  title: string;
-  category: string;
-  price: string;
-  inStock: boolean;
-  image: string;
+export type WishlistItem = WishItem;
+
+interface Props {
+  items?: WishItem[];
+  onAddToCart?: (item: WishItem) => void;
 }
 
-const mockWishlist: WishlistItem[] = [
-  {
-    id: 'w1',
-    title: 'دیمر حلقه برنجی پرتو',
-    category: 'کنترل‌کننده‌های روشنایی',
-    price: '۲,۱۰۰,۰۰۰ تومان',
-    inStock: true,
-    image: '/images/account/recentorder.jpg',
-  },
-  {
-    id: 'w2',
-    title: 'صفحه دیواری مرمرین مجسمه‌وار',
-    category: 'یراق‌آلات معماری',
-    price: '۱,۴۵۰,۰۰۰ تومان',
-    inStock: true,
-    image: '/images/account/recentorder2.jpg',
-  },
-  {
-    id: 'w3',
-    title: 'آویز خطی مینیمالیست',
-    category: 'روشنایی آویز',
-    price: '۳,۸۰۰,۰۰۰ تومان',
-    inStock: false,
-    image: '/images/account/recentorder3.jpg',
-  },
-];
+export const WishlistList: React.FC<Props> = ({ items: initial = mockWishlist, onAddToCart }) => {
+  const [items, setItems] = useState<WishItem[]>(initial);
+  const [added, setAdded] = useState<string[]>([]);
+  const [notify, setNotify] = useState<string[]>([]);
 
-export const WishlistList: React.FC = () => {
-  const [items, setItems] = useState<WishlistItem[]>(mockWishlist);
-
-  const handleRemove = (id: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
+  const add = (it: WishItem) => {
+    onAddToCart?.(it);
+    setAdded((a) => [...a, it.id]);
+    setTimeout(() => setAdded((a) => a.filter((x) => x !== it.id)), 1800);
   };
+  const addAll = () => items.filter((i) => i.inStock).forEach(add);
+  const available = items.filter((i) => i.inStock);
+  const total = available.reduce((a, i) => a + i.price, 0);
 
   return (
-    <div className="space-y-6 text-right" dir="rtl">
-      {/* HEADER */}
-      <div className="flex justify-between items-center pb-4 border-b border-[#d9bfa6]/60">
-        <div>
-          <h2 className="font-serif text-xl font-light tracking-wide text-[#2a1a12]">
-            علاقه‌مندی‌ها
-          </h2>
-          <p className="font-sans text-xs text-[#7a6252] mt-1">
-            مجموعه برگزیده از اقلام ذخیره‌شده شما.
-          </p>
-        </div>
-        <span className="font-mono text-xs text-[#9a6b47]" dir="ltr">
-          {items.length} {items.length === 1 ? 'ITEM' : 'ITEMS'}
-        </span>
-      </div>
-
-      {/* WISHLIST ITEMS */}
-      <div className="space-y-4">
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="group bg-white/50 border border-[#d9bfa6]/60 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-[#c8a07c]/40 transition-all duration-300"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-lg overflow-hidden border border-[#d9bfa6]/60 bg-white/40 flex-none relative">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div>
-                <span className="font-sans text-[10px] tracking-wider text-[#9a6b47]">
-                  {item.category}
-                </span>
-                <h3 className="font-serif text-base font-light text-[#2a1a12] mt-0.5">
-                  {item.title}
-                </h3>
-                <div className="flex items-center gap-3 mt-1">
-                  <span className="font-serif text-sm text-[#2a1a12]">{item.price}</span>
-                  <span
-                    className={`font-sans text-[10px] tracking-wider px-2.5 py-0.5 rounded-full border ${
-                      item.inStock
-                        ? 'border-[#bcd3b0] text-[#3f6b3a] bg-[#dfead7]'
-                        : 'border-[#d9bfa6]/60 text-[#8a7261]'
-                    }`}
+    <AccountCard
+      title="علاقه‌مندی‌ها"
+      subtitle={`${toFa(items.length)} قطعه‌ی ذخیره‌شده`}
+      icon="heart"
+      action={
+        available.length > 1 && (
+          <button type="button" onClick={addAll} className={`${btnGhost} !h-10 !px-5 !text-[13px]`}>
+            افزودن همه‌ی موجودها به سبد
+          </button>
+        )
+      }
+    >
+      <div className="p-5 sm:p-7" dir="rtl">
+        {items.length === 0 ? (
+          <EmptyState
+            title="لیست علاقه‌مندی‌های شما خالی است"
+            text="با زدن قلب روی هر جواهر، آن را اینجا نگه می‌دارید تا بعداً سراغش بیایید."
+            action={<Link href="/collection" className={btnPrimary}>مشاهده مجموعه‌ها</Link>}
+          />
+        ) : (
+          <>
+            <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              <AnimatePresence>
+                {items.map((it) => (
+                  <motion.li
+                    key={it.id}
+                    layout
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.94 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="group overflow-hidden rounded-[22px] border border-white/80 bg-gradient-to-b from-[#fffaf4] to-[#f6e5d4] shadow-[0_10px_24px_rgba(90,56,34,0.1)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_36px_rgba(90,56,34,0.18)]"
                   >
-                    {item.inStock ? 'موجود در انبار' : 'پیش‌خرید'}
-                  </span>
-                </div>
-              </div>
-            </div>
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <Photo src={it.image} gradient="linear-gradient(135deg,#f3e1cf,#d9b595)" className={`absolute inset-0 transition duration-[1200ms] group-hover:scale-110 ${it.inStock ? '' : 'opacity-70 saturate-50'}`} />
+                      <span className="absolute right-3 top-3 rounded-full bg-[#1c110c]/70 px-3 py-1 text-[12px] text-[#f3dcc4] backdrop-blur">{it.category}</span>
+                      <button
+                        type="button"
+                        aria-label={`حذف ${it.title} از علاقه‌مندی‌ها`}
+                        onClick={() => setItems((p) => p.filter((x) => x.id !== it.id))}
+                        className="absolute left-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-white/85 text-[#c0674a] backdrop-blur transition hover:scale-110 hover:bg-white"
+                      >
+                        <Icon name="heart" className="h-4 w-4 fill-current" />
+                      </button>
+                    </div>
+                    <div className="p-4 text-right">
+                      <h3 className="text-[16px] font-bold text-[#2a1a12]">{it.title}</h3>
+                      <div className="mt-1.5 flex items-center justify-between gap-2">
+                        <span className="text-[14.5px] font-medium text-[#3a2418]">{toman(it.price)}</span>
+                        <span className={`text-[12.5px] font-medium ${it.inStock ? 'text-[#3f6b3a]' : 'text-[#9a3a26]'}`}>{it.inStock ? 'موجود' : 'ناموجود'}</span>
+                      </div>
+                      {it.inStock ? (
+                        <button type="button" onClick={() => add(it)} className={`${btnPrimary} mt-4 w-full !h-11`}>
+                          {added.includes(it.id) ? (<><Icon name="check" className="h-4 w-4" /> به سبد اضافه شد</>) : 'افزودن به سبد خرید'}
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => setNotify((n) => (n.includes(it.id) ? n.filter((x) => x !== it.id) : [...n, it.id]))}
+                          aria-pressed={notify.includes(it.id)}
+                          className={`${btnGhost} mt-4 w-full`}
+                        >
+                          <Icon name="bell" className="h-4 w-4" />
+                          {notify.includes(it.id) ? 'موجود شد، خبرم کن ✓' : 'وقتی موجود شد خبرم کن'}
+                        </button>
+                      )}
+                    </div>
+                  </motion.li>
+                ))}
+              </AnimatePresence>
+            </ul>
 
-            {/* ACTIONS */}
-            <div className="flex items-center justify-between sm:justify-end gap-4 pt-3 sm:pt-0 border-t sm:border-t-0 border-[#d9bfa6]/40">
-              <button
-                disabled={!item.inStock}
-                className={`px-4 py-2.5 rounded-full font-sans text-xs tracking-wider transition-all duration-300 ${
-                  item.inStock
-                    ? 'border border-[#c8a07c]/40 bg-[#e8c9aa]/10 text-[#9a6b47] hover:bg-[#e8c9aa] hover:text-[#2a1a12]'
-                    : 'border border-[#d9bfa6]/60 text-[#8a7261] cursor-not-allowed opacity-50'
-                }`}
-              >
-                {item.inStock ? 'افزودن به سبد خرید' : 'ناموجود'}
-              </button>
-
-              <button
-                onClick={() => handleRemove(item.id)}
-                className="w-8 h-8 rounded-full border border-[#d9bfa6]/60 flex items-center justify-center text-[#7a6252] hover:text-[#b4472f] hover:border-[#b4472f]/40 transition-all text-xs"
-                title="حذف کالا"
-              >
-                ✕
-              </button>
-            </div>
-          </div>
-        ))}
-
-        {items.length === 0 && (
-          <div className="text-center py-12 border border-dashed border-[#d9bfa6]/60 rounded-2xl">
-            <p className="font-sans text-xs text-[#7a6252]">لیست علاقه‌مندی‌های شما در حال حاضر خالی است.</p>
-            <Link
-              href="/collection"
-              className="inline-block mt-3 font-sans text-xs tracking-wider text-[#9a6b47] underline"
-            >
-              مشاهده مجموعه آثار
-            </Link>
-          </div>
+            {available.length > 0 && (
+              <p className="mt-6 text-[13.5px] text-[#7a5a46]">
+                مجموع قیمت قطعه‌های موجود: <b className="text-[#2a1a12]">{toman(total)}</b>
+              </p>
+            )}
+          </>
         )}
       </div>
-    </div>
+    </AccountCard>
   );
 };
 

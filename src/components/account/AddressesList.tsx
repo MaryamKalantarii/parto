@@ -1,369 +1,239 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { AccountCard, Badge, ConfirmModal, EmptyState, Field, Icon, Modal, btnGhost, btnPrimary, inputCls } from './ui';
+import { isValidMobile, isValidPostalCode, onlyDigits, toFa } from './validators';
 
 export interface AddressItem {
   id: string;
   isDefault: boolean;
+  /** برچسب آدرس: خانه، محل کار، … */
+  title?: string;
+  /** نام گیرنده */
   fullName: string;
   street: string;
+  plaque?: string;
+  /** واحد / طبقه */
   apartment?: string;
   city: string;
   state: string;
   postalCode: string;
   country: string;
+  /** موبایل گیرنده */
   phone: string;
 }
 
+const PROVINCES = [
+  'آذربایجان شرقی', 'آذربایجان غربی', 'اردبیل', 'اصفهان', 'البرز', 'ایلام', 'بوشهر', 'تهران', 'چهارمحال و بختیاری', 'خراسان جنوبی',
+  'خراسان رضوی', 'خراسان شمالی', 'خوزستان', 'زنجان', 'سمنان', 'سیستان و بلوچستان', 'فارس', 'قزوین', 'قم', 'کردستان', 'کرمان',
+  'کرمانشاه', 'کهگیلویه و بویراحمد', 'گلستان', 'گیلان', 'لرستان', 'مازندران', 'مرکزی', 'هرمزگان', 'همدان', 'یزد',
+];
+const TITLES = ['خانه', 'محل کار', 'دیگر'];
+
 const mockAddresses: AddressItem[] = [
-  {
-    id: '1',
-    isDefault: true,
-    fullName: 'الکس مورگان',
-    street: 'خیابان پارک، پلاک ۷۴۰',
-    apartment: 'واحد ۱۲A',
-    city: 'تهران',
-    state: 'تهران',
-    postalCode: '۱۹۸۳۹۶۳۵۴۱',
-    country: 'ایران',
-    phone: '۰۹۱۲۱۲۳۴۵۶۷',
-  },
-  {
-    id: '2',
-    isDefault: false,
-    fullName: 'الکس مورگان',
-    street: 'بلوار دریا، پلاک ۱۵۴۰',
-    apartment: 'سوئیت ۴۰۲',
-    city: 'اصفهان',
-    state: 'اصفهان',
-    postalCode: '۸۱۵۴۶۹۸۷۶۵',
-    country: 'ایران',
-    phone: '۰۹۹۸۷۶۵۴۳۲۱',
-  },
+  { id: '1', isDefault: true, title: 'خانه', fullName: 'مینا رضایی', street: 'خیابان ولیعصر، بالاتر از فرشته، کوچه‌ی ششم', plaque: '12', apartment: 'واحد ۴', city: 'تهران', state: 'تهران', postalCode: '1983963541', country: 'ایران', phone: '09121234567' },
+  { id: '2', isDefault: false, title: 'محل کار', fullName: 'مینا رضایی', street: 'بلوار دریا، مجتمع آرین', plaque: '15', apartment: 'سوئیت ۴۰۲', city: 'اصفهان', state: 'اصفهان', postalCode: '8154698765', country: 'ایران', phone: '09987654321' },
 ];
 
-export const AddressesList: React.FC = () => {
-  const [addresses, setAddresses] = useState<AddressItem[]>(mockAddresses);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingAddress, setEditingAddress] = useState<AddressItem | null>(null);
+type Form = Omit<AddressItem, 'id'>;
+const emptyForm = (isDefault: boolean): Form => ({ isDefault, title: 'خانه', fullName: '', street: '', plaque: '', apartment: '', city: '', state: 'تهران', postalCode: '', country: 'ایران', phone: '' });
 
-  // Form State
-  const [formData, setFormData] = useState<Omit<AddressItem, 'id'>>({
-    isDefault: false,
-    fullName: 'الکس مورگان',
-    street: '',
-    apartment: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: 'ایران',
-    phone: '',
-  });
+export const AddressesList: React.FC<{ addresses?: AddressItem[]; defaultName?: string }> = ({ addresses: initial = mockAddresses, defaultName = '' }) => {
+  const [addresses, setAddresses] = useState<AddressItem[]>(initial);
+  const [open, setOpen] = useState(false);
+  const [editing, setEditing] = useState<AddressItem | null>(null);
+  const [form, setForm] = useState<Form>(emptyForm(false));
+  const [errors, setErrors] = useState<Partial<Record<keyof Form, string>>>({});
+  const [toDelete, setToDelete] = useState<AddressItem | null>(null);
 
-  const handleOpenAddModal = () => {
-    setEditingAddress(null);
-    setFormData({
-      isDefault: addresses.length === 0,
-      fullName: 'الکس مورگان',
-      street: '',
-      apartment: '',
-      city: '',
-      state: '',
-      postalCode: '',
-      country: 'ایران',
-      phone: '',
+  const set = <K extends keyof Form>(k: K, v: Form[K]) => {
+    setForm((f) => ({ ...f, [k]: v }));
+    setErrors((e) => ({ ...e, [k]: undefined }));
+  };
+
+  const openAdd = () => {
+    setEditing(null);
+    setForm({ ...emptyForm(addresses.length === 0), fullName: defaultName });
+    setErrors({});
+    setOpen(true);
+  };
+  const openEdit = (a: AddressItem) => {
+    setEditing(a);
+    setForm({ ...a });
+    setErrors({});
+    setOpen(true);
+  };
+
+  const setDefault = (id: string) => setAddresses((p) => p.map((a) => ({ ...a, isDefault: a.id === id })));
+  const remove = (id: string) =>
+    setAddresses((p) => {
+      const rest = p.filter((a) => a.id !== id);
+      // اگر آدرس پیش‌فرض حذف شد، اولین آدرس باقی‌مانده پیش‌فرض می‌شود
+      return rest.length && !rest.some((a) => a.isDefault) ? rest.map((a, i) => ({ ...a, isDefault: i === 0 })) : rest;
     });
-    setIsModalOpen(true);
-  };
 
-  const handleOpenEditModal = (addr: AddressItem) => {
-    setEditingAddress(addr);
-    setFormData({ ...addr });
-    setIsModalOpen(true);
-  };
-
-  const handleSetDefault = (id: string) => {
-    setAddresses((prev) =>
-      prev.map((item) => ({
-        ...item,
-        isDefault: item.id === id,
-      }))
-    );
-  };
-
-  const handleDelete = (id: string) => {
-    setAddresses((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (editingAddress) {
-      // Update
-      setAddresses((prev) =>
-        prev.map((item) =>
-          item.id === editingAddress.id ? { ...item, ...formData } : item
-        )
-      );
-    } else {
-      // Add
-      const newAddr: AddressItem = {
-        id: Date.now().toString(),
-        ...formData,
-      };
+    const er: typeof errors = {};
+    if (!form.fullName.trim()) er.fullName = 'نام گیرنده را وارد کنید.';
+    if (!isValidMobile(form.phone)) er.phone = 'موبایل گیرنده باید ۱۱ رقم و با ۰۹ شروع شود.';
+    if (!form.state) er.state = 'استان را انتخاب کنید.';
+    if (!form.city.trim()) er.city = 'شهر را وارد کنید.';
+    if (!isValidPostalCode(form.postalCode)) er.postalCode = 'کدپستی باید ۱۰ رقم باشد.';
+    if (form.street.trim().length < 8) er.street = 'نشانی را کامل‌تر بنویسید.';
+    setErrors(er);
+    if (Object.keys(er).length) return;
 
-      if (formData.isDefault) {
-        setAddresses((prev) =>
-          prev.map((item) => ({ ...item, isDefault: false })).concat(newAddr)
-        );
-      } else {
-        setAddresses((prev) => [...prev, newAddr]);
-      }
-    }
-    setIsModalOpen(false);
+    const clean: Form = { ...form, phone: onlyDigits(form.phone), postalCode: onlyDigits(form.postalCode) };
+    setAddresses((prev) => {
+      const base = clean.isDefault ? prev.map((a) => ({ ...a, isDefault: false })) : prev;
+      return editing ? base.map((a) => (a.id === editing.id ? { ...a, ...clean } : a)) : [...base, { id: String(Date.now()), ...clean }];
+    });
+    setOpen(false);
   };
 
   return (
-    <div className="space-y-6 text-right" dir="rtl">
-      {/* HEADER */}
-      <div className="flex justify-between items-center pb-4 border-b border-[#d9bfa6]/60">
-        <div>
-          <h2 className="font-serif text-xl font-light tracking-wide text-[#2a1a12]">
-            آدرس‌های ثبت‌شده
-          </h2>
-          <p className="font-sans text-xs text-[#7a6252] mt-1">
-            مقاصد تحویل و آدرس پیش‌فرض خود را مدیریت کنید.
-          </p>
+    <>
+      <AccountCard
+        title="آدرس‌های ثبت‌شده"
+        subtitle="مقصد تحویل سفارش‌ها و آدرس پیش‌فرض را مدیریت کنید."
+        icon="pin"
+        action={
+          <button type="button" onClick={openAdd} className={`${btnPrimary} !h-10 !px-5 !text-[13px]`}>
+            <Icon name="plus" className="h-4 w-4" /> افزودن آدرس
+          </button>
+        }
+      >
+        <div className="p-5 sm:p-7" dir="rtl">
+          {addresses.length === 0 ? (
+            <EmptyState title="هنوز آدرسی ثبت نکرده‌اید" text="با ثبت آدرس، تکمیل خرید بعدی چند ثانیه بیشتر طول نمی‌کشد." action={<button onClick={openAdd} className={btnPrimary}>ثبت اولین آدرس</button>} />
+          ) : (
+            <ul className="grid gap-5 md:grid-cols-2">
+              <AnimatePresence>
+                {addresses.map((a) => (
+                  <motion.li
+                    key={a.id}
+                    layout
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.94 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className={`relative flex flex-col rounded-[22px] border bg-white/55 p-5 transition duration-300 ${a.isDefault ? 'border-[#c8a07c] shadow-[0_12px_28px_rgba(110,72,46,0.14)]' : 'border-[#d9bfa6]/70 hover:border-[#c8a07c]'}`}
+                  >
+                    {a.isDefault && <span aria-hidden className="absolute right-0 top-6 h-10 w-1 rounded-l-full bg-gradient-to-b from-[#e2bf9f] to-[#b3865f]" />}
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex flex-wrap items-center gap-2.5">
+                        <span className="grid h-10 w-10 place-items-center rounded-full bg-[#e8c9aa]/40 text-[#84563a]">
+                          <Icon name={a.title === 'محل کار' ? 'box' : 'pin'} className="h-5 w-5" />
+                        </span>
+                        <span className="text-[16px] font-bold text-[#2a1a12]">{a.title || 'آدرس'}</span>
+                        {a.isDefault && <Badge tone="gold">پیش‌فرض</Badge>}
+                      </div>
+                      <div className="flex gap-1.5">
+                        <button type="button" onClick={() => openEdit(a)} aria-label="ویرایش آدرس" className="grid h-9 w-9 place-items-center rounded-full border border-[#d9bfa6]/70 bg-white/60 text-[#5a3a28] transition hover:bg-[#f3dcc4]"><Icon name="edit" className="h-4 w-4" /></button>
+                        <button type="button" onClick={() => setToDelete(a)} aria-label="حذف آدرس" className="grid h-9 w-9 place-items-center rounded-full border border-[#d9bfa6]/70 bg-white/60 text-[#9a3a26] transition hover:bg-[#f6dcd4]"><Icon name="trash" className="h-4 w-4" /></button>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 space-y-1 text-[14.5px] leading-8 text-[#3a2418]">
+                      <p>
+                        {a.state}، {a.city}، {a.street}
+                        {a.plaque ? `، پلاک ${toFa(a.plaque)}` : ''}
+                        {a.apartment ? `، ${a.apartment}` : ''}
+                      </p>
+                      <p className="text-[13.5px] text-[#6b4f3e]">
+                        کدپستی: <span dir="ltr" className="inline-block">{toFa(a.postalCode)}</span>
+                      </p>
+                      <p className="text-[13.5px] text-[#6b4f3e]">
+                        گیرنده: {a.fullName} · <span dir="ltr" className="inline-block">{toFa(a.phone)}</span>
+                      </p>
+                    </div>
+
+                    {!a.isDefault && (
+                      <button type="button" onClick={() => setDefault(a.id)} className="mt-4 self-start border-t border-[#d9bfa6]/50 pt-3 text-[13px] font-medium text-[#84563a] hover:underline">
+                        تنظیم به‌عنوان آدرس پیش‌فرض
+                      </button>
+                    )}
+                  </motion.li>
+                ))}
+              </AnimatePresence>
+            </ul>
+          )}
         </div>
+      </AccountCard>
 
-        <button
-          onClick={handleOpenAddModal}
-          className="px-4 py-2 rounded-full border border-[#c8a07c]/40 bg-[#e8c9aa]/10 font-sans text-xs tracking-wider text-[#9a6b47] hover:bg-[#e8c9aa] hover:text-[#2a1a12] transition-all duration-300"
-        >
-          + افزودن آدرس جدید
-        </button>
-      </div>
-
-      {/* ADDRESSES GRID */}
-      <div className="space-y-4">
-        {addresses.map((addr) => (
-          <div
-            key={addr.id}
-            className={`bg-white/50 border rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 ${
-              addr.isDefault
-                ? 'border-[#c8a07c]/60 shadow-[0_0_15px_rgba(216,194,168,0.05)]'
-                : 'border-[#d9bfa6]/60 hover:border-[#c8a07c]'
-            }`}
-          >
-            <div className="flex justify-between items-start mb-3">
-              <div className="flex items-center gap-3">
-                <span className="font-serif text-base font-light text-[#2a1a12]">
-                  {addr.fullName}
-                </span>
-                {addr.isDefault && (
-                  <span className="font-sans text-[10px] tracking-wider px-2 py-0.5 rounded-full border border-[#c8a07c]/40 text-[#9a6b47] bg-[#e8c9aa]/10">
-                    پیش‌فرض
-                  </span>
-                )}
-              </div>
-
-              <div className="flex items-center gap-3 text-xs font-sans tracking-wider text-[#7a6252]">
-                <button
-                  onClick={() => handleOpenEditModal(addr)}
-                  className="hover:text-[#b3865f] transition-colors"
-                >
-                  ویرایش
-                </button>
-                <span>•</span>
-                <button
-                  onClick={() => handleDelete(addr.id)}
-                  className="hover:text-[#b4472f] transition-colors"
-                >
-                  حذف
-                </button>
-              </div>
-            </div>
-
-            <div className="font-sans text-xs font-light text-[#6b4f3e] leading-relaxed space-y-0.5">
-              <p>{addr.street}{addr.apartment ? `، ${addr.apartment}` : ''}</p>
-              <p>{addr.city}، {addr.state}، کدپستی: {addr.postalCode}</p>
-              <p>{addr.country}</p>
-              <p className="font-mono text-[11px] text-[#8a7261] pt-1" dir="ltr">{addr.phone}</p>
-            </div>
-
-            {!addr.isDefault && (
-              <div className="pt-4 mt-4 border-t border-[#d9bfa6]/40">
-                <button
-                  onClick={() => handleSetDefault(addr.id)}
-                  className="font-sans text-[11px] tracking-wider text-[#7a6252] hover:text-[#b3865f] transition-colors"
-                >
-                  تنظیم به‌عنوان آدرس پیش‌فرض
-                </button>
-              </div>
-            )}
+      {/* فرم افزودن / ویرایش */}
+      <Modal open={open} onClose={() => setOpen(false)} eyebrow="آدرس تحویل" title={editing ? 'ویرایش آدرس' : 'افزودن آدرس جدید'} maxWidth="max-w-xl">
+        <form onSubmit={submit} className="space-y-4" noValidate>
+          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="عنوان آدرس">
+            {TITLES.map((t) => (
+              <button
+                key={t}
+                type="button"
+                role="radio"
+                aria-checked={form.title === t}
+                onClick={() => set('title', t)}
+                className={`rounded-full border px-5 py-2 text-[13.5px] font-medium transition ${form.title === t ? 'border-transparent bg-gradient-to-br from-[#4a2c1c] to-[#2a170e] text-[#f3dcc4]' : 'border-[#c8a07c]/50 bg-white/50 text-[#5a3a28]'}`}
+              >
+                {t}
+              </button>
+            ))}
           </div>
-        ))}
 
-        {addresses.length === 0 && (
-          <div className="text-center py-12 border border-dashed border-[#d9bfa6]/60 rounded-2xl">
-            <p className="font-sans text-xs text-[#7a6252]">هیچ آدرسی ثبت نشده است.</p>
-            <button
-              onClick={handleOpenAddModal}
-              className="mt-3 font-sans text-xs tracking-wider text-[#9a6b47] underline"
-            >
-              اولین آدرس خود را اضافه کنید
-            </button>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="نام و نام خانوادگی گیرنده" error={errors.fullName}>
+              <input className={inputCls} value={form.fullName} onChange={(e) => set('fullName', e.target.value)} aria-invalid={!!errors.fullName} autoComplete="name" />
+            </Field>
+            <Field label="موبایل گیرنده" error={errors.phone}>
+              <input className={`${inputCls} text-left`} dir="ltr" inputMode="numeric" placeholder="09123456789" value={form.phone} onChange={(e) => set('phone', e.target.value)} aria-invalid={!!errors.phone} autoComplete="tel" />
+            </Field>
+            <Field label="استان" error={errors.state}>
+              <select className={inputCls} value={form.state} onChange={(e) => set('state', e.target.value)} aria-invalid={!!errors.state}>
+                {PROVINCES.map((p) => <option key={p}>{p}</option>)}
+              </select>
+            </Field>
+            <Field label="شهر" error={errors.city}>
+              <input className={inputCls} value={form.city} onChange={(e) => set('city', e.target.value)} aria-invalid={!!errors.city} />
+            </Field>
           </div>
-        )}
-      </div>
 
-      {/* ADD / EDIT MODAL */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4" dir="rtl">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-[#1c110c]/70 backdrop-blur-md"
-            />
+          <Field label="نشانی (خیابان، کوچه)" error={errors.street}>
+            <input className={inputCls} placeholder="مثال: خیابان ولیعصر، بالاتر از فرشته، کوچه‌ی ششم" value={form.street} onChange={(e) => set('street', e.target.value)} aria-invalid={!!errors.street} autoComplete="street-address" />
+          </Field>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative z-10 w-full max-w-lg bg-[#f8efe6] border border-[#d9bfa6]/60 rounded-2xl p-8 shadow-[0_25px_60px_rgba(0,0,0,0.8)] text-right"
-            >
-              <div className="flex justify-between items-center pb-4 border-b border-[#d9bfa6]/60 mb-6">
-                <h3 className="font-serif text-xl font-light text-[#2a1a12]">
-                  {editingAddress ? 'ویرایش آدرس' : 'افزودن آدرس جدید'}
-                </h3>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="text-[#7a6252] hover:text-[#2a1a12]"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-1">
-                    نام و نام خانوادگی
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-2.5 font-sans text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f]"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-1">
-                    نشانی پستی (خیابان / کوچه / پلاک)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.street}
-                    onChange={(e) => setFormData({ ...formData, street: e.target.value })}
-                    placeholder="مثال: خیابان ولیعصر، بالاتر از فرشته، پلاک ۱۲"
-                    className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-2.5 font-sans text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f]"
-                    required
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-1">
-                      واحد / طبقه
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.apartment}
-                      onChange={(e) => setFormData({ ...formData, apartment: e.target.value })}
-                      placeholder="مثال: واحد ۴، طبقه ۲"
-                      className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-2.5 font-sans text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-1">
-                      شهر
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.city}
-                      onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-2.5 font-sans text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f]"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-1">
-                      استان
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.state}
-                      onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                      className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-2.5 font-sans text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f]"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-1">
-                      کد پستی
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.postalCode}
-                      onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-                      className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-2.5 font-mono text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f]"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block font-sans text-xs tracking-wider text-[#7a6252] mb-1">
-                    شماره همراه
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full bg-white/60 border border-[#d9bfa6]/60 rounded-lg px-4 py-2.5 font-mono text-xs text-[#2a1a12] focus:outline-none focus:border-[#b3865f]"
-                    dir="ltr"
-                    required
-                  />
-                </div>
-
-                <div className="pt-4 flex items-center justify-end gap-4 border-t border-[#d9bfa6]/60 mt-6">
-                  <button
-                    type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="px-5 py-2.5 font-sans text-xs tracking-wider text-[#7a6252]"
-                  >
-                    انصراف
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-6 py-2.5 rounded-full bg-[#e8c9aa] text-[#2a1a12] font-sans text-xs tracking-wider font-medium"
-                  >
-                    ذخیره آدرس
-                  </button>
-                </div>
-              </form>
-            </motion.div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <Field label="پلاک">
+              <input className={inputCls} value={form.plaque ?? ''} onChange={(e) => set('plaque', e.target.value)} />
+            </Field>
+            <Field label="واحد / طبقه">
+              <input className={inputCls} placeholder="واحد ۴، طبقه ۲" value={form.apartment ?? ''} onChange={(e) => set('apartment', e.target.value)} />
+            </Field>
+            <Field label="کدپستی (۱۰ رقم)" error={errors.postalCode}>
+              <input className={`${inputCls} text-left`} dir="ltr" inputMode="numeric" maxLength={10} value={form.postalCode} onChange={(e) => set('postalCode', e.target.value)} aria-invalid={!!errors.postalCode} autoComplete="postal-code" />
+            </Field>
           </div>
-        )}
-      </AnimatePresence>
-    </div>
+
+          <label className="flex cursor-pointer items-center gap-3 pt-1 text-[14px] text-[#3a2418]">
+            <input type="checkbox" checked={form.isDefault} onChange={(e) => set('isDefault', e.target.checked)} className="h-5 w-5 accent-[#b3865f]" />
+            این آدرس، آدرس پیش‌فرض من باشد
+          </label>
+
+          <div className="flex flex-wrap items-center justify-end gap-3 border-t border-[#d9bfa6]/60 pt-5">
+            <button type="button" onClick={() => setOpen(false)} className={btnGhost}>انصراف</button>
+            <button type="submit" className={btnPrimary}>ذخیره آدرس</button>
+          </div>
+        </form>
+      </Modal>
+
+      <ConfirmModal
+        open={!!toDelete}
+        onClose={() => setToDelete(null)}
+        onConfirm={() => toDelete && remove(toDelete.id)}
+        title="حذف آدرس"
+        text={toDelete ? `آدرس «${toDelete.title || 'بدون عنوان'}» حذف شود؟ این کار قابل بازگشت نیست.` : ''}
+      />
+    </>
   );
 };
 
