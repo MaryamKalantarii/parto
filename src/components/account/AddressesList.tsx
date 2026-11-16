@@ -31,15 +31,12 @@ const PROVINCES = [
 ];
 const TITLES = ['خانه', 'محل کار', 'دیگر'];
 
-const mockAddresses: AddressItem[] = [
-  { id: '1', isDefault: true, title: 'خانه', fullName: 'مینا رضایی', street: 'خیابان ولیعصر، بالاتر از فرشته، کوچه‌ی ششم', plaque: '12', apartment: 'واحد ۴', city: 'تهران', state: 'تهران', postalCode: '1983963541', country: 'ایران', phone: '09121234567' },
-  { id: '2', isDefault: false, title: 'محل کار', fullName: 'مینا رضایی', street: 'بلوار دریا، مجتمع آرین', plaque: '15', apartment: 'سوئیت ۴۰۲', city: 'اصفهان', state: 'اصفهان', postalCode: '8154698765', country: 'ایران', phone: '09987654321' },
-];
+const initialAddresses: AddressItem[] = [];
 
 type Form = Omit<AddressItem, 'id'>;
 const emptyForm = (isDefault: boolean): Form => ({ isDefault, title: 'خانه', fullName: '', street: '', plaque: '', apartment: '', city: '', state: 'تهران', postalCode: '', country: 'ایران', phone: '' });
 
-export const AddressesList: React.FC<{ addresses?: AddressItem[]; defaultName?: string }> = ({ addresses: initial = mockAddresses, defaultName = '' }) => {
+export const AddressesList: React.FC<{ addresses?: AddressItem[]; defaultName?: string }> = ({ addresses: initial = initialAddresses, defaultName = '' }) => {
   const [addresses, setAddresses] = useState<AddressItem[]>(initial);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<AddressItem | null>(null);

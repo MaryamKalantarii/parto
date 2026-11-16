@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Photo } from '@/components/home/primitives';
 import { AccountCard, Badge, EmptyState, Icon, btnGhost, btnPrimary, inputCls } from './ui';
 import { toEn, toFa, toman } from './validators';
-import { mockOrders, statusMeta, type Order } from './accountData';
+import { initialOrders, statusMeta, type Order } from './accountData';
 import { OrderStepper } from './RecentOrders';
 
 export type { OrderItem } from './accountData';
@@ -26,7 +26,7 @@ interface Props {
   onDownload?: (kind: 'invoice' | 'certificate', o: Order) => void;
 }
 
-export const OrdersList: React.FC<Props> = ({ orders = mockOrders, onReorder, onSupport, onDownload }) => {
+export const OrdersList: React.FC<Props> = ({ orders = initialOrders, onReorder, onSupport, onDownload }) => {
   const [filter, setFilter] = useState<Filter>('ALL');
   const [q, setQ] = useState('');
   const [open, setOpen] = useState<string | null>(orders.find((o) => o.status === 'IN_TRANSIT')?.id ?? null);

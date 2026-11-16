@@ -1,4 +1,3 @@
-// src/components/sections/Craft/Craft.tsx
 "use client";
 
 import React from "react";

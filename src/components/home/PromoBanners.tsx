@@ -23,7 +23,7 @@ function PromoCard({ b }: { b: Banner }) {
         dark ? "border-[#e8c9aa]/20 text-[#fbeee2]" : "border-white/70 text-[#2a1a12]"
       }`}
     >
-      {/* تصویر سمت چپ، محو شونده به سمت متن (راست) */}
+
       <Photo
         src={b.img}
         gradient={b.gradient}
@@ -75,7 +75,6 @@ function Grid({ items, label }: { items: Banner[]; label: string }) {
   );
 }
 
-/* دو بنر اول (بعد از دسته‌بندی‌ها) — راست: دستبندها، چپ: راهنمای هدیه */
 const top: Banner[] = [
   {
     title: "مجموعه دستبندها",
@@ -97,7 +96,6 @@ const top: Banner[] = [
   },
 ];
 
-/* دو بنر آخر (قبل از مزایا و خبرنامه) — راست: تجربه مشتریان، چپ: مجله جواهرات */
 const bottom: Banner[] = [
   {
     title: "تجربه مشتریان",

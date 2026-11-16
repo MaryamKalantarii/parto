@@ -1,17 +1,11 @@
 'use client';
 
-/**
- * کیف پول و کارت‌های بانکی  →  components/account/PaymentMethodsList.tsx
- * (به‌جای فرم قبلی که کارت Visa/Amex و CVV می‌گرفت؛ در ایران پرداخت از درگاه بانکی انجام می‌شود
- *  و CVV2 هیچ‌وقت نباید در سایت دریافت یا ذخیره شود.)
- * کارت‌ها فقط برای «بازگشت وجه» نگه داشته می‌شوند و به‌صورت ماسک‌شده نمایش داده می‌شوند.
- */
 
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AccountCard, ConfirmModal, EmptyState, Field, Icon, Modal, btnGhost, btnPrimary, inputCls } from './ui';
 import { bankFromCard, formatCardNumber, isValidCard, onlyDigits, toFa, toman } from './validators';
-import { mockWallet, type WalletTx } from './accountData';
+import { initialWallet, type WalletTx } from './accountData';
 
 export interface BankCard {
   id: string;
@@ -22,7 +16,7 @@ export interface BankCard {
   masked: string;
 }
 
-const mockCards: BankCard[] = [{ id: 'c1', isDefault: true, holder: 'مینا رضایی', bank: 'بانک ملت', masked: '610433******1234' }];
+const initialCards: BankCard[] = [];
 
 const mask = (digits: string) => `${digits.slice(0, 6)}******${digits.slice(12)}`;
 const showMasked = (m: string) => toFa(`${m.slice(0, 4)} ${m.slice(4, 6)}•• •••• ${m.slice(12)}`);
@@ -34,7 +28,7 @@ interface Props {
   onTopUp?: () => void;
 }
 
-export const PaymentMethodsList: React.FC<Props> = ({ balance = mockWallet.balance, txs = mockWallet.txs, cards: initial = mockCards, onTopUp }) => {
+export const PaymentMethodsList: React.FC<Props> = ({ balance = initialWallet.balance, txs = initialWallet.txs, cards: initial = initialCards, onTopUp }) => {
   const [cards, setCards] = useState<BankCard[]>(initial);
   const [open, setOpen] = useState(false);
   const [toDelete, setToDelete] = useState<BankCard | null>(null);

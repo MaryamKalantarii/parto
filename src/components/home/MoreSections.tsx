@@ -1,7 +1,6 @@
 "use client";
 
 /**
- * سکشن‌های پیشنهادی برای تکمیل صفحه اصلی پرتو
  * ─────────────────────────────────────────────
  *  GoldPriceBar   نوار قیمت طلا (زیر هیرو)
  *  ProcessSteps   مراحل طراحی اختصاصی (پشتیبان وعده‌ی هیرو)
@@ -10,7 +9,6 @@
  *  FaqSection     سوالات متداول + اسکیمای FAQ برای سئو
  *
  * همه از primitives و Reveal خود پروژه استفاده می‌کنند و رنگ‌ها همان پالت فعلی است.
- * متن‌ها و عددها «نمونه» هستند؛ قبل از فروش قالب، از props یا data جایگزین شوند.
  */
 
 import React, { useRef } from "react";
@@ -18,7 +16,6 @@ import Link from "next/link";
 import { GoldButton, Photo, RoundArrow, SectionHeading, ArrowLeft, DiamondIcon } from "./primitives";
 import { Reveal } from "@/components/ui/Reveal";
 
-/* رنگ طلایی خوانا روی زمینه‌ی کرم (کنتراست ≈ ۵:۱؛ #b3865f فقط برای خط و آیکن مناسب است) */
 const GOLD_TEXT = "text-[#84563a]";
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
@@ -179,7 +176,6 @@ export function ProcessSteps({ href = "/contact" }: { href?: string }) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   ۳) نظرات مشتریان (نمونه)
    ═══════════════════════════════════════════════════════════ */
 export type Review = { name: string; city: string; product: string; rating: number; text: string; photo?: string };
 
