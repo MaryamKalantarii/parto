@@ -4,8 +4,8 @@ import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Photo, GoldButton, ArrowLeft, Chevron } from '@/components/home/primitives';
 import { ProductCardView } from '@/components/product/ProductCard';
+import { bestSellerCatalog, CATALOG_PAGE_SIZE } from '@/data/bestSellerCatalog';
 import {
-  ringsCatalog,
   type GoldType,
   type RingKind,
   type RingItem,
@@ -14,7 +14,7 @@ import {
 
 const MIN_PRICE = 1_000_000;
 const MAX_PRICE = 50_000_000;
-const PAGE_SIZE = 9;
+const PAGE_SIZE = CATALOG_PAGE_SIZE; // ۶ محصول در هر صفحه (۳ صفحه)
 
 const fa = (n: number) => n.toLocaleString('fa-IR');
 const faPrice = (n: number) => `${n.toLocaleString('fa-IR').replace(/٬/g, ',')} تومان`;
@@ -97,7 +97,7 @@ export const ProductCatalog = () => {
   const [added, setAdded] = useState<Set<string>>(new Set());
 
   const items = useMemo(() => {
-    const list = ringsCatalog.filter((r) => {
+    const list = bestSellerCatalog.filter((r) => {
       if (kind !== 'ALL' && !r.kinds.includes(kind)) return false;
       if (r.rawPrice > applied.maxPrice) return false;
       if (applied.gold.length && !applied.gold.includes(r.gold)) return false;
@@ -196,7 +196,7 @@ export const ProductCatalog = () => {
           />
         </label>
 
-        <div className="glass-cream flex h-11 items-center gap-1 rounded-full p-1">
+        {/* <div className="glass-cream flex h-11 items-center gap-1 rounded-full p-1">
           {(['list', 'grid'] as const).map((v) => (
             <button
               key={v}
@@ -237,7 +237,7 @@ export const ProductCatalog = () => {
               )}
             </button>
           ))}
-        </div>
+        </div> */}
 
       </div>
     </div>

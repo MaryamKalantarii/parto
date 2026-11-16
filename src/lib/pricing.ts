@@ -1,6 +1,6 @@
 import type { Product } from '@/types/product';
 
-const DISCOUNT_PERCENT = 12;
+export const DISCOUNT_PERCENT = 12;
 
 export const faNum = (n: number) =>
   n.toLocaleString('fa-IR').replace(/٬/g, ',');

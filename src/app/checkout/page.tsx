@@ -207,8 +207,8 @@ export default function CheckoutPage() {
       <Header />
       <PageHero title="تکمیل خرید" subtitle="لطفاً اطلاعات خود را بررسی و سفارش خود را نهایی کنید" big />
 
-      <div className="mx-auto w-full max-w-[1200px] px-5 pb-12 lg:px-11 -mt-3">
-        <Stepper current={done ? 4 : step} />
+      <div className="relative z-20 mx-auto w-full max-w-[1200px] space-y-5 px-5 pb-10 lg:px-11 -mt-3"> 
+         <Stepper current={done ? 4 : step} />
 
         {done ? (
           <section className="parto-card mx-auto mt-6 max-w-[560px] rounded-[28px] p-10 text-center" role="status">
