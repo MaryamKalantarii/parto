@@ -128,22 +128,22 @@ export const ProductCatalog = () => {
       className="relative w-full pb-16"
       style={{ background: 'radial-gradient(60% 30% at 20% 10%, rgba(255,255,255,0.55), transparent 70%), linear-gradient(180deg,#f6e9de 0%,#f2e2d4 50%,#f6ebe0 100%)' }}
     >
-      <div className="mx-auto max-w-[1360px] px-10">
+      <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* نوار دسته‌بندی (روی هیرو) */}
-        <div className="glass-cream relative z-10 -mt-[48px] flex items-stretch justify-between rounded-[40px] px-6 py-5">
+        <div className="glass-cream relative z-10 -mt-7 flex snap-x snap-mandatory items-stretch justify-start gap-2 overflow-x-auto rounded-[24px] px-3 py-3 sm:-mt-10 sm:justify-between sm:gap-0 sm:overflow-visible sm:rounded-[32px] sm:px-5 sm:py-4 lg:-mt-[48px] lg:rounded-[40px] lg:px-6 lg:py-5">
           {kinds.map((k, i) => {
             const active = kind === k.value;
             return (
               <React.Fragment key={k.value}>
-                {i > 0 && <span className="my-3 w-px bg-[#c8a07c]/25" />}
+                {i > 0 && <span className="my-3 hidden w-px shrink-0 bg-[#c8a07c]/25 sm:block" />}
                 <button
                   type="button"
                   onClick={() => { setKind(k.value); setPage(1); }}
                   aria-pressed={active}
-                  className={`relative flex flex-1 flex-col items-center gap-3 rounded-[24px] px-3 py-2 transition ${active ? 'bg-gradient-to-b from-white/80 to-[#ecd9c6]/70 shadow-[0_8px_22px_rgba(110,72,46,0.18)] ring-1 ring-[#c8a07c]/50' : 'hover:bg-white/40'}`}
+                  className={`relative flex min-w-[112px] shrink-0 snap-start flex-col items-center gap-2 rounded-[18px] px-2 py-2 transition sm:min-w-0 sm:flex-1 sm:gap-3 sm:rounded-[24px] sm:px-3 ${active ? 'bg-gradient-to-b from-white/80 to-[#ecd9c6]/70 shadow-[0_8px_22px_rgba(110,72,46,0.18)] ring-1 ring-[#c8a07c]/50' : 'hover:bg-white/40'}`}
                 >
-                  <Photo src={k.img} gradient="radial-gradient(circle at 35% 30%,#fff,#e7cdb4 60%,#c9a07c)" className="h-[82px] w-[82px] rounded-full ring-2 ring-white/80 shadow-[0_8px_20px_rgba(110,72,46,0.2)]" />
-                  <span className={`rounded-full px-5 py-1.5 text-[13px] font-semibold ${active ? 'bg-gradient-to-l from-[#3a2418] to-[#6b4630] text-[#f3dcc4]' : 'text-[#3a2418]'}`}>{k.label}</span>
+                  <Photo src={k.img} gradient="radial-gradient(circle at 35% 30%,#fff,#e7cdb4 60%,#c9a07c)" className="h-14 w-14 rounded-full ring-2 ring-white/80 shadow-[0_8px_20px_rgba(110,72,46,0.2)] sm:h-[68px] sm:w-[68px] lg:h-[82px] lg:w-[82px]" />
+                  <span className={`whitespace-nowrap rounded-full px-3 py-1.5 text-[11px] font-semibold sm:px-4 sm:text-[12px] lg:px-5 lg:text-[13px] ${active ? 'bg-gradient-to-l from-[#3a2418] to-[#6b4630] text-[#f3dcc4]' : 'text-[#3a2418]'}`}>{k.label}</span>
                 </button>
               </React.Fragment>
             );
@@ -151,16 +151,15 @@ export const ProductCatalog = () => {
         </div>
 
     
-{/* سایدبار + محصولات */}
 
-<div className="mt-10 flex items-start gap-6">
 
-  {/* محصولات (راست) */}
-  <div className="min-w-0 flex-1">
+<div className="mt-6 flex flex-col items-stretch gap-5 sm:mt-8 lg:mt-10 lg:flex-row lg:items-start lg:gap-6">
 
-    <div className="mb-5 flex items-center gap-4">
+  <div className="order-2 min-w-0 flex-1 lg:order-1">
 
-      <h2 className="text-[27px] font-bold text-[#2a1a12]">
+    <div className="mb-4 flex flex-wrap items-center gap-2.5 sm:mb-5 sm:gap-4">
+
+      <h2 className="text-[20px] font-bold text-[#2a1a12] sm:text-[24px] lg:text-[27px]">
         محصولات انگشتر
       </h2>
 
@@ -170,7 +169,7 @@ export const ProductCatalog = () => {
         {fa(items.length)} محصول
       </span>
 
-      <div className="mr-auto flex items-center gap-3">
+      <div className="mr-auto flex w-full items-center justify-start gap-3 sm:w-auto sm:justify-end">
 
         <label className="relative">
           <span className="sr-only">مرتب‌سازی</span>
@@ -181,7 +180,7 @@ export const ProductCatalog = () => {
               setSort(e.target.value as Sort);
               setPage(1);
             }}
-            className="glass-cream h-11 cursor-pointer appearance-none rounded-full py-0 pl-9 pr-4 text-[14px] font-medium text-[#3a2418] outline-none"
+            className="glass-cream h-10 max-w-full cursor-pointer appearance-none rounded-full py-0 pl-9 pr-4 text-[12px] font-medium text-[#3a2418] outline-none sm:h-11 sm:text-[14px]"
           >
             {(Object.keys(sortLabels) as Sort[]).map((s) => (
               <option key={s} value={s}>
@@ -245,7 +244,7 @@ export const ProductCatalog = () => {
     <div
       className={
         view === 'grid'
-          ? 'grid grid-cols-3 gap-6'
+          ? 'grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4 xl:grid-cols-3 xl:gap-6'
           : 'flex flex-col gap-6'
       }
     >
@@ -293,8 +292,8 @@ export const ProductCatalog = () => {
 
   </div>
 
-  {/* سایدبار فیلتر (چپ) */}
-  <aside className="glass-cream sticky top-24 w-[270px] shrink-0 rounded-[26px] p-5 text-right">
+
+  <aside className="glass-cream order-1 w-full shrink-0 rounded-[22px] p-4 text-right sm:rounded-[26px] sm:p-5 lg:sticky lg:top-24 lg:order-2 lg:w-[250px] xl:w-[270px]">
 
     <div className="flex items-center justify-between border-b border-[#c8a07c]/25 pb-4">
 
@@ -308,7 +307,7 @@ export const ProductCatalog = () => {
 
     </div>
 
-    {/* قیمت */}
+  
     <div className="border-b border-[#c8a07c]/20 py-4">
 
       <SectionTitle
@@ -366,7 +365,7 @@ export const ProductCatalog = () => {
       )}
     </div>
 
-    {/* نوع طلا */}
+
     <div className="border-b border-[#c8a07c]/20 py-4">
 
       <SectionTitle
@@ -398,7 +397,7 @@ export const ProductCatalog = () => {
 
     </div>
 
-    {/* رنگ طلا */}
+
     <div className="border-b border-[#c8a07c]/20 py-4">
 
       <SectionTitle
@@ -437,7 +436,7 @@ export const ProductCatalog = () => {
 
     </div>
 
-    {/* سنگ */}
+    
     <div className="border-b border-[#c8a07c]/20 py-4">
 
       <SectionTitle
@@ -469,7 +468,7 @@ export const ProductCatalog = () => {
 
     </div>
 
-    {/* برند */}
+    
     <div className="py-4">
 
       <SectionTitle
@@ -498,7 +497,7 @@ export const ProductCatalog = () => {
 
     </div>
 
-    {/* اعمال فیلترها */}
+   
     <button
       type="button"
       onClick={() => {
@@ -511,7 +510,7 @@ export const ProductCatalog = () => {
       اعمال فیلترها
     </button>
 
-    {/* حذف فیلترها */}
+   
     {(applied.gold.length > 0 ||
       applied.stone.length > 0 ||
       applied.color ||
@@ -535,8 +534,8 @@ export const ProductCatalog = () => {
 </div>
 
 
-        {/* بنر کالکشن ویژه */}
-        <div className="relative mt-10 flex h-[215px] items-center overflow-hidden rounded-[28px] shadow-[0_18px_40px_rgba(60,36,24,0.3)]">
+       
+        <div className="relative mt-8 flex min-h-[180px] items-center overflow-hidden rounded-[22px] shadow-[0_18px_40px_rgba(60,36,24,0.3)] sm:mt-10 sm:min-h-[200px] sm:rounded-[28px] lg:h-[215px]">
           <Photo
             src="/images/product-hero/product-baner.png"
             gradient="radial-gradient(60% 100% at 18% 50%,#a87a58,#3a2418 65%,#1c110c)"
@@ -545,9 +544,9 @@ export const ProductCatalog = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-l from-[#1c110c] via-[#1c110c]/85 to-transparent" />
           <svg className="pointer-events-none absolute left-[38%] top-0 h-full w-[260px] text-[#e2bf9f]/50" viewBox="0 0 260 215" fill="none" stroke="currentColor" strokeWidth="1"><path d="M30 0C-20 80 20 190 150 215" /></svg>
-          <div className="relative w-[420px] pr-14 text-right">
-            <h2 className="text-[26px] font-bold text-[#f3dcc4]">کالکشن ویژه پرتو</h2>
-            <p className="mt-2 text-[13px] text-[#e6d2bf]/90">انتخابی منحصربه‌فرد برای لحظه‌های خاص</p>
+          <div className="relative w-full max-w-[420px] px-5 py-7 text-right sm:pr-10 lg:pr-14">
+            <h2 className="text-[20px] font-bold text-[#f3dcc4] sm:text-[23px] lg:text-[26px]">کالکشن ویژه پرتو</h2>
+            <p className="mt-2 text-[11px] text-[#e6d2bf]/90 sm:text-[12px] lg:text-[13px]">انتخابی منحصربه‌فرد برای لحظه‌های خاص</p>
             <GoldButton href="/collection" className="mt-6 !px-6">
               مشاهده کالکشن
               <ArrowLeft className="h-4 w-4" />
@@ -555,9 +554,9 @@ export const ProductCatalog = () => {
           </div>
         </div>
 
-        {/* صفحه‌بندی */}
+        
         {pages > 1 && (
-          <nav aria-label="صفحه‌بندی" className="mt-8 flex items-center justify-center gap-3 text-[13px] text-[#3a2418]">
+          <nav aria-label="صفحه‌بندی" className="mt-8 flex flex-wrap items-center justify-center gap-2 text-[12px] text-[#3a2418] sm:gap-3 sm:text-[13px]">
             <button type="button" aria-label="صفحه قبل" disabled={current === 1} onClick={() => setPage(current - 1)} className="grid h-7 w-7 place-items-center rounded-full border border-[#c8a07c]/50 transition hover:bg-white/60 disabled:opacity-40">
               <Chevron dir="right" className="h-3.5 w-3.5" />
             </button>

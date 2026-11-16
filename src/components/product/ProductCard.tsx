@@ -86,7 +86,7 @@ export interface ProductCardViewProps {
   className?: string;
 }
 
-/* کارت محصول (نمای خالص) — هم برای ProductCard و هم برای کاتالوگ انگشترها */
+
 export function ProductCardView({
   name, subTitle, href, images, price, oldPrice, discount, rating, reviewsCount,
   badge: label, added, onAddToCart, className = '',
@@ -96,13 +96,13 @@ export function ProductCardView({
 
   return (
     <article
-      className={`group relative flex flex-col overflow-hidden rounded-[34px] border border-white/60 shadow-[0_24px_60px_rgba(110,72,46,0.22)] transition-all duration-700 ease-out hover:-translate-y-1.5 hover:shadow-[0_34px_70px_rgba(110,72,46,0.3)] ${className}`}
+      className={`group relative flex flex-col overflow-hidden rounded-[22px] border border-white/60 sm:rounded-[28px] lg:rounded-[34px] shadow-[0_24px_60px_rgba(110,72,46,0.22)] transition-all duration-700 ease-out hover:-translate-y-1.5 hover:shadow-[0_34px_70px_rgba(110,72,46,0.3)] ${className}`}
       style={{
         background:
           'linear-gradient(165deg,#e8cdb2 0%,#f3e1cd 45%,#d6b394 100%)',
       }}
     >
-      {/* ------------------------------ تصویر ------------------------------ */}
+     
       <div className="relative aspect-[1/1] w-full overflow-hidden">
         <Link href={href} aria-label={name} className="absolute inset-0 block">
           {images[active] && (
@@ -118,7 +118,7 @@ export function ProductCardView({
         </Link>
 
         {label && (
-          <span className="absolute left-4 top-4 z-10 inline-flex h-10 items-center gap-2 rounded-full bg-gradient-to-l from-[#4a2e20] to-[#24140d] px-4 text-[13px] font-medium text-[#f6e6d3] shadow-[0_6px_16px_rgba(36,20,13,0.35)] ring-1 ring-[#e2bf9f]/30">
+          <span className="absolute left-2.5 top-2.5 z-10 inline-flex h-8 max-w-[calc(100%-64px)] items-center gap-1.5 rounded-full bg-gradient-to-l from-[#4a2e20] to-[#24140d] px-2.5 text-[10px] sm:left-4 sm:top-4 sm:h-10 sm:gap-2 sm:px-4 sm:text-[13px] font-medium text-[#f6e6d3] shadow-[0_6px_16px_rgba(36,20,13,0.35)] ring-1 ring-[#e2bf9f]/30">
             <span className="text-[#e8c9aa]"><SparkIcon /></span>
             {label}
           </span>
@@ -129,7 +129,7 @@ export function ProductCardView({
           aria-label="افزودن به علاقه‌مندی‌ها"
           aria-pressed={wished}
           onClick={() => setWished((v) => !v)}
-          className={`absolute right-4 top-4 z-10 grid h-12 w-12 place-items-center rounded-[18px] bg-[#f8ece0]/85 shadow-[0_6px_16px_rgba(110,72,46,0.2)] ring-1 ring-white/70 backdrop-blur-md transition hover:bg-white ${
+          className={`absolute right-2.5 top-2.5 z-10 grid h-9 w-9 sm:right-4 sm:top-4 sm:h-12 sm:w-12 place-items-center rounded-[18px] bg-[#f8ece0]/85 shadow-[0_6px_16px_rgba(110,72,46,0.2)] ring-1 ring-white/70 backdrop-blur-md transition hover:bg-white ${
             wished ? 'text-[#b3433a]' : 'text-[#24140d]'
           }`}
         >
@@ -137,7 +137,7 @@ export function ProductCardView({
         </button>
 
         {images.length > 1 && (
-          <div className="absolute inset-x-0 bottom-[52px] z-10 flex justify-center">
+          <div className="absolute inset-x-0 bottom-8 z-10 flex justify-center sm:bottom-[52px]">
             <div className="flex items-center gap-2 rounded-full bg-black/15 px-3 py-1.5 backdrop-blur-sm" dir="ltr">
               {images.map((img, i) => (
                 <button
@@ -156,14 +156,13 @@ export function ProductCardView({
         )}
       </div>
 
-      {/* ------------------------------ اطلاعات ------------------------------ */}
-      <div className="relative z-10 -mt-10 mx-3 mb-3 rounded-[28px] bg-gradient-to-b from-[#fbf1e6] to-[#f4e3d2] p-4 shadow-[0_-8px_24px_rgba(110,72,46,0.12)] ring-1 ring-white/70">
+      <div className="relative z-10 -mt-7 mx-2 mb-2 rounded-[20px] bg-gradient-to-b from-[#fbf1e6] to-[#f4e3d2] p-3 sm:-mt-9 sm:mx-3 sm:mb-3 sm:rounded-[24px] sm:p-4 lg:-mt-10 lg:rounded-[28px] shadow-[0_-8px_24px_rgba(110,72,46,0.12)] ring-1 ring-white/70">
         <Link href={href} className="block">
-          <h3 className="text-[16px] font-bold leading-snug text-[#24140d]">{name}</h3>
+          <h3 className="text-[13px] font-bold leading-snug text-[#24140d] sm:text-[15px] lg:text-[16px]">{name}</h3>
         </Link>
-        {subTitle && <p className="mt-1 line-clamp-1 text-[12.5px] text-[#8a6e5c]">{subTitle}</p>}
+        {subTitle && <p className="mt-1 line-clamp-1 text-[10px] text-[#8a6e5c] sm:text-[11px] lg:text-[12.5px]">{subTitle}</p>}
 
-        <div className="mt-2.5 flex items-center justify-between">
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-1 sm:mt-2.5">
           {rating !== undefined ? (
             <div className="flex items-center gap-1.5 text-[12.5px] text-[#5a3a28]">
               <StarIcon />
@@ -182,16 +181,16 @@ export function ProductCardView({
           )}
         </div>
 
-        <div className="mt-2 flex items-baseline gap-1.5 text-[#24140d]">
-          <span className="text-[24px] font-bold leading-none tracking-tight">{price}</span>
-          <span className="text-[13px] text-[#6a4a38]">تومان</span>
+        <div className="mt-2 flex flex-wrap items-baseline gap-1 text-[#24140d] sm:gap-1.5">
+          <span className="text-[16px] font-bold leading-none tracking-tight sm:text-[20px] lg:text-[24px]">{price}</span>
+          <span className="text-[10px] text-[#6a4a38] sm:text-[11px] lg:text-[13px]">تومان</span>
         </div>
 
-        <div className="mt-3.5 flex items-center gap-2">
+        <div className="mt-3 flex items-center gap-1.5 sm:mt-3.5 sm:gap-2">
           <button
             type="button"
             onClick={onAddToCart}
-            className="flex h-12 min-w-0 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-l from-[#4a2e20] to-[#24140d] px-2 text-[13px] font-medium text-[#f6e6d3] shadow-[0_8px_18px_rgba(36,20,13,0.3)] transition hover:brightness-125"
+            className="flex h-10 min-w-0 flex-1 items-center justify-center gap-1 whitespace-nowrap rounded-full bg-gradient-to-l from-[#4a2e20] to-[#24140d] px-1.5 text-[10px] sm:h-12 sm:gap-2 sm:px-2 sm:text-[12px] lg:text-[13px] font-medium text-[#f6e6d3] shadow-[0_8px_18px_rgba(36,20,13,0.3)] transition hover:brightness-125"
           >
             <CartIcon />
             {added ? '✓ افزوده شد' : 'افزودن به سبد خرید'}
@@ -199,14 +198,14 @@ export function ProductCardView({
           <button
             type="button"
             aria-label="اشتراک‌گذاری"
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#d9b99a] bg-white/40 text-[#3a2418] transition hover:bg-white"
+            className="grid h-9 w-9 shrink-0 place-items-center sm:h-11 sm:w-11 rounded-full border border-[#d9b99a] bg-white/40 text-[#3a2418] transition hover:bg-white"
           >
             <ShareIcon />
           </button>
           <button
             type="button"
             aria-label="مقایسه"
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#d9b99a] bg-white/40 text-[#3a2418] transition hover:bg-white"
+            className="grid h-9 w-9 shrink-0 place-items-center sm:h-11 sm:w-11 rounded-full border border-[#d9b99a] bg-white/40 text-[#3a2418] transition hover:bg-white"
           >
             <CompareIcon />
           </button>
@@ -218,7 +217,7 @@ export function ProductCardView({
 
 export interface ProductCardProps {
   product: Product;
-  /** برچسب بالای کارت؛ پیش‌فرض: «پرفروش‌ترین» برای محصولات پرفروش */
+  
   badge?: string | null;
   className?: string;
 }
