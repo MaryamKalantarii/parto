@@ -1,147 +1,216 @@
-# AUREL — Objects of Light.
+# PARTO — Objects of Light
+
+### A Cinematic Luxury Jewelry Experience
+
+PARTO is a modern digital experience for a fictional luxury jewelry house, built around the relationship between **light, material, sculpture, motion, and digital storytelling**.
+
+Rather than behaving like a conventional e-commerce website, PARTO transforms online shopping into an **editorial and cinematic experience** — combining immersive visuals, refined typography, motion design, and interactive product presentation.
+
+> **Objects of Light. Designed to be experienced.**
 
 <p align="center">
-  <img src="public/images/hero-bggg.png" alt="AUREL — Objects of Light" width="100%" />
+  <a href="https://landing-parto.chbkn.dev/">
+    <img src="https://img.shields.io/badge/✦%20Landing%20Page-Visit%20PARTO-black?style=for-the-badge" alt="PARTO Landing Page" />
+  </a>
+  <a href="https://demo-parto.chbkn.dev/">
+    <img src="https://img.shields.io/badge/◈%20Live%20Demo-Explore%20PARTO-black?style=for-the-badge" alt="PARTO Live Demo" />
+  </a>
 </p>
 
-<h3 align="center">A Digital Experience for a Modern Luxury Jewelry House</h3>
-
 <p align="center">
-  AUREL is a cinematic luxury jewelry e-commerce experience where sculptural design, light, motion, and modern web technology come together.
-</p>
-
-<p align="center">
-  <a href="https://aurel-z71t.onrender.com">Live Demo</a>
-  ·
-  <a href="https://github.com/mhidusti/AUREL">Repository</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Next.js-15.5.0-000000?style=flat-square&logo=next.js&logoColor=white" alt="Next.js" />
-  <img src="https://img.shields.io/badge/React-19-149ECA?style=flat-square&logo=react&logoColor=white" alt="React" />
-  <img src="https://img.shields.io/badge/TypeScript-Enabled-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
-  <img src="https://img.shields.io/badge/Deployment-Render-46E3B7?style=flat-square&logo=render&logoColor=black" alt="Render" />
+  <a href="https://nextjs.org/">
+    <img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js" alt="Next.js" />
+  </a>
+  <a href="https://react.dev/">
+    <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react" alt="React" />
+  </a>
+  <a href="https://www.typescriptlang.org/">
+    <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript" alt="TypeScript" />
+  </a>
+  <a href="https://tailwindcss.com/">
+    <img src="https://img.shields.io/badge/Tailwind%20CSS-4-38B2AC?style=flat-square&logo=tailwindcss" alt="Tailwind CSS" />
+  </a>
 </p>
 
 ---
 
+# ✦ PARTO
+
 ## Overview
 
-**AUREL — Objects of Light.** is a fictional luxury jewelry brand and a modern e-commerce web experience designed around the relationship between precious materials, sculptural forms, light, and digital storytelling.
+**PARTO — Objects of Light** is a fictional luxury jewelry brand and a cinematic e-commerce experience.
 
-Rather than following the conventions of a traditional online jewelry store, AUREL approaches commerce as an editorial experience. Cinematic imagery, restrained typography, immersive compositions, and carefully orchestrated motion create a digital environment inspired by contemporary luxury, architectural minimalism, and high-fashion art direction.
+The project explores how a digital storefront can feel less like a traditional online shop and more like entering a **luxury fashion editorial, architectural space, or digital gallery**.
 
-The project combines a premium visual identity with a multi-page storefront, product discovery, shopping flows, and account-related interfaces.
+Every part of the experience — from typography and imagery to transitions and product presentation — is designed around a restrained and immersive visual language.
 
-**Live Website:** https://aurel-z71t.onrender.com
+### PARTO combines:
 
-## Design Philosophy
+- Luxury editorial design
+- Cinematic visual storytelling
+- Interactive product experiences
+- Smooth motion and transitions
+- Responsive layouts
+- Modern React architecture
+- Dynamic product pages
+- Shopping and account interfaces
 
-AUREL is built around a simple principle:
+---
 
-> Objects of light. Designed to be experienced.
+# ✧ The Concept
 
-The visual direction emphasizes:
+## Objects of Light.
 
-- **Quiet luxury** — refined typography, restrained colors, and intentional negative space.
-- **Sculptural minimalism** — jewelry presented as an object of design rather than a conventional product listing.
-- **Cinematic art direction** — dark architectural environments, atmospheric lighting, and material-focused imagery.
-- **Motion with purpose** — animation and transitions designed to support storytelling and navigation.
-- **Editorial composition** — oversized typography, asymmetric layouts, and a strong visual hierarchy.
-- **Digital craftsmanship** — attention to detail across page layouts, interactions, responsive behavior, and reusable components.
+PARTO is built around a simple idea:
 
-### Visual Identity
+> **Jewelry is not merely an object. It is light captured in form.**
+
+The experience therefore focuses on five core elements:
+
+### Material
+
+Precious surfaces, reflections, textures, and sculptural forms.
+
+### Light
+
+Soft illumination, contrast, atmosphere, and movement.
+
+### Space
+
+Generous negative space and architectural compositions.
+
+### Motion
+
+Transitions and interactions that make the interface feel alive.
+
+### Storytelling
+
+Products are presented as part of a visual narrative rather than simple catalog entries.
+
+---
+
+# ◇ Design Philosophy
+
+### Quiet Luxury
+
+A restrained visual system built around sophisticated typography, controlled spacing, subtle colors, and intentional negative space.
+
+### Sculptural Minimalism
+
+Products are treated as objects of design rather than ordinary e-commerce cards.
+
+### Cinematic Art Direction
+
+Dark environments, atmospheric imagery, dramatic compositions, and carefully controlled motion create a cinematic visual language.
+
+### Motion With Purpose
+
+Animations are designed to support navigation, hierarchy, and storytelling — not simply to decorate the interface.
+
+### Editorial Composition
+
+Oversized typography, asymmetric layouts, large imagery, and strong visual hierarchy create an editorial feel.
+
+### Digital Craftsmanship
+
+Every detail — from micro-interactions to responsive behavior — contributes to the overall brand experience.
+
+---
+
+# 🎨 Visual Identity
 
 | Element | Direction |
-| --- | --- |
-| Brand | AUREL |
-| Tagline | OBJECTS OF LIGHT. |
-| Primary palette | Pearl, Soft Stone, Silver, Graphite, Black |
-| Art direction | Contemporary luxury × digital art × editorial design |
-| Experience | Cinematic, immersive, minimal, and refined |
+|---|---|
+| **Brand** | PARTO |
+| **Tagline** | OBJECTS OF LIGHT. |
+| **Style** | Contemporary Luxury |
+| **Art Direction** | Luxury × Architecture × Digital Art |
+| **Experience** | Cinematic · Immersive · Minimal |
+| **Visual Tone** | Elegant · Atmospheric · Refined |
+| **Palette** | Pearl · Soft Stone · Silver · Graphite · Black |
 
-## Features
+---
 
-### Shopping Experience
+# ✨ Features
 
-- Luxury-inspired homepage and brand introduction
-- Collection discovery and product browsing
-- Individual product detail pages
-- Dynamic product routes using slugs
-- Product imagery and editorial brand storytelling
+## Shopping Experience
+
+- Luxury-inspired homepage
+- Brand introduction
+- Collection discovery
+- Product browsing
+- Dynamic product pages
+- Slug-based product routing
+- Editorial product storytelling
+- Product imagery
 - Shopping cart interface
 - Checkout interface
-- Customer account and profile pages
-- Order history and individual order detail routes
-- Login and registration interfaces
-- Dedicated contact page
+- Customer account pages
+- Order history
+- Individual order details
+- Login interface
+- Registration interface
+- Contact page
 
-### Motion & Interaction
+## Motion & Interaction
 
+- Cinematic page transitions
+- Scroll-driven animations
+- Smooth scrolling
+- Interactive navigation
+- Hover interactions
+- Motion-enhanced sections
 - Animated visual compositions
-- Scroll-driven storytelling and transitions
-- Interactive interface elements
-- Motion-enhanced product and editorial sections
-- Carefully considered hover and navigation states
-- Responsive layouts for desktop and mobile screens
+- Editorial image reveals
+- Responsive interactions
+- Micro-interactions
 
-### Engineering
+## Responsive Experience
 
-- Component-based React architecture
-- TypeScript for static type checking
-- Next.js App Router
-- Dynamic route handling
-- Reusable UI components
-- Centralized product data
-- Production build validation
-- Deployment through Render
+PARTO is designed to adapt across:
 
-> Note: Feature availability depends on the current implementation. Backend integrations, payment processing, persistent cart storage, authentication providers, and transactional email should be considered separate capabilities unless explicitly configured.
+- Desktop
+- Large screens
+- Tablets
+- Mobile devices
 
-## Technology Stack
+Typography, spacing, imagery, navigation, and interactive elements are designed to preserve the visual identity across different screen sizes.
+
+---
+
+# 🧩 Technology Stack
 
 | Technology | Purpose |
-| --- | --- |
-| Next.js 15 | React framework, routing, and production rendering |
-| React 19 | Component-based user interface |
-| TypeScript | Type safety and maintainable application code |
-| Tailwind CSS 4 | Utility-first styling |
-| CSS | Custom visual styling and animations |
-| Framer Motion | Motion and interactive transitions |
-| GSAP | Advanced animation and scroll-based effects |
-| React Three Fiber | React-based 3D rendering |
-| Drei | Helpers and abstractions for React Three Fiber |
-| Lucide React | Interface icons |
-| ESLint | Code quality and linting |
-| Render | Hosting and deployment |
+|---|---|
+| **Next.js 15** | React framework, routing, and rendering |
+| **React 19** | Component-based UI |
+| **TypeScript** | Type safety |
+| **Tailwind CSS 4** | Utility-first styling |
+| **Framer Motion** | Motion and transitions |
+| **GSAP** | Advanced animations and scroll effects |
+| **React Three Fiber** | 3D rendering |
+| **Drei** | React Three Fiber utilities |
+| **Zustand** | State management |
+| **Lucide React** | Interface icons |
+| **ESLint** | Code quality |
+| **Turbopack** | Development/build tooling |
+| **Render** | Deployment |
 
-## Application Pages
+---
 
-| Route | Description |
-| --- | --- |
-| `/` | Homepage and brand introduction |
-| `/about` | Brand philosophy and editorial storytelling |
-| `/collection` | Collection discovery |
-| `/product` | Product browsing |
-| `/product/[slug]` | Individual product details |
-| `/cart` | Shopping cart interface |
-| `/checkout` | Checkout interface |
-| `/account` | Customer account |
-| `/account/orders/[id]` | Individual order details |
-| `/contact` | Contact information and inquiry form |
-| `/login` | Customer sign-in interface |
-| `/signup` | Customer registration interface |
+# 🏗️ Architecture
 
-## Project Structure
+PARTO follows a component-driven architecture using the Next.js App Router.
 
 ```text
-AUREL/
+parto/
+│
 ├── public/
 │   └── images/
 │       ├── about/
 │       ├── products/
 │       └── ...
+│
 ├── src/
 │   ├── app/
 │   │   ├── about/
@@ -155,155 +224,824 @@ AUREL/
 │   │   ├── signup/
 │   │   ├── layout.tsx
 │   │   └── page.tsx
+│   │
 │   ├── components/
 │   │   ├── about/
 │   │   ├── account/
 │   │   ├── collection/
 │   │   ├── product-detail/
 │   │   └── sections/
+│   │
 │   └── data/
+│
 ├── package.json
-├── pnpm-lock.yaml
+├── next.config.ts
 ├── tsconfig.json
 └── README.md
 ```
 
-*The structure above highlights the main application areas; individual files and directories may evolve during development.*
+---
 
-## Getting Started
+# 🗺️ Application Routes
 
-### Prerequisites
+| Route | Description |
+|---|---|
+| `/` | Homepage & brand introduction |
+| `/about` | Brand philosophy & story |
+| `/collection` | Collection discovery |
+| `/product` | Product browsing |
+| `/product/[slug]` | Individual product experience |
+| `/cart` | Shopping cart |
+| `/checkout` | Checkout interface |
+| `/account` | Customer account |
+| `/account/orders/[id]` | Order details |
+| `/contact` | Contact & inquiry page |
+| `/login` | Customer login |
+| `/signup` | Customer registration |
 
-Make sure you have the following installed:
+---
 
-- Node.js — a version compatible with the project's Next.js requirements
+# 🚀 Explore PARTO
+
+### ✦ Landing Page
+
+A dedicated visual landing experience introducing the PARTO identity, art direction, and overall concept.
+
+**[→ Visit PARTO Landing Page](https://landing-parto.chbkn.dev/)**
+
+### ◈ Live Demo
+
+Explore the interactive PARTO experience, including its product pages, navigation, motion, and e-commerce interfaces.
+
+**[→ Open PARTO Live Demo](https://demo-parto.chbkn.dev/)**
+
+### ◉ Source Code
+
+**[→ View PARTO on GitHub](https://github.com/mhidusti/parto)**
+
+---
+
+# ⚡ Getting Started
+
+## Prerequisites
+
+Make sure you have:
+
+- Node.js
 - npm
 - Git
 
-### 1. Clone the Repository
+## Clone the repository
 
 ```bash
-git clone https://github.com/mhidusti/AUREL.git
-cd AUREL
+git clone https://github.com/mhidusti/parto.git
+cd parto
 ```
 
-### 2. Install Dependencies
-
-This repository contains both `package.json` and a pnpm lockfile. For a reproducible installation, use the package manager and lockfile maintained by the project.
-
-Using npm:
+## Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Start the Development Server
+## Start development server
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open:
 
-### 4. Create a Production Build
+```text
+http://localhost:3000
+```
+
+## Production build
 
 ```bash
 npm run build
 ```
 
-### 5. Run the Production Server Locally
+## Start production server
 
 ```bash
 npm run start
 ```
 
-Build the application before running the production server.
+---
 
-## Deployment
+# 🛠️ Available Scripts
 
-AUREL is deployed on Render as a Next.js web service.
+### Development
 
-**Live URL:** https://aurel-z71t.onrender.com
+```bash
+npm run dev
+```
 
-Typical service configuration:
+Starts the development server.
 
-| Setting | Value |
-| --- | --- |
-| Runtime | Node.js |
-| Build command | `npm install && npm run build` |
-| Start command | `npm run start` |
-| Application port | Provided by the hosting environment |
+### Production Build
 
-For production deployments, keep dependency versions and lockfiles synchronized. Use a supported, security-patched Next.js release and review dependency advisories before updating the deployment.
+```bash
+npm run build
+```
 
-## Responsive Design
+Creates an optimized production build.
 
-The interface is designed with multiple screen sizes in mind, including:
+### Production Server
 
-- Desktop and large-screen editorial layouts
-- Tablet-friendly content arrangements
-- Mobile navigation and content flow
-- Responsive typography and spacing
-- Adaptable imagery and product presentations
+```bash
+npm run start
+```
 
-Responsive behavior should be validated on actual devices and browsers as the interface evolves.
+Starts the production server.
 
-## Performance & Code Quality
+### Lint
 
-The project uses Next.js production builds and TypeScript checks to validate the application before deployment.
+```bash
+npm run lint
+```
 
-Recommended ongoing improvements include:
-
-- Optimize large images and use responsive image delivery.
-- Review accessibility, keyboard navigation, and color contrast.
-- Reduce unnecessary client-side JavaScript.
-- Test navigation, forms, and shopping flows end to end.
-- Keep dependencies updated and resolve security advisories.
-- Test production behavior after every deployment.
-
-## Roadmap
-
-Potential future improvements include:
-
-- [ ] Complete accessibility and keyboard-navigation audits
-- [ ] Optimize image loading and delivery
-- [ ] Refine mobile-specific motion and interactions
-- [ ] Integrate persistent cart and wishlist storage
-- [ ] Connect authentication to a secure backend
-- [ ] Integrate a payment provider and order processing
-- [ ] Add product search, filtering, and sorting
-- [ ] Expand automated testing and error handling
-- [ ] Improve SEO metadata and structured product data
-
-## Contributing
-
-This repository is primarily a personal portfolio project. Suggestions, feedback, and ideas for improvement are welcome.
-
-If you would like to contribute:
-
-1. Fork the repository.
-2. Create a feature branch.
-3. Make your changes.
-4. Test the application and production build.
-5. Open a pull request describing the proposed changes.
-
-## License
-
-Unless a license file is added to this repository, all rights are reserved by the project owner. Please contact the owner before redistributing or using project assets commercially.
-
-## Author
-
-**Mohadese Doosti**  
-IT Developer · Full-Stack & Web Development
-
-- GitHub: [@mhidusti](https://github.com/mhidusti)
-- Project: [AUREL — Objects of Light](https://aurel-z71t.onrender.com)
+Runs ESLint across the project.
 
 ---
 
-<p align="center">
-  <strong>AUREL</strong><br />
-  <em>OBJECTS OF LIGHT.</em>
-  <br /><br />
-  Designed to be seen. Crafted to be remembered.
-</p>
+# 📱 Responsive Design
+
+PARTO is designed around a responsive-first experience.
+
+The interface adapts across:
+
+- Desktop
+- Large displays
+- Tablet
+- Mobile
+
+Special attention is given to:
+
+- Typography scaling
+- Image proportions
+- Navigation behavior
+- Content spacing
+- Product presentation
+- Motion behavior
+- Touch interactions
+
+---
+
+# ⚡ Performance
+
+PARTO uses modern Next.js production tooling together with TypeScript and optimized build workflows.
+
+Potential optimization areas include:
+
+- Responsive image delivery
+- Image compression
+- Lazy loading
+- Bundle optimization
+- Reduced client-side JavaScript
+- Core Web Vitals
+- Mobile performance optimization
+
+---
+
+# ♿ Accessibility
+
+Accessibility is an ongoing part of the project.
+
+Future improvements include:
+
+- Full keyboard navigation
+- Improved focus states
+- Screen-reader optimization
+- Improved color contrast
+- Reduced-motion support
+- Accessible form validation
+
+---
+
+# 🔐 Production Considerations
+
+PARTO currently focuses heavily on the **front-end experience and visual interaction**.
+
+Some commerce-related interfaces are designed as part of the experience and may require backend integrations for a complete production environment.
+
+A complete production commerce system could include:
+
+- Secure authentication
+- Persistent shopping cart
+- Wishlist storage
+- Payment processing
+- Order management
+- Inventory synchronization
+- Transactional emails
+- Customer database
+- Secure API layer
+
+---
+
+# 🗺️ Roadmap
+
+## Commerce
+
+- [ ] Persistent shopping cart
+- [ ] Wishlist
+- [ ] Product search
+- [ ] Advanced filtering
+- [ ] Product sorting
+- [ ] Inventory management
+- [ ] Payment integration
+- [ ] Order processing
+
+## Authentication
+
+- [ ] Secure backend authentication
+- [ ] Persistent customer sessions
+- [ ] Password recovery
+- [ ] Profile management
+- [ ] Account security
+
+## Experience
+
+- [ ] Advanced mobile motion
+- [ ] Interactive product presentations
+- [ ] 3D product experiences
+- [ ] Product configurator
+- [ ] Enhanced transitions
+- [ ] Advanced product storytelling
+
+## Performance
+
+- [ ] Image optimization
+- [ ] Advanced caching
+- [ ] Bundle optimization
+- [ ] Core Web Vitals improvements
+- [ ] Performance monitoring
+
+## Accessibility
+
+- [ ] Accessibility audit
+- [ ] Keyboard navigation improvements
+- [ ] Screen-reader improvements
+- [ ] Reduced-motion support
+- [ ] Contrast improvements
+
+## SEO
+
+- [ ] Advanced metadata
+- [ ] Open Graph optimization
+- [ ] Structured product data
+- [ ] Sitemap
+- [ ] Robots configuration
+- [ ] SEO optimization
+
+## Testing
+
+- [ ] Unit testing
+- [ ] Component testing
+- [ ] End-to-end testing
+- [ ] Cross-browser testing
+- [ ] Automated CI checks
+
+---
+
+# 🤝 Contributing
+
+PARTO is primarily a personal portfolio project, but feedback and ideas are welcome.
+
+If you'd like to contribute:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run the linter
+5. Test the production build
+6. Open a Pull Request
+7. Describe your changes clearly
+
+```bash
+git checkout -b feature/new-experience
+npm run lint
+npm run build
+```
+
+---
+
+# 📄 License
+
+Unless a license file is added to the repository, the project remains **all rights reserved**.
+
+Please contact the project owner before redistributing the source code or using project assets commercially.
+
+---
+
+# 👤 Author
+
+## Mohadese Doosti
+
+**IT Developer · Full-Stack & Web Development**
+
+GitHub: **[@mhidusti](https://github.com/mhidusti)**
+
+---
+
+# 🇮🇷 نسخه فارسی
+
+## PARTO — اشیای نور
+
+### یک تجربه سینمایی برای جواهرات لوکس
+
+**PARTO** یک تجربه دیجیتال مدرن برای یک برند مفهومی جواهرات لوکس است که بر پایه‌ی ترکیب **نور، متریال، فرم، حرکت و داستان‌گویی دیجیتال** طراحی شده است.
+
+PARTO صرفاً یک فروشگاه اینترنتی معمولی نیست؛ بلکه تلاش می‌کند تجربه‌ی خرید آنلاین را به یک **تجربه‌ی سینمایی و ادیتوریال** تبدیل کند.
+
+در PARTO، تصاویر، تایپوگرافی، انیمیشن‌ها، فضای خالی، حرکت و نحوه‌ی نمایش محصولات همگی در کنار یکدیگر قرار گرفته‌اند تا حس ورود به یک **خانه‌ی لوکس جواهرات، گالری دیجیتال یا ادیتوریال مد** را ایجاد کنند.
+
+> **Objects of Light — اشیای نور؛ طراحی‌شده برای تجربه شدن.**
+
+---
+
+# ✦ درباره PARTO
+
+**PARTO — Objects of Light** یک برند مفهومی جواهرات لوکس و یک تجربه‌ی مدرن E-Commerce است.
+
+هدف پروژه این است که نشان دهد یک فروشگاه آنلاین می‌تواند چیزی فراتر از نمایش ساده‌ی محصولات باشد.
+
+PARTO تلاش می‌کند فضای دیجیتال را به محیطی تبدیل کند که در آن:
+
+- محصول دیده می‌شود
+- داستان محصول روایت می‌شود
+- حرکت بخشی از تجربه است
+- نور و تصویر نقش اصلی دارند
+- رابط کاربری بخشی از هویت برند است
+
+---
+
+# ✧ ایده اصلی
+
+## Objects of Light
+
+ایده‌ی اصلی PARTO ساده است:
+
+> **جواهر فقط یک شیء نیست؛ نوری است که در فرم ثبت شده است.**
+
+به همین دلیل تجربه‌ی PARTO روی پنج مفهوم اصلی شکل گرفته است:
+
+### متریال
+
+سطوح ارزشمند، انعکاس نور، بافت‌ها و فرم‌های مجسمه‌وار.
+
+### نور
+
+روشنایی، سایه، کنتراست، انعکاس و حرکت نور.
+
+### فضا
+
+استفاده از فضای خالی و ترکیب‌بندی‌های معماری.
+
+### حرکت
+
+ترنزیشن‌ها و انیمیشن‌هایی که رابط کاربری را زنده می‌کنند.
+
+### داستان‌گویی
+
+نمایش محصول به‌عنوان بخشی از یک روایت بصری، نه صرفاً یک کارت محصول.
+
+---
+
+# 🎨 هویت بصری
+
+| عنصر | توضیح |
+|---|---|
+| **نام برند** | PARTO |
+| **شعار** | OBJECTS OF LIGHT. |
+| **سبک** | Contemporary Luxury |
+| **آرت‌دایرکشن** | Luxury × Architecture × Digital Art |
+| **تجربه** | Cinematic · Immersive · Minimal |
+| **لحن بصری** | Elegant · Atmospheric · Refined |
+| **رنگ‌ها** | Pearl · Soft Stone · Silver · Graphite · Black |
+
+---
+
+# ✨ امکانات
+
+### تجربه فروشگاهی
+
+- صفحه اصلی لوکس و سینمایی
+- معرفی برند
+- نمایش کالکشن
+- مرور محصولات
+- صفحات اختصاصی محصولات
+- مسیرهای داینامیک محصولات
+- روایت ادیتوریال برای محصولات
+- نمایش تصاویر محصولات
+- رابط سبد خرید
+- رابط Checkout
+- صفحات حساب کاربری
+- تاریخچه سفارش‌ها
+- جزئیات هر سفارش
+- صفحه ورود
+- صفحه ثبت‌نام
+- صفحه تماس
+
+### انیمیشن و تعامل
+
+- ترنزیشن‌های سینمایی
+- انیمیشن‌های مبتنی بر Scroll
+- Smooth Scrolling
+- Navigation تعاملی
+- Hover Interaction
+- بخش‌های Motion-Based
+- نمایش متحرک تصاویر
+- Image Reveal
+- تعاملات Responsive
+- Micro-interactions
+
+### طراحی واکنش‌گرا
+
+PARTO برای تجربه‌ی یکپارچه در:
+
+- دسکتاپ
+- نمایشگرهای بزرگ
+- تبلت
+- موبایل
+
+طراحی شده است.
+
+---
+
+# 🧩 تکنولوژی‌های استفاده‌شده
+
+| تکنولوژی | کاربرد |
+|---|---|
+| **Next.js 15** | فریم‌ورک اصلی |
+| **React 19** | ساخت رابط کاربری |
+| **TypeScript** | Type Safety |
+| **Tailwind CSS 4** | استایل‌دهی |
+| **Framer Motion** | انیمیشن و Transition |
+| **GSAP** | انیمیشن‌های پیشرفته |
+| **React Three Fiber** | رندرینگ سه‌بعدی |
+| **Drei** | ابزارهای Three.js |
+| **Zustand** | مدیریت State |
+| **Lucide React** | آیکون‌ها |
+| **ESLint** | کنترل کیفیت کد |
+| **Turbopack** | ابزار توسعه و Build |
+| **Render** | Deployment |
+
+---
+
+# 🏗️ معماری پروژه
+
+PARTO بر پایه‌ی معماری Component-Based و Next.js App Router ساخته شده است.
+
+```text
+parto/
+│
+├── public/
+│   └── images/
+│       ├── about/
+│       ├── products/
+│       └── ...
+│
+├── src/
+│   ├── app/
+│   │   ├── about/
+│   │   ├── account/
+│   │   ├── cart/
+│   │   ├── checkout/
+│   │   ├── collection/
+│   │   ├── contact/
+│   │   ├── login/
+│   │   ├── product/
+│   │   ├── signup/
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   │
+│   ├── components/
+│   │   ├── about/
+│   │   ├── account/
+│   │   ├── collection/
+│   │   ├── product-detail/
+│   │   └── sections/
+│   │
+│   └── data/
+│
+├── package.json
+├── next.config.ts
+├── tsconfig.json
+└── README.md
+```
+
+---
+
+# 🗺️ صفحات پروژه
+
+| مسیر | توضیح |
+|---|---|
+| `/` | صفحه اصلی |
+| `/about` | داستان و فلسفه برند |
+| `/collection` | نمایش کالکشن |
+| `/product` | مرور محصولات |
+| `/product/[slug]` | جزئیات محصول |
+| `/cart` | سبد خرید |
+| `/checkout` | پرداخت |
+| `/account` | حساب کاربری |
+| `/account/orders/[id]` | جزئیات سفارش |
+| `/contact` | تماس |
+| `/login` | ورود |
+| `/signup` | ثبت‌نام |
+
+---
+
+# 🚀 مشاهده PARTO
+
+## ✦ Landing Page
+
+لندینگ اختصاصی PARTO برای معرفی هویت بصری، فضای برند، آرت‌دایرکشن و ایده‌ی اصلی پروژه.
+
+**[→ مشاهده Landing Page PARTO](https://landing-parto.chbkn.dev/)**
+
+## ◈ Live Demo
+
+نسخه‌ی تعاملی PARTO شامل صفحات محصول، Navigation، انیمیشن‌ها و تجربه‌ی فروشگاهی.
+
+**[→ مشاهده Demo پروژه](https://demo-parto.chbkn.dev/)**
+
+## ◉ Source Code
+
+**[→ مشاهده سورس PARTO در GitHub](https://github.com/mhidusti/parto)**
+
+---
+
+# ⚡ نصب و اجرا
+
+### پیش‌نیازها
+
+قبل از اجرا باید موارد زیر را داشته باشید:
+
+- Node.js
+- npm
+- Git
+
+### دریافت پروژه
+
+```bash
+git clone https://github.com/mhidusti/parto.git
+cd parto
+```
+
+### نصب پکیج‌ها
+
+```bash
+npm install
+```
+
+### اجرای محیط توسعه
+
+```bash
+npm run dev
+```
+
+سپس:
+
+```text
+http://localhost:3000
+```
+
+را در مرورگر باز کنید.
+
+### ساخت نسخه Production
+
+```bash
+npm run build
+```
+
+### اجرای نسخه Production
+
+```bash
+npm run start
+```
+
+---
+
+# 🛠️ اسکریپت‌ها
+
+### Development
+
+```bash
+npm run dev
+```
+
+اجرای محیط توسعه.
+
+### Build
+
+```bash
+npm run build
+```
+
+ساخت نسخه Production.
+
+### Start
+
+```bash
+npm run start
+```
+
+اجرای نسخه Production.
+
+### Lint
+
+```bash
+npm run lint
+```
+
+بررسی کیفیت کد با ESLint.
+
+---
+
+# 📱 Responsive Design
+
+PARTO با رویکرد Responsive طراحی شده است.
+
+تجربه‌ی پروژه برای:
+
+- Desktop
+- Large Screens
+- Tablet
+- Mobile
+
+بهینه شده است.
+
+مواردی مانند:
+
+- اندازه‌ی تایپوگرافی
+- نسبت تصاویر
+- Navigation
+- فاصله‌گذاری
+- نمایش محصولات
+- انیمیشن‌ها
+- تعاملات لمسی
+
+در طراحی Responsive مورد توجه قرار گرفته‌اند.
+
+---
+
+# ⚡ Performance
+
+PARTO از ابزارهای مدرن Next.js و TypeScript استفاده می‌کند.
+
+زمینه‌های قابل توسعه برای بهینه‌سازی:
+
+- بهینه‌سازی تصاویر
+- Responsive Image Delivery
+- Lazy Loading
+- کاهش حجم Bundle
+- کاهش JavaScript سمت Client
+- بهبود Core Web Vitals
+- بهینه‌سازی Performance موبایل
+
+---
+
+# ♿ Accessibility
+
+بهبود Accessibility بخشی از مسیر توسعه PARTO است.
+
+موارد قابل توسعه:
+
+- Keyboard Navigation
+- Focus States
+- Screen Reader Support
+- Color Contrast
+- Reduced Motion
+- Form Accessibility
+
+---
+
+# 🔐 وضعیت Production
+
+PARTO در حال حاضر تمرکز زیادی روی **تجربه‌ی Front-End، طراحی و Interaction** دارد.
+
+برای تبدیل کامل پروژه به یک سیستم E-Commerce Production Ready می‌توان قابلیت‌هایی مانند موارد زیر را اضافه کرد:
+
+- Authentication امن
+- سبد خرید دائمی
+- Wishlist
+- Payment Gateway
+- مدیریت سفارش‌ها
+- مدیریت موجودی
+- ارسال ایمیل
+- Database
+- API امن
+- سیستم مدیریت کاربران
+
+---
+
+# 🗺️ Roadmap
+
+### Commerce
+
+- [ ] سبد خرید دائمی
+- [ ] Wishlist
+- [ ] جستجوی محصولات
+- [ ] فیلتر محصولات
+- [ ] مرتب‌سازی
+- [ ] مدیریت موجودی
+- [ ] اتصال درگاه پرداخت
+- [ ] سیستم پردازش سفارش
+
+### Authentication
+
+- [ ] Authentication واقعی
+- [ ] Session Management
+- [ ] بازیابی رمز عبور
+- [ ] مدیریت پروفایل
+- [ ] امنیت حساب کاربری
+
+### Experience
+
+- [ ] Motion پیشرفته برای موبایل
+- [ ] Product Presentation تعاملی
+- [ ] تجربه سه‌بعدی محصولات
+- [ ] Product Configurator
+- [ ] Page Transitionهای پیشرفته
+- [ ] Product Storytelling پیشرفته
+
+### Performance
+
+- [ ] Image Optimization
+- [ ] Caching پیشرفته
+- [ ] Bundle Optimization
+- [ ] Core Web Vitals
+- [ ] Performance Monitoring
+
+### SEO
+
+- [ ] Metadata پیشرفته
+- [ ] Open Graph
+- [ ] Structured Product Data
+- [ ] Sitemap
+- [ ] Robots Configuration
+- [ ] SEO Optimization
+
+### Testing
+
+- [ ] Unit Testing
+- [ ] Component Testing
+- [ ] E2E Testing
+- [ ] Cross-Browser Testing
+- [ ] CI/CD
+
+---
+
+# 🤝 مشارکت
+
+PARTO در اصل یک پروژه‌ی شخصی و Portfolio است، اما پیشنهادها و ایده‌های جدید با استقبال روبه‌رو می‌شوند.
+
+برای مشارکت:
+
+1. Repository را Fork کنید.
+2. یک Branch جدید بسازید.
+3. تغییرات خود را اعمال کنید.
+4. پروژه را تست کنید.
+5. Lint و Build را اجرا کنید.
+6. Pull Request ایجاد کنید.
+7. تغییرات را به‌صورت واضح توضیح دهید.
+
+```bash
+git checkout -b feature/new-experience
+
+npm run lint
+npm run build
+```
+
+---
+
+# 📄 License
+
+در صورتی که License مشخصی به Repository اضافه نشده باشد، حقوق پروژه و Assetهای آن متعلق به صاحب پروژه است.
+
+برای استفاده تجاری یا بازتوزیع Source Code و Assets، لطفاً با صاحب پروژه هماهنگ کنید.
+
+---
+
+# 👤 سازنده
+
+## Mohadese Doosti
+
+**IT Developer · Full-Stack & Web Development**
+
+GitHub: **[@mhidusti](https://github.com/mhidusti)**
+
+---
+
+<div align="center">
+
+# PARTO
+
+### OBJECTS OF LIGHT.
+
+**Designed to be seen.  
+Crafted to be remembered.**
+
+</div>
