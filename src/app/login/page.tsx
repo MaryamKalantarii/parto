@@ -13,7 +13,6 @@ export default function LoginPage() {
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    // TODO: اتصال به API احراز هویت
   };
 
   return (

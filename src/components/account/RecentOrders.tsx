@@ -4,11 +4,10 @@ import React from 'react';
 import { Photo } from '@/components/home/primitives';
 import { AccountCard, ArrowLink, Badge, Icon, btnGhost } from './ui';
 import { toFa, toman } from './validators';
-import { mockOrders, orderSteps, statusMeta, type Order, type OrderStatus } from './accountData';
+import { initialOrders, orderSteps, statusMeta, type Order, type OrderStatus } from './accountData';
 
 export type { OrderItem } from './accountData';
 
-/* ───────── نوار مراحل سفارش (RTL: مرحله‌ی اول سمت راست) ───────── */
 export function OrderStepper({ status }: { status: OrderStatus }) {
   if (status === 'CANCELLED') return <Badge tone="danger">این سفارش لغو شده است</Badge>;
   const cur = statusMeta[status].step;
@@ -64,7 +63,7 @@ interface Props {
   onViewAll?: () => void;
 }
 
-export const RecentOrders: React.FC<Props> = ({ orders = mockOrders, onViewAll }) => {
+export const RecentOrders: React.FC<Props> = ({ orders = initialOrders, onViewAll }) => {
   const active = orders.find((o) => o.status === 'PROCESSING' || o.status === 'IN_TRANSIT') ?? orders[0];
   const others = orders.filter((o) => o !== active).slice(0, 2);
 

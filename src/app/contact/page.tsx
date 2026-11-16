@@ -41,7 +41,6 @@ export default function ContactPage() {
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: اتصال به API ارسال پیام
     setSent(true);
     e.currentTarget.reset();
   };

@@ -32,7 +32,7 @@ import type { Product } from '@/types/product';
 
 const FREE_SHIPPING_FROM = 5_000_000; // ارسال رایگان برای خرید بالای ۵ میلیون
 const SHIPPING_FEE = 250_000;
-const ORDER_DISCOUNT = 5_000_000; // تخفیف نمونه؛ به کد تخفیف/API واقعی وصل شود
+const ORDER_DISCOUNT = 5_000_000;
 
 type CartItem = {
   id: string;

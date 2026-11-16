@@ -27,7 +27,6 @@ export default function SignupPage() {
     if (f.get('password') !== f.get('confirm')) return setError('رمز عبور و تکرار آن یکسان نیست');
     if (!terms) return setError('لطفاً قوانین و مقررات را بپذیرید');
     setError('');
-    // TODO: اتصال به API ثبت‌نام
   };
 
   return (

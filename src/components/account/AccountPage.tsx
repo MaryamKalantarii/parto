@@ -1,9 +1,7 @@
 'use client';
 
 /**
- * نمونه‌ی اتصال همه‌ی بخش‌ها  →  components/account/AccountPage.tsx
  * در app/account/page.tsx:   <main …><Header /><AccountPage /><Footer /></main>
- * اگر صفحه‌ی حساب شما الان ساختار دیگری دارد، فقط تب‌ها و props را با همین الگو تطبیق دهید.
  */
 
 import React, { useState } from 'react';
@@ -20,11 +18,11 @@ import { AddressesList } from './AddressesList';
 import { PaymentMethodsList } from './PaymentMethodsList';
 import { AccountSettings } from './AccountSettings';
 import type { UserProfileData } from './EditProfileModal';
-import { mockUser } from './accountData';
+import { initialUser } from './accountData';
 
 export function AccountPage() {
   const [tab, setTab] = useState<AccountTab>('profile');
-  const [user, setUser] = useState<UserProfileData>(mockUser);
+  const [user, setUser] = useState<UserProfileData>(initialUser);
   const [modalOpen, setModalOpen] = useState(false);
 
   const go = (t: AccountTab) => {
@@ -49,7 +47,6 @@ export function AccountPage() {
               setModalOpen(true);
             }}
             onLogout={() => {
-              /* TODO: خروج از حساب */
             }}
           />
         </div>

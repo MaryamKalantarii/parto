@@ -9,7 +9,6 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// 📌 در این بخش می‌توانید عکس‌ها، متن‌ها، تخفیف‌ها و لینک‌ها را به راحتی تغییر دهید
 const CAMPAIGN_DATA = {
   // بخش اول (بنر بزرگ سمت چپ با عکس صخره و حلقه)
   mainBanner: {

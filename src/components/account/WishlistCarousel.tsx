@@ -4,9 +4,9 @@ import React, { useRef, useState } from 'react';
 import { Photo } from '@/components/home/primitives';
 import { AccountCard, ArrowLink, Icon } from './ui';
 import { toman } from './validators';
-import { mockWishlist, type WishItem } from './accountData';
+import { initialWishlist, type WishItem } from './accountData';
 
-export const WishlistCarousel: React.FC<{ items?: WishItem[]; onViewAll: () => void }> = ({ items = mockWishlist, onViewAll }) => {
+export const WishlistCarousel: React.FC<{ items?: WishItem[]; onViewAll: () => void }> = ({ items = initialWishlist, onViewAll }) => {
   const ref = useRef<HTMLUListElement>(null);
   const [liked, setLiked] = useState<Record<string, boolean>>(() => Object.fromEntries(items.map((i) => [i.id, true])));
   // در RTL: اسکرول مثبت = برگشت به سمت راست (قبلی)

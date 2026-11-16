@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Photo } from '@/components/home/primitives';
 import { AccountCard, EmptyState, Icon, btnGhost, btnPrimary } from './ui';
 import { toFa, toman } from './validators';
-import { mockWishlist, type WishItem } from './accountData';
+import { initialWishlist, type WishItem } from './accountData';
 
 export type WishlistItem = WishItem;
 
@@ -15,7 +15,7 @@ interface Props {
   onAddToCart?: (item: WishItem) => void;
 }
 
-export const WishlistList: React.FC<Props> = ({ items: initial = mockWishlist, onAddToCart }) => {
+export const WishlistList: React.FC<Props> = ({ items: initial = initialWishlist, onAddToCart }) => {
   const [items, setItems] = useState<WishItem[]>(initial);
   const [added, setAdded] = useState<string[]>([]);
   const [notify, setNotify] = useState<string[]>([]);

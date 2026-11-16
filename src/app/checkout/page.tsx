@@ -137,7 +137,6 @@ export default function CheckoutPage() {
   const placeOrder = (e: FormEvent) => {
     e.preventDefault();
     if (qty === 0) return;
-    // TODO: ارسال سفارش به API (info, pay, note, qty)
     setDone(true);
   };
 

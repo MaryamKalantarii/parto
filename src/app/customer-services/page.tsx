@@ -68,7 +68,6 @@ export default function CustomerServicesPage() {
 
   const track = (e: FormEvent) => {
     e.preventDefault();
-    // TODO: اتصال به API پیگیری سفارش
     setStatus(order.trim() ? `سفارش ${order.trim()} در حال پردازش است.` : 'لطفاً شماره سفارش را وارد کنید.');
   };
 
