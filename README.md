@@ -1032,7 +1032,7 @@ npm run build
 **IT Developer · Full-Stack & Web Development**
 
 GitHub: **[@mhidusti](https://github.com/mhidusti)**
-GitHub: **[@MaryamKalantarii]((https://github.com/MaryamKalantarii))**
+
 
 ---
 
