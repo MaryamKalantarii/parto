@@ -3,8 +3,7 @@ export const IMG = {
 
   silk: '/images/theme/silk.png',
   ringHero: '/images/theme/ring-hero.png',
-  silk: '/images/collection/newsletter-bg.png',
-  ringHero: '/images/theme/ring-hero.jpg',
+
   ringLogin: '/images/theme/ring-login.jpg',
   ringFlowers: '/images/theme/ring-flowers.jpg',
   ringBox: '/images/theme/ring-box.png',

@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -37,18 +38,55 @@ const P: Record<string, React.ReactNode> = {
   gift: <><rect x="3" y="9" width="18" height="11" rx="2" /><path d="M12 9v11M3 13h18M12 9c-3 0-5-1-5-3s3-2.5 5 3c2-5.500 5-5 5-3s-2 3-5 3Z" /></>,
 };
 
-export function Icon({ name, className = 'h-5 w-5', sw = 1.5 }: { name: keyof typeof P | string; className?: string; sw?: number }) {
+export function Icon({
+  name,
+  className = 'h-5 w-5',
+  sw = 1.5,
+}: {
+  name: keyof typeof P | string;
+  className?: string;
+  sw?: number;
+}) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={sw}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
       {P[name]}
     </svg>
   );
 }
 
 /* ───────── تصویر پس‌زمینه‌ای با fallback ───────── */
-export function Img({ src, className = '', style, children, pos = 'center' }: { src: string; className?: string; style?: React.CSSProperties; children?: React.ReactNode; pos?: string }) {
+export function Img({
+  src,
+  className = '',
+  style,
+  children,
+  pos = 'center',
+}: {
+  src: string;
+  className?: string;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+  pos?: string;
+}) {
   return (
-    <div className={className} style={{ backgroundImage: `url("${src}")`, backgroundSize: 'cover', backgroundPosition: pos, ...style }}>
+    <div
+      className={className}
+      style={{
+        backgroundImage: `url("${src}")`,
+        backgroundSize: 'cover',
+        backgroundPosition: pos,
+        ...style,
+      }}
+    >
       {children}
     </div>
   );
@@ -66,30 +104,78 @@ export function Ornament({ className = '' }: { className?: string }) {
 }
 
 /* ───────── فیلد گرد شیشه‌ای ───────── */
+
+type FieldProps = {
+  icon?: string;
+  label: string;
+  className?: string;
+  as?: 'input' | 'textarea' | 'select';
+  rows?: number;
+} & (
+  | React.InputHTMLAttributes<HTMLInputElement>
+  | React.TextareaHTMLAttributes<HTMLTextAreaElement>
+  | React.SelectHTMLAttributes<HTMLSelectElement>
+);
+
 export function Field({
-  icon, label, className = '', as = 'input', rows = 4, ...rest
-}: { icon?: string; label: string; className?: string; as?: 'input' | 'textarea' | 'select'; rows?: number } & Record<string, any>) {
-  const base = 'field-silk w-full text-[15px] ' + (as === 'textarea' ? 'rounded-[26px] py-4' : 'h-[58px] rounded-full') + ' pr-14 pl-5 text-right';
+  icon,
+  label,
+  className = '',
+  as = 'input',
+  rows = 4,
+  ...rest
+}: FieldProps) {
+  const base =
+    'field-silk w-full text-[15px] ' +
+    (as === 'textarea' ? 'rounded-[26px] py-4' : 'h-[58px] rounded-full') +
+    ' pr-14 pl-5 text-right';
+
   return (
     <label className={`relative block ${className}`}>
       <span className="sr-only">{label}</span>
-      {icon && <span className="pointer-events-none absolute right-5 top-[17px] text-[#3a2418]"><Icon name={icon} className="h-6 w-6" /></span>}
+
+      {icon && (
+        <span className="pointer-events-none absolute right-5 top-[17px] text-[#3a2418]">
+          <Icon name={icon} className="h-6 w-6" />
+        </span>
+      )}
+
       {as === 'textarea' ? (
-        <textarea rows={rows} placeholder={label} className={base + ' resize-none'} {...rest} />
+        <textarea
+          rows={rows}
+          placeholder={label}
+          className={base + ' resize-none'}
+          {...(rest as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+        />
       ) : as === 'select' ? (
         <>
-          <select className={base + ' appearance-none'} {...rest} />
-          <span className="pointer-events-none absolute left-5 top-[19px] text-[#3a2418]"><Icon name="chevD" className="h-5 w-5" /></span>
+          <select
+            className={base + ' appearance-none'}
+            {...(rest as React.SelectHTMLAttributes<HTMLSelectElement>)}
+          />
+          <span className="pointer-events-none absolute left-5 top-[19px] text-[#3a2418]">
+            <Icon name="chevD" className="h-5 w-5" />
+          </span>
         </>
       ) : (
-        <input placeholder={label} className={base} {...rest} />
+        <input
+          placeholder={label}
+          className={base}
+          {...(rest as React.InputHTMLAttributes<HTMLInputElement>)}
+        />
       )}
     </label>
   );
 }
 
 /* ───────── صفحه با پس‌زمینه ابریشمی + هدر + فوتر ───────── */
-export function SilkPage({ children, footer = true }: { children: React.ReactNode; footer?: boolean }) {
+export function SilkPage({
+  children,
+  footer = true,
+}: {
+  children: React.ReactNode;
+  footer?: boolean;
+}) {
   return (
     <main className="silk-bg relative min-h-screen w-full overflow-x-hidden font-sans text-[#2a1a12]">
       <Header />
@@ -105,11 +191,32 @@ export function SilkPage({ children, footer = true }: { children: React.ReactNod
 
 /* ───────── هیرو صفحات داخلی ───────── */
 export function SilkHero({
-  title, subtitle, image, height = 'h-[340px]', ornament = true,
-}: { title: string; subtitle?: string; image?: string; height?: string; ornament?: boolean }) {
+  title,
+  subtitle,
+  image,
+  height = 'h-[340px]',
+  ornament = true,
+}: {
+  title: string;
+  subtitle?: string;
+  image?: string;
+  height?: string;
+  ornament?: boolean;
+}) {
   return (
     <section className={`relative mx-auto w-full max-w-[1360px] px-10 pt-[88px] ${height}`}>
-      {image && <Img src={image} className="pointer-events-none absolute bottom-0 left-6 top-[70px] w-[46%] bg-contain bg-left bg-no-repeat" style={{ backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'left center' }} />}
+      {image && (
+        <Img
+          src={image}
+          className="pointer-events-none absolute bottom-0 left-6 top-[70px] w-[46%] bg-contain bg-left bg-no-repeat"
+          style={{
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'left center',
+          }}
+        />
+      )}
+
       <div className="relative ml-auto flex h-full w-[420px] max-w-full flex-col items-center justify-center text-center">
         {ornament && <Ornament className="mb-4 w-[300px]" />}
         <h1 className="text-[40px] font-bold leading-tight text-[#3a2418]">{title}</h1>
@@ -126,12 +233,33 @@ export const trustItems = [
   { icon: 'truck', title: 'ارسال به سراسر کشور', sub: 'سریع و مطمئن' },
 ];
 
-export function TrustIcon({ name, className = 'h-10 w-10' }: { name: string; className?: string }) {
-  return name === 'diamond' ? <DiamondIcon className={className} /> : <Icon name={name} className={className} sw={1.3} />;
+export function TrustIcon({
+  name,
+  className = 'h-10 w-10',
+}: {
+  name: string;
+  className?: string;
+}) {
+  return name === 'diamond' ? (
+    <DiamondIcon className={className} />
+  ) : (
+    <Icon name={name} className={className} sw={1.3} />
+  );
 }
 
-export function DarkButton({ children, className = '', ...r }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  return <button {...r} className={`btn-dark inline-flex items-center justify-center gap-3 rounded-full text-[18px] font-medium transition ${className}`}>{children}</button>;
+export function DarkButton({
+  children,
+  className = '',
+  ...r
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      {...r}
+      className={`btn-dark inline-flex items-center justify-center gap-3 rounded-full text-[18px] font-medium transition ${className}`}
+    >
+      {children}
+    </button>
+  );
 }
 
 export { Link };

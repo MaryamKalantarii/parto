@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -5,12 +6,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/home/primitives";
 
-const navItems = [
+const navItems: { label: string; href: string; caret?: boolean }[] = [
   { label: "خانه", href: "/" },
   { label: "محصولات", href: "/product" },
   { label: "درباره ما", href: "/about" },
   { label: " بلاگ", href: "/blog" },
-  { label: "خدمات مشتریان", href: "/customer-services"},
+  { label: "خدمات مشتریان", href: "/customer-services" },
   { label: "کالکشن", href: "/collection" },
   { label: "تماس با ما", href: "/contact" },
 ];
@@ -19,30 +20,62 @@ const iconCls = "h-[18px] w-[18px]";
 
 function CartIcon() {
   return (
-    <svg viewBox="0 0 24 24" className={iconCls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      viewBox="0 0 24 24"
+      className={iconCls}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M8 8a4 4 0 0 1 8 0" />
       <rect x="5" y="8" width="14" height="12" rx="3" />
     </svg>
   );
 }
+
 function UserIcon() {
   return (
-    <svg viewBox="0 0 24 24" className={iconCls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+    <svg
+      viewBox="0 0 24 24"
+      className={iconCls}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    >
       <circle cx="12" cy="8" r="4" />
       <path d="M4 20c1.5-4 4.5-5.5 8-5.5s6.5 1.5 8 5.5" />
     </svg>
   );
 }
+
 function HeartIcon() {
   return (
-    <svg viewBox="0 0 24 24" className={iconCls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round">
+    <svg
+      viewBox="0 0 24 24"
+      className={iconCls}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    >
       <path d="M12 20s-7-4.4-9-9.2C1.6 7.4 4 4.5 7 4.5c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3 0 5.4 2.9 4 6.3C19 15.6 12 20 12 20Z" />
     </svg>
   );
 }
+
 function SearchIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    >
       <circle cx="11" cy="11" r="6.5" />
       <path d="m16 16 4 4" />
     </svg>
@@ -57,14 +90,19 @@ export function Header() {
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
+
     window.addEventListener("scroll", onScroll, { passive: true });
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
+    const onKey = (e: KeyboardEvent) =>
+      e.key === "Escape" && setMenuOpen(false);
+
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = menuOpen ? "hidden" : "";
+
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
@@ -88,22 +126,40 @@ export function Header() {
           {/* ناوبری */}
           <nav className="flex items-center gap-9">
             {navItems.map((item) => {
-              const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+              const active =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(item.href);
+
               return (
                 <Link
                   key={item.label}
                   href={item.href}
                   className={`relative inline-flex items-center gap-1 pb-1.5 text-[13px] font-medium transition-colors ${
-                    active ? "text-[#f3dcc4]" : "text-[#eadccd]/85 hover:text-[#f3dcc4]"
+                    active
+                      ? "text-[#f3dcc4]"
+                      : "text-[#eadccd]/85 hover:text-[#f3dcc4]"
                   }`}
                 >
                   {item.label}
+
                   {item.caret && (
-                    <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-3 w-3"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <path d="m6 9 6 6 6-6" />
                     </svg>
                   )}
-                  {active && <span className="absolute inset-x-0 -bottom-0.5 h-px bg-[#e2bf9f]" />}
+
+                  {active && (
+                    <span className="absolute inset-x-0 -bottom-0.5 h-px bg-[#e2bf9f]" />
+                  )}
                 </Link>
               );
             })}
@@ -119,11 +175,32 @@ export function Header() {
                 className="w-full bg-transparent text-[12px] outline-none placeholder:text-[#eadccd]/70"
               />
             </label>
-            <Link href="/account" aria-label="علاقه‌مندی‌ها" className="transition hover:text-white"><HeartIcon /></Link>
-            <Link href="/login" aria-label="حساب کاربری" className="transition hover:text-white"><UserIcon /></Link>
-            <Link href="/cart" aria-label="سبد خرید" className="relative transition hover:text-white">
+
+            <Link
+              href="/account"
+              aria-label="علاقه‌مندی‌ها"
+              className="transition hover:text-white"
+            >
+              <HeartIcon />
+            </Link>
+
+            <Link
+              href="/login"
+              aria-label="حساب کاربری"
+              className="transition hover:text-white"
+            >
+              <UserIcon />
+            </Link>
+
+            <Link
+              href="/cart"
+              aria-label="سبد خرید"
+              className="relative transition hover:text-white"
+            >
               <CartIcon />
-              <span className="absolute -right-1.5 -top-1.5 grid h-3.5 w-3.5 place-items-center rounded-full bg-[#e2bf9f] text-[8px] font-bold text-[#2a1a12]">0</span>
+              <span className="absolute -right-1.5 -top-1.5 grid h-3.5 w-3.5 place-items-center rounded-full bg-[#e2bf9f] text-[8px] font-bold text-[#2a1a12]">
+                0
+              </span>
             </Link>
           </div>
         </div>
@@ -140,19 +217,37 @@ export function Header() {
             className="grid h-10 w-10 place-items-center"
           >
             <span className="flex w-6 flex-col gap-[6px]">
-              <span className={`h-[1.5px] bg-current transition ${menuOpen ? "translate-y-[3.75px] rotate-45" : ""}`} />
-              <span className={`h-[1.5px] bg-current transition ${menuOpen ? "-translate-y-[3.75px] -rotate-45" : "w-4"}`} />
+              <span
+                className={`h-[1.5px] bg-current transition ${
+                  menuOpen ? "translate-y-[3.75px] rotate-45" : ""
+                }`}
+              />
+              <span
+                className={`h-[1.5px] bg-current transition ${
+                  menuOpen
+                    ? "-translate-y-[3.75px] -rotate-45"
+                    : "w-4"
+                }`}
+              />
             </span>
           </button>
-          <div className="scale-75"><Logo /></div>
-          <Link href="/cart" aria-label="سبد خرید"><CartIcon /></Link>
+
+          <div className="scale-75">
+            <Logo />
+          </div>
+
+          <Link href="/cart" aria-label="سبد خرید">
+            <CartIcon />
+          </Link>
         </div>
 
         <div
           aria-hidden={!menuOpen}
           data-lenis-prevent
           className={`fixed inset-0 z-[65] bg-[#1c110c] px-8 pb-10 pt-24 text-[#f3dcc4] transition-all duration-500 ${
-            menuOpen ? "visible opacity-100" : "invisible -translate-y-3 opacity-0"
+            menuOpen
+              ? "visible opacity-100"
+              : "invisible -translate-y-3 opacity-0"
           }`}
         >
           <nav className="flex flex-col">
@@ -162,16 +257,36 @@ export function Header() {
                 href={item.href}
                 tabIndex={menuOpen ? 0 : -1}
                 onClick={() => setMenuOpen(false)}
-                style={{ transitionDelay: menuOpen ? `${150 + idx * 70}ms` : "0ms" }}
-                className={`border-b border-white/10 py-5 text-lg transition-all duration-700 hover:text-[#e2bf9f] ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"}`}
+                style={{
+                  transitionDelay: menuOpen ? `${150 + idx * 70}ms` : "0ms",
+                }}
+                className={`border-b border-white/10 py-5 text-lg transition-all duration-700 hover:text-[#e2bf9f] ${
+                  menuOpen
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-5 opacity-0"
+                }`}
               >
                 {item.label}
               </Link>
             ))}
           </nav>
+
           <div className="mt-8 flex gap-3">
-            <Link href="/login" onClick={() => setMenuOpen(false)} className="btn-gold flex-1 rounded-full py-3 text-center text-sm font-medium">ورود / ثبت‌نام</Link>
-            <Link href="/account" onClick={() => setMenuOpen(false)} className="flex-1 rounded-full border border-white/25 py-3 text-center text-sm">حساب کاربری</Link>
+            <Link
+              href="/login"
+              onClick={() => setMenuOpen(false)}
+              className="btn-gold flex-1 rounded-full py-3 text-center text-sm font-medium"
+            >
+              ورود / ثبت‌نام
+            </Link>
+
+            <Link
+              href="/account"
+              onClick={() => setMenuOpen(false)}
+              className="flex-1 rounded-full border border-white/25 py-3 text-center text-sm"
+            >
+              حساب کاربری
+            </Link>
           </div>
         </div>
       </div>
