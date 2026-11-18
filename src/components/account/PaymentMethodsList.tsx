@@ -16,7 +16,10 @@ export interface BankCard {
   masked: string;
 }
 
-const initialCards: BankCard[] = [];
+const initialCards: BankCard[] = [
+  { id: 'c1', isDefault: true, holder: 'سیده نژاد', bank: 'بانک ملی ایران', masked: '603799******7890' },
+  { id: 'c2', isDefault: false, holder: 'سیده نژاد', bank: 'بانک ملت', masked: '610433******1092' },
+];
 
 const mask = (digits: string) => `${digits.slice(0, 6)}******${digits.slice(12)}`;
 const showMasked = (m: string) => toFa(`${m.slice(0, 4)} ${m.slice(4, 6)}•• •••• ${m.slice(12)}`);

@@ -31,7 +31,11 @@ const PROVINCES = [
 ];
 const TITLES = ['خانه', 'محل کار', 'دیگر'];
 
-const initialAddresses: AddressItem[] = [];
+const initialAddresses: AddressItem[] = [
+  { id: 'a1', isDefault: true, title: 'خانه', fullName: 'سیده نژاد', street: 'خیابان آزادی', plaque: '۱۲۳', apartment: 'طبقه‌ی ۳، واحد ۱۲', city: 'تهران', state: 'تهران', postalCode: '1968713456', country: 'ایران', phone: '09123456789' },
+  { id: 'a2', isDefault: false, title: 'محل کار', fullName: 'سیده نژاد', street: 'میدان ونک، خیابان ملاصدرا، برج آسمان', plaque: '۲۱', apartment: 'طبقه‌ی ۸، واحد ۴', city: 'تهران', state: 'تهران', postalCode: '1991653741', country: 'ایران', phone: '09123456789' },
+  { id: 'a3', isDefault: false, title: 'دیگر', fullName: 'مریم نژاد', street: 'بلوار چمران، خیابان ارم', plaque: '۱۵', apartment: 'واحد ۲', city: 'شیراز', state: 'فارس', postalCode: '7134915678', country: 'ایران', phone: '09177654321' },
+];
 
 type Form = Omit<AddressItem, 'id'>;
 const emptyForm = (isDefault: boolean): Form => ({ isDefault, title: 'خانه', fullName: '', street: '', plaque: '', apartment: '', city: '', state: 'تهران', postalCode: '', country: 'ایران', phone: '' });
